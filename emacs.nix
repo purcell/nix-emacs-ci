@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--disable-build-details" # for a (more) reproducible build
-    #"--with-modules"
+    "--with-modules"
     "--with-x=no"
     "--with-ns=no"
     "--with-xpm=no"
