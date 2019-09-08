@@ -11,7 +11,7 @@
   emacs_25_1 = pkgs.callPackage ./emacs.nix { version = "25.1"; sha256 = "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn"; withAutoReconf = true; };
   emacs_25_2 = pkgs.callPackage ./emacs.nix { version = "25.2"; sha256 = "0b9dwx6nxzflaipkgml4snny2c3brgy0py6h05q995y1lrpbsnsh"; withAutoReconf = true; };
   emacs_25_3 = pkgs.callPackage ./emacs.nix { version = "25.3"; sha256 = "1jc3g79nrcix0500kiw6hqpql82ajq0xivlip6iaryxn90dnlb7p"; withAutoReconf = true; };
-  emacs_26_1 = pkgs.callPackage ./emacs.nix { version = "26.1"; sha256 = "119ldpk7sgn9jlpyngv5y4z3i7bb8q3xp4p0qqi7i5nq39syd42d"; withAutoReconf = true; };
+  emacs_26_1 = pkgs.callPackage ./emacs.nix { version = "26.1"; sha256 = "18vaqn7y7c39as4bn95yfcabwvqkw6y59xz8g78d1ifdx3aq40vn"; withAutoReconf = true; };
   emacs_26_2 = pkgs.callPackage ./emacs.nix { version = "26.2"; sha256 = "1sxl0bqwl9b62nswxaiqh1xa61f3hng4fmyc69lmadx770mfb6ag"; withAutoReconf = true; };
   emacs_26_3 = pkgs.callPackage ./emacs.nix { version = "26.3"; sha256 = "14bm73758w6ydxlvckfy9nby015p20lh2yvl6pnrjz0k93h4giq9"; withAutoReconf = true; };
   # TODO: HEAD
