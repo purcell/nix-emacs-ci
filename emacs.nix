@@ -1,10 +1,8 @@
 { version
 , sha256
 , stdenv, lib, fetchurl, ncurses, autoreconfHook
-, pkgconfig, gettext, libXft, dbus, libpng, libjpeg, libungif
-, libtiff, librsvg, libxml2, gnutls, libselinux
+, pkgconfig, dbus, libxml2, gettext, gnutls, libselinux
 , gpm ? null
-, systemd ? null
 , withAutoReconf ? false
 }:
 
@@ -27,7 +25,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ ncurses libxml2 gnutls gettext ]
-    ++ lib.optionals stdenv.isLinux [ gpm dbus libselinux systemd ];
+    ++ lib.optionals stdenv.isLinux [ gpm dbus libselinux ];
 
   hardeningDisable = [ "format" ];
 
