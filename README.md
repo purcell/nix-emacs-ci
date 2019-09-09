@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/purcell/nix-emacs-ci.png?branch=master)](https://travis-ci.org/purcell/nix-emacs-ci)
+<a href="https://www.patreon.com/sanityinc"><img alt="Support me" src="https://img.shields.io/badge/Support%20Me-%F0%9F%92%97-ff69b4.svg"></a>
+
 # Emacs installations for continuous integration
 
 This work-in-progress repo will provide a method for Emacs Lisp
