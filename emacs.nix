@@ -1,12 +1,12 @@
 { version
 , sha256
-, clangStdenv, lib, fetchurl, ncurses, autoreconfHook
+, libcxxStdenv, llvmPackages, lib, fetchurl, ncurses, autoreconfHook
 , pkgconfig, libxml2, gettext, gnutls
 , withAutoReconf ? false
 }:
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
-let stdenv = clangStdenv;
+let stdenv = libcxxStdenv;
 in
 stdenv.mkDerivation rec {
   name = "emacs-${version}${versionModifier}";
