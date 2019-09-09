@@ -1,1 +1,24 @@
 language: nix
+
+matrix:
+  include:
+    - name: "24.3"
+      env: ATTR=emacs_24_3
+    - name: "24.4"
+      env: ATTR=emacs_24_4
+    - name: "24.5"
+      env: ATTR=emacs_24_5
+    - name: "25.1"
+      env: ATTR=emacs_25_1
+    - name: "25.2"
+      env: ATTR=emacs_25_2
+    - name: "25.3"
+      env: ATTR=emacs_25_3
+    - name: "26.1"
+      env: ATTR=emacs_26_1
+    - name: "26.2"
+      env: ATTR=emacs_26_2
+    - name: "24.3"
+      env: ATTR=emacs_24_3
+
+script: nix-build -A $ATTR
