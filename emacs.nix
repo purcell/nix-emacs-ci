@@ -1,12 +1,13 @@
 { version
 , sha256
-, stdenv, lib, fetchurl, ncurses, autoreconfHook
+, clangStdenv, lib, fetchurl, ncurses, autoreconfHook
 , pkgconfig, libxml2, gettext, gnutls
 , withAutoReconf ? false
 }:
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
-
+let stdenv = clangStdenv;
+in
 stdenv.mkDerivation rec {
   name = "emacs-${version}${versionModifier}";
   versionModifier = "";
@@ -26,11 +27,6 @@ stdenv.mkDerivation rec {
     [ ncurses libxml2 gnutls gettext ];
 
   hardeningDisable = [ "format" ];
-
-  # Prevent error on Linux with "__dso_handle" not being defined for builds of Emacs 24.x
-  buildPhase = ''
-    export LD=$CXX
-  '';
 
   configureFlags = [
     "--disable-build-details" # for a (more) reproducible build
