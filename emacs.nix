@@ -1,7 +1,7 @@
 { version
 , sha256
 , stdenv, lib, fetchurl, ncurses, autoreconfHook
-, pkgconfig, dbus, libxml2, gettext, gnutls, libselinux, glibc
+, pkgconfig, dbus, libxml2, gettext, gnutls, libselinux
 , gpm ? null
 , withAutoReconf ? false
 }:
@@ -25,9 +25,14 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ ncurses libxml2 gnutls gettext ]
-    ++ lib.optionals stdenv.isLinux [ glibc gpm dbus libselinux ];
+    ++ lib.optionals stdenv.isLinux [ gpm dbus libselinux ];
 
   hardeningDisable = [ "format" ];
+
+  # Prevent error on Linux with "__dso_handle" not being defined for builds of Emacs 24.x
+  buildPhase = ''
+    export LD=$CXX
+  '';
 
   configureFlags = [
     "--disable-build-details" # for a (more) reproducible build
