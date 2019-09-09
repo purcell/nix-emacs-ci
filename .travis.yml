@@ -1,5 +1,9 @@
 language: nix
 
+os:
+  - linux
+  - osx
+
 matrix:
   include:
     - name: "24.3"
