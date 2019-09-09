@@ -29,6 +29,11 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "format" ];
 
+  # Prevent error on Linux with "__dso_handle" not being defined for builds of Emacs 24.x
+  buildPhase = ''
+    export LD=$CXX
+  '';
+
   configureFlags = [
     "--disable-build-details" # for a (more) reproducible build
     "--with-modules"
