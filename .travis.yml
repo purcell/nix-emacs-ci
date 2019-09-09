@@ -18,7 +18,7 @@ matrix:
       env: ATTR=emacs_26_1
     - name: "26.2"
       env: ATTR=emacs_26_2
-    - name: "24.3"
-      env: ATTR=emacs_24_3
+    - name: "26.3"
+      env: ATTR=emacs_26_3
 
 script: nix-build -A $ATTR
