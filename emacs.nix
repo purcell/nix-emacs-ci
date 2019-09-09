@@ -1,8 +1,7 @@
 { version
 , sha256
 , stdenv, lib, fetchurl, ncurses, autoreconfHook
-, pkgconfig, dbus, libxml2, gettext, gnutls, libselinux
-, gpm ? null
+, pkgconfig, libxml2, gettext, gnutls
 , withAutoReconf ? false
 }:
 
@@ -24,8 +23,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ pkgconfig (if withAutoReconf then autoreconfHook else null) ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext ]
-    ++ lib.optionals stdenv.isLinux [ gpm dbus libselinux ];
+    [ ncurses libxml2 gnutls gettext ];
 
   hardeningDisable = [ "format" ];
 
