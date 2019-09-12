@@ -16,4 +16,10 @@ env:
     - ATTR=emacs-26-2
     - ATTR=emacs-26-3
 
-script: nix-build -A $ATTR
+before_script:
+  # Enable downloadable pre-built binaries stored on cachix
+  nix-env -iA cachix -f https://cachix.org/api/v1/install
+  cachix use emacs-ci
+
+script:
+  nix-build -A $ATTR | cachix push emacs-ci
