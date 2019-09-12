@@ -19,7 +19,8 @@ env:
 before_script:
   # Enable downloadable pre-built binaries stored on cachix
   - nix-env -iA cachix -f https://cachix.org/api/v1/install
-  - cachix use emacs-ci
+  - cachix -V
+  - cachix -v use emacs-ci
 
 script:
   - nix-build -A $ATTR | cachix push emacs-ci
