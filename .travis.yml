@@ -6,14 +6,14 @@ os:
 
 env:
   matrix:
-    - ATTR=emacs_24_3
-    - ATTR=emacs_24_4
-    - ATTR=emacs_24_5
-    - ATTR=emacs_25_1
-    - ATTR=emacs_25_2
-    - ATTR=emacs_25_3
-    - ATTR=emacs_26_1
-    - ATTR=emacs_26_2
-    - ATTR=emacs_26_3
+    - ATTR=emacs-24-3
+    - ATTR=emacs-24-4
+    - ATTR=emacs-24-5
+    - ATTR=emacs-25-1
+    - ATTR=emacs-25-2
+    - ATTR=emacs-25-3
+    - ATTR=emacs-26-1
+    - ATTR=emacs-26-2
+    - ATTR=emacs-26-3
 
 script: nix-build -A $ATTR
