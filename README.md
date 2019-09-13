@@ -18,7 +18,33 @@ Goals:
 - Both Linux *and* MacOS support
 - Minimal installations by default: no images, no `window-system`
 
+## Status
 
+- Official release versions from 24.3 onwards are supported
+- Binary caching via Cachix is enabled, and working for Linux (but not yet MacOS)
+- Early Travis integration is tested and [in use
+  elsewhere](https://github.com/purcell/emacs.d) but see notes below.
+
+## Travis usage
+
+Here's some example usage: caution that this early method may change,
+and in particular I may provide a shell script that can be piped to
+bash, to provide some insurance against future setup changes.
+
+```yaml
+language: nix
+
+install:
+  # Enable downloadable pre-built binaries stored on cachix
+  - nix-env -iA cachix -f https://cachix.org/api/v1/install
+  - cachix use emacs-ci
+  # Install a specific Emacs version in the nix environment
+  # The default "emacs" executable will then be Emacs 25.2
+  - nix-env -iA emacs-25-2 -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
+
+script:
+  - ... your commands go here ...
+```
 
 
 <hr>
