@@ -1,9 +1,4 @@
 let
-  nixpkgs-1709 = import (builtins.fetchTarball {
-    url = https://github.com/NixOS/nixpkgs/archive/14f9ee66e63077539252f8b4550049381a082518.tar.gz;
-    sha256 = "1wn7nmb1cqfk2j91l3rwc6yhimfkzxprb8wknw5wi57yhq9m6lv1";
-  }) {};
-
   nixpkgs-1903 = import (builtins.fetchTarball {
     url = https://github.com/NixOS/nixpkgs/archive/aa34ca05fe5b0bc2cc36d67aed023110da226164.tar.gz;
     sha256 = "1lsywp26kq426bmywxq2d1n8s39p3cy4y93xplkgqbi5qj6xgl6z";
@@ -11,19 +6,18 @@ let
 
   pkgs = nixpkgs-1903;
 
-  old-emacs-pkgs = if pkgs.stdenv.isLinux then nixpkgs-1709 else pkgs;
-
 in
 {
   # TODO: These early versions fail for me at the bootstrap phase on MacOS
   #emacs-24-1 = old-emacs-pkgs.callPackage ./emacs.nix { version = "24.1"; sha256 = "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0"; };
   #emacs-24-2 = old-emacs-pkgs.callPackage ./emacs.nix { version = "24.2"; sha256 = "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d"; withAutoReconf = false; };
 
-  emacs-24-3 = with old-emacs-pkgs; callPackage ./emacs.nix {
+  emacs-24-3 = with pkgs; callPackage ./emacs.nix {
     version = "24.3";
     sha256 = "0hggksbn9h5gxmmzbgzlc8hgl0c77simn10jhk6njgc10hrcm600";
     withAutoReconf = false;
     stdenv = clangStdenv;
+    patches = [ ./all-dso-handle.patch ];
   };
 
   emacs-24-4 = with pkgs; callPackage ./emacs.nix {

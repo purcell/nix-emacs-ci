@@ -3,6 +3,7 @@
 , stdenv, lib, fetchurl, ncurses, autoreconfHook
 , pkgconfig, libxml2, gettext, gnutls
 , withAutoReconf ? false
+, patches ? []
 }:
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
@@ -25,6 +26,8 @@ stdenv.mkDerivation rec {
     [ ncurses libxml2 gnutls gettext ];
 
   hardeningDisable = [ "format" ];
+
+  inherit patches;
 
   configureFlags = [
     "--disable-build-details" # for a (more) reproducible build
