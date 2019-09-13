@@ -16,7 +16,7 @@ in
     version = "24.3";
     sha256 = "0hggksbn9h5gxmmzbgzlc8hgl0c77simn10jhk6njgc10hrcm600";
     withAutoReconf = false;
-    stdenv = clangStdenv;
+    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
     patches = [ ./all-dso-handle.patch ];
   };
 
@@ -24,14 +24,14 @@ in
     version = "24.4";
     sha256 = "1iicqcijr56r7vxxm3v3qhf69xpxlpq7afbjr6h6bpjsz8d4yg59";
     withAutoReconf = false;
-    stdenv = clangStdenv;
+    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
   };
 
   emacs-24-5 = with pkgs; callPackage ./emacs.nix {
     version = "24.5";
     sha256 = "1dn3jx1dph5wr47v97g0fhka9gcpn8pnzys7khp9indj5xiacdr7";
     withAutoReconf = false;
-    stdenv = clangStdenv;
+    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
   };
 
   emacs-25-1 = pkgs.callPackage ./emacs.nix { version = "25.1"; sha256 = "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn"; withAutoReconf = true; };
