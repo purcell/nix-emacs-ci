@@ -1,0 +1,13 @@
+https://bugs.gentoo.org/682282
+
+--- emacs-23.4-orig/src/emacs.c
++++ emacs-23.4/src/emacs.c
+@@ -217,6 +217,8 @@
+    output a warning in dump-emacs.  */
+ #define MAX_HEAP_BSS_DIFF (1024*1024)
+ 
++void *__dso_handle = NULL;
++
+ 
+ #ifdef HAVE_WINDOW_SYSTEM
+ extern Lisp_Object Vinitial_window_system;
