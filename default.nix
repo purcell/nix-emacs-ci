@@ -7,11 +7,26 @@ let
   pkgs = nixpkgs-1903;
 
 in
-{
-  # TODO: These early versions fail for me at the bootstrap phase on MacOS
-  #emacs-24-1 = old-emacs-pkgs.callPackage ./emacs.nix { version = "24.1"; sha256 = "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0"; };
-  #emacs-24-2 = old-emacs-pkgs.callPackage ./emacs.nix { version = "24.2"; sha256 = "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d"; withAutoReconf = false; };
+# These versions do not currently build on MacOS, so we do not even
+# expose them on that platform.
+(if pkgs.stdenv.isLinux then {
+  emacs-24-1 = with pkgs; callPackage ./emacs.nix {
+    version = "24.1";
+    sha256 = "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0";
+    withAutoReconf = false;
+    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    patches = [ ./all-dso-handle.patch ];
+  };
 
+  emacs-24-2 = with pkgs; callPackage ./emacs.nix {
+    version = "24.2";
+    sha256 = "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d";
+    withAutoReconf = false;
+    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    patches = [ ./all-dso-handle.patch ];
+  };
+} else {}) //
+{
   emacs-24-3 = with pkgs; callPackage ./emacs.nix {
     version = "24.3";
     sha256 = "0hggksbn9h5gxmmzbgzlc8hgl0c77simn10jhk6njgc10hrcm600";

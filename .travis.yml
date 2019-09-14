@@ -10,6 +10,8 @@ os:
 # often.
 env:
   matrix:
+    - ATTR=emacs-24-1
+    - ATTR=emacs-24-2
     - ATTR=emacs-24-3
     - ATTR=emacs-24-4
     - ATTR=emacs-24-5
@@ -19,6 +21,13 @@ env:
     - ATTR=emacs-26-1
     - ATTR=emacs-26-2
     - ATTR=emacs-26-3
+
+matrix:
+  exclude:
+  - os: osx
+    env: ATTR=emacs-24-1
+  - os: osx
+    env: ATTR=emacs-24-2
 
 install:
   ./travis-install
