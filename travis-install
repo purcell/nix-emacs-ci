@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+echo "Setting up Nix-based Emacs CI support"
+
+if ! command -v nix > /dev/null 2>&1; then
+   echo "Nix not installed (use 'language: nix' in Travis)" >&2
+   exit 1
+fi
+
+# Work around unfortunate issues in the MacOS Nix support on Travis
+if [ "$(uname)" = "Darwin" ]; then
+    echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf
+    sudo launchctl kickstart -k system/org.nixos.nix-daemon || true
+fi
+
+if ! command -v cachix > /dev/null 2>&1; then
+    echo "Installing cachix"
+    nix-env -iA cachix -f https://cachix.org/api/v1/install
+fi
+
+echo "Enabling download of precompiled binaries"
+cachix use emacs-ci

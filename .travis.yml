@@ -21,10 +21,7 @@ env:
     - ATTR=emacs-26-3
 
 install:
-  # Enable downloadable pre-built binaries stored on cachix
-  - nix-env -iA cachix -f https://cachix.org/api/v1/install
-  - cachix -V
-  - cachix -v use emacs-ci
+  ./travis-install
 
 script:
   - nix-build -A $ATTR | tee output
