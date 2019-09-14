@@ -23,4 +23,5 @@ install:
   - cachix -v use emacs-ci
 
 script:
-  - nix-build -A $ATTR | cachix push emacs-ci
+  - nix-build -A $ATTR | tee output
+  - if [ -n "$CACHIX_SIGNING_KEY" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then cachix push emacs-ci < output; fi
