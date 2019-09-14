@@ -6,7 +6,7 @@ https://bugs.gentoo.org/682282
     output a warning in dump-emacs.  */
  #define MAX_HEAP_BSS_DIFF (1024*1024)
  
-+void *__dso_handle = NULL;
++void *__dso_handle = 0; /* NULL is undefined in 24.1 */
 +
  
  #ifdef HAVE_WINDOW_SYSTEM
