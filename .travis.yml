@@ -4,6 +4,10 @@ os:
   - linux
   - osx
 
+# It's a bit wasteful, in Travis terms, to build each version in a
+# separate job, but this allows a clear overview of which individual
+# versions are not working, and ultimately we hope to not be building
+# often.
 env:
   matrix:
     - ATTR=emacs-24-3
