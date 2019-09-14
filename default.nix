@@ -7,16 +7,20 @@ let
   pkgs = nixpkgs-1903;
 
 in
-# These versions do not currently build on MacOS, so we do not even
+# Some versions do not currently build on MacOS, so we do not even
 # expose them on that platform.
 (if pkgs.stdenv.isLinux then {
-  emacs-24-1 = with pkgs; callPackage ./emacs.nix {
-    version = "24.1";
-    sha256 = "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0";
-    withAutoReconf = false;
-    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-    patches = [ ./all-dso-handle.patch ];
-  };
+
+  # Fails on Linux due to insecure use of gets, see
+  # https://travis-ci.com/purcell/nix-emacs-ci/jobs/235281220, would
+  # need patching
+  # emacs-24-1 = with pkgs; callPackage ./emacs.nix {
+  #   version = "24.1";
+  #   sha256 = "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0";
+  #   withAutoReconf = false;
+  #   stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+  #   patches = [ ./all-dso-handle.patch ];
+  # };
 
   emacs-24-2 = with pkgs; callPackage ./emacs.nix {
     version = "24.2";
