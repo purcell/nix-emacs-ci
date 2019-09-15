@@ -22,10 +22,10 @@ fi
 echo "Enabling download of precompiled binaries"
 cachix use emacs-ci
 
-if [ -n "$EMACS_CI_VERSION" ]; then
-    echo "Installing and activating version: $EMACS_CI_VERSION"
-    nix-env -iA "$EMACS_CI_VERSION" -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
+if [ -n "$EMACS_CI" ]; then
+    echo "Installing and activating version: $EMACS_CI"
+    nix-env -iA "$EMACS_CI" -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
     readlink "$(command -v emacs)"
 else
-    echo "EMACS_CI_VERSION not set: skipping auto-install of any emacs version"
+    echo "EMACS_CI not set: skipping auto-install of any emacs version"
 fi
