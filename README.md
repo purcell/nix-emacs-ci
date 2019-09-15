@@ -49,7 +49,10 @@ containing a specific Emacs, but I haven't figured that out yet.
 
 ## Travis usage
 
-Here's some example usage: caution that this early method may change.
+Here's some example usage: caution that this early method may
+change. Early adopters should watch [issue
+6](https://github.com/purcell/nix-emacs-ci/issues/6) to be kept up to
+date with changes to the recommended usage method.
 
 ```yaml
 language: nix
