@@ -33,14 +33,14 @@ in
   #   inherit (release "24.1" "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0") name src;
   #   withAutoReconf = false;
   #   stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-  #   patches = [ ./all-dso-handle.patch ];
+  #   patches = [ ./patches/all-dso-handle.patch ];
   # };
 
   emacs-24-2 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.2" "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d") name src;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-    patches = [ ./all-dso-handle.patch ];
+    patches = [ ./patches/all-dso-handle.patch ];
   };
 } else {}) //
 {
@@ -48,7 +48,7 @@ in
     inherit (release "24.3" "0hggksbn9h5gxmmzbgzlc8hgl0c77simn10jhk6njgc10hrcm600") name src;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-    patches = [ ./all-dso-handle.patch ];
+    patches = [ ./patches/all-dso-handle.patch ];
   };
 
   emacs-24-4 = with pkgs; callPackage ./emacs.nix {
@@ -66,31 +66,31 @@ in
   emacs-25-1 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.1" "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn") name src;
     withAutoReconf = true;
-    patches = [ ./gnutls-use-osx-cert-bundle.patch ];
+    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch ];
   };
 
   emacs-25-2 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.2" "0b9dwx6nxzflaipkgml4snny2c3brgy0py6h05q995y1lrpbsnsh") name src;
     withAutoReconf = true;
-    patches = [ ./gnutls-use-osx-cert-bundle.patch ];
+    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch ];
   };
 
   emacs-25-3 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.3" "1jc3g79nrcix0500kiw6hqpql82ajq0xivlip6iaryxn90dnlb7p") name src;
     withAutoReconf = true;
-    patches = [ ./gnutls-use-osx-cert-bundle.patch ];
+    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch ];
   };
 
   emacs-26-1 = pkgs.callPackage ./emacs.nix {
     inherit (release "26.1" "18vaqn7y7c39as4bn95yfcabwvqkw6y59xz8g78d1ifdx3aq40vn") name src;
     withAutoReconf = true;
-    patches = [ ./gnutls-e_again.patch ];
+    patches = [ ./patches/gnutls-e_again.patch ];
   };
 
   emacs-26-2 = pkgs.callPackage ./emacs.nix {
     inherit (release "26.2" "1sxl0bqwl9b62nswxaiqh1xa61f3hng4fmyc69lmadx770mfb6ag") name src;
     withAutoReconf = true;
-    patches = [ ./gnutls-e_again.patch ];
+    patches = [ ./patches/gnutls-e_again.patch ];
   };
 
   emacs-26-3 = pkgs.callPackage ./emacs.nix {
