@@ -100,7 +100,7 @@ manually. Send me a pull request to do this:
 <hr>
 
 
-[💝 Support this project and my other Open Source work](https://www.patreon.com/sanityinc)
+[💝 Support this project and my other Open Source work via Patreon](https://www.patreon.com/sanityinc)
 
 [💼 LinkedIn profile](https://uk.linkedin.com/in/stevepurcell)
 
