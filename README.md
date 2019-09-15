@@ -62,6 +62,7 @@ env:
   - EMACS_VER=emacs-24-5
   - EMACS_VER=emacs-25-3
   - EMACS_VER=emacs-26-3
+  - EMACS_VER=emacs-snapshot
 
 install:
   - bash <(curl https://raw.githubusercontent.com/purcell/nix-emacs-ci/master/travis-install)
@@ -71,6 +72,16 @@ install:
 script:
   - ... your commands go here ...
 ```
+
+## Using new snapshot builds
+
+The current plan is to periodically update the `-snapshot` builds
+here. Send me a pull request to do this. First, update the commit
+named in `default.nix`, then try `nix-build -A emacs-snapshot`. This
+will fail due to SHA256 checksum mismatch of the downloaded archive,
+so now update that too, and rebuild. Now submit the change as a pull
+request. Once merged, we'll all be testing against a newer snapshot
+build.
 
 <hr>
 
