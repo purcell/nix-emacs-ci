@@ -1,5 +1,5 @@
-{ version
-, sha256
+{ name
+, src
 , stdenv, lib, fetchurl, ncurses, autoreconfHook
 , pkgconfig, libxml2, gettext, gnutls
 , withAutoReconf ? false
@@ -8,13 +8,7 @@
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
-  name = "emacs-${version}${versionModifier}";
-  versionModifier = "";
-
-  src = fetchurl {
-    inherit sha256;
-    url = "mirror://gnu/emacs/${name}.tar.gz";
-  };
+  inherit name src;
 
   enableParallelBuilding = true;
 
