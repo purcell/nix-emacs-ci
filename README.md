@@ -10,13 +10,15 @@ versions.
 The rationale for this is that [EVM](https://github.com/rejeep/evm)
 and Damien Cassou's PPA are both unmaintained and have various issues.
 
-Goals:
+## Goals:
 
 - Usable without Nix knowledge
-- Clear, simple docs and setup, initially for Travis
-- Binary caching if possible, via Cachix
+- Clear, simple docs and setup, initially primarily for Travis
+- Binary caching, ie. pre-built executables, via
+  [Cachix](https://cachix.org/) (a wonderful service!)
 - Both Linux *and* MacOS support
-- Minimal installations by default: no images, no `window-system`
+- Minimal installations by default, for download speed: no images, no
+  `window-system`
 
 ## Status
 
@@ -42,10 +44,11 @@ e.g. here's how you would add a specific version to your Nix profile:
 nix-env -iA emacs-25-2 -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
 ```
 
-For local testing, that mutates your user-level profile, so you
-probably don't want to do that.  There'll be a `nix-shell` equivalent
-of this, in order to run a command inside a transient environment
-containing a specific Emacs, but I haven't figured that out yet.
+The above command mutates your user-level profile, so you probably
+don't want to do that when testing locally. There'll be a `nix-shell`
+equivalent of this, in order to run a command inside a transient
+environment containing a specific Emacs, but I haven't figured that
+out yet.
 
 ## Travis usage
 
@@ -62,15 +65,15 @@ os:
   - osx
 
 env:
-  - EMACS_VER=emacs-24-5
-  - EMACS_VER=emacs-25-3
-  - EMACS_VER=emacs-26-3
-  - EMACS_VER=emacs-snapshot
+  - EMACS_VERSION=emacs-24-5
+  - EMACS_VERSION=emacs-25-3
+  - EMACS_VERSION=emacs-26-3
+  - EMACS_VERSION=emacs-snapshot
 
 install:
   - bash <(curl https://raw.githubusercontent.com/purcell/nix-emacs-ci/master/travis-install)
-  - nix-env -iA $EMACS_VER -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
-  # The default "emacs" executable will now be the named one
+  - nix-env -iA $EMACS_VERSION -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
+  # The default "emacs" executable on the $PATH will now be the version named by $EMACS_VERSION
 
 script:
   - ... your commands go here ...
@@ -78,13 +81,19 @@ script:
 
 ## Using new snapshot builds
 
-The current plan is to periodically update the `-snapshot` builds
-here. Send me a pull request to do this. First, update the commit
-named in `default.nix`, then try `nix-build -A emacs-snapshot`. This
-will fail due to SHA256 checksum mismatch of the downloaded archive,
-so now update that too, and rebuild. Now submit the change as a pull
-request. Once merged, we'll all be testing against a newer snapshot
-build.
+`snapshot` builds aim to be a relatively recent commit on the Emacs
+master branch, and do not automatically give you the very latest Emacs
+revision available via Git. That would defeat binary caching, so the
+current plan is to periodically update the `-snapshot` builds
+manually. Send me a pull request to do this:
+
+- Update the commit named in `default.nix`
+- Try `nix-build -A emacs-snapshot`.
+- This will fail due to SHA256 checksum mismatch of the downloaded archive,
+  so now update that too, and rebuild.
+- Now submit the change as a pull request.
+- Once merged, we'll all be testing against a newer snapshot
+  build.
 
 <hr>
 
