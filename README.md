@@ -67,15 +67,14 @@ os:
   - osx
 
 env:
-  - EMACS_VERSION=emacs-24-5
-  - EMACS_VERSION=emacs-25-3
-  - EMACS_VERSION=emacs-26-3
-  - EMACS_VERSION=emacs-snapshot
+  - EMACS_CI_VERSION=emacs-24-5
+  - EMACS_CI_VERSION=emacs-25-3
+  - EMACS_CI_VERSION=emacs-26-3
+  - EMACS_CI_VERSION=emacs-snapshot
 
 install:
+  # The default "emacs" executable on the $PATH will now be the version named by $EMACS_CI_VERSION
   - bash <(curl https://raw.githubusercontent.com/purcell/nix-emacs-ci/master/travis-install)
-  - nix-env -iA $EMACS_VERSION -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
-  # The default "emacs" executable on the $PATH will now be the version named by $EMACS_VERSION
 
 script:
   - ... your commands go here ...
