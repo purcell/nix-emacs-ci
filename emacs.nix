@@ -2,8 +2,10 @@
 , src
 , stdenv, lib, fetchurl, ncurses, autoreconfHook
 , pkgconfig, libxml2, gettext, gnutls
+, autoconf ? null, automake ? null, texinfo ? null
 , withAutoReconf ? false
 , patches ? []
+, srcRepo ? false
 }:
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
@@ -14,7 +16,10 @@ stdenv.mkDerivation rec {
 
   CFLAGS = "-DMAC_OS_X_VERSION_MAX_ALLOWED=101200";
 
-  nativeBuildInputs = [ pkgconfig (if withAutoReconf then autoreconfHook else null) ];
+  nativeBuildInputs =
+    [ pkgconfig ]
+    ++ lib.optionals withAutoReconf [autoreconfHook]
+    ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
   buildInputs =
     [ ncurses libxml2 gnutls gettext ];

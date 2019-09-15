@@ -20,6 +20,7 @@ env:
     - ATTR=emacs-26-1
     - ATTR=emacs-26-2
     - ATTR=emacs-26-3
+    - ATTR=emacs-head
 
 matrix:
   exclude:
