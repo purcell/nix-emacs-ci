@@ -7,6 +7,9 @@ if ! command -v nix > /dev/null 2>&1; then
    exit 1
 fi
 
+sudo mount -o remount,exec,size=4G,mode=755 /run/user || true
+sudo mkdir -p /etc/nix
+
 # Work around unfortunate issues in the MacOS Nix support on Travis
 if [ "$(uname)" = "Darwin" ]; then
     echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf
