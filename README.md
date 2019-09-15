@@ -22,7 +22,9 @@ and Damien Cassou's PPA are both unmaintained and have various issues.
 
 ## Status
 
-- Official release versions from 24.2 onwards are supported
+- Official release versions from 24.2 onwards are supported (MacOS:
+  24.3 onwards, see [issue
+  #4](https://github.com/purcell/nix-emacs-ci/issues/4))
 - Binary caching via Cachix is enabled, and working
 - Early Travis integration is tested and [in use
   elsewhere](https://github.com/purcell/emacs.d) but see notes below.
@@ -54,7 +56,7 @@ out yet.
 
 Here's some example usage: caution that this early method may
 change. Early adopters should watch [issue
-6](https://github.com/purcell/nix-emacs-ci/issues/6) to be kept up to
+#6](https://github.com/purcell/nix-emacs-ci/issues/6) to be kept up to
 date with changes to the recommended usage method.
 
 ```yaml
