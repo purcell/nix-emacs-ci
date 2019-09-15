@@ -14,8 +14,8 @@ let
     };
   };
 
-  head = commit: sha256: rec {
-    name = "emacs-head-${pkgs.lib.strings.substring 0 8 commit}";
+  snapshot = commit: sha256: rec {
+    name = "emacs-snapshot-${pkgs.lib.strings.substring 0 8 commit}";
     src = pkgs.fetchurl {
       inherit sha256;
       url = "https://github.com/emacs-mirror/emacs/archive/${commit}.tar.gz";
@@ -70,5 +70,5 @@ in
   emacs-26-2 = pkgs.callPackage ./emacs.nix { inherit (release "26.2" "1sxl0bqwl9b62nswxaiqh1xa61f3hng4fmyc69lmadx770mfb6ag") name src; withAutoReconf = true; };
   emacs-26-3 = pkgs.callPackage ./emacs.nix { inherit (release "26.3" "14bm73758w6ydxlvckfy9nby015p20lh2yvl6pnrjz0k93h4giq9") name src; withAutoReconf = true; };
 
-  emacs-head = pkgs.callPackage ./emacs.nix { inherit (head "52172d234015776bcc595c731477b98fa2949e50" "1xfidal23dxxplf0h2cpy816slqih1h096a9irfcjg4mrx02syrx") name src; srcRepo = true; withAutoReconf = true; };
+  emacs-snapshot = pkgs.callPackage ./emacs.nix { inherit (snapshot "52172d234015776bcc595c731477b98fa2949e50" "1xfidal23dxxplf0h2cpy816slqih1h096a9irfcjg4mrx02syrx") name src; srcRepo = true; withAutoReconf = true; };
 }
