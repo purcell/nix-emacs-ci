@@ -84,11 +84,13 @@ in
   emacs-26-1 = pkgs.callPackage ./emacs.nix {
     inherit (release "26.1" "18vaqn7y7c39as4bn95yfcabwvqkw6y59xz8g78d1ifdx3aq40vn") name src;
     withAutoReconf = true;
+    patches = [ ./gnutls-e_again.patch ];
   };
 
   emacs-26-2 = pkgs.callPackage ./emacs.nix {
     inherit (release "26.2" "1sxl0bqwl9b62nswxaiqh1xa61f3hng4fmyc69lmadx770mfb6ag") name src;
     withAutoReconf = true;
+    patches = [ ./gnutls-e_again.patch ];
   };
 
   emacs-26-3 = pkgs.callPackage ./emacs.nix {
