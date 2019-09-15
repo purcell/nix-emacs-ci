@@ -63,12 +63,38 @@ in
     stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
   };
 
-  emacs-25-1 = pkgs.callPackage ./emacs.nix { inherit (release "25.1" "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn") name src; withAutoReconf = true; };
-  emacs-25-2 = pkgs.callPackage ./emacs.nix { inherit (release "25.2" "0b9dwx6nxzflaipkgml4snny2c3brgy0py6h05q995y1lrpbsnsh") name src; withAutoReconf = true; };
-  emacs-25-3 = pkgs.callPackage ./emacs.nix { inherit (release "25.3" "1jc3g79nrcix0500kiw6hqpql82ajq0xivlip6iaryxn90dnlb7p") name src; withAutoReconf = true; };
-  emacs-26-1 = pkgs.callPackage ./emacs.nix { inherit (release "26.1" "18vaqn7y7c39as4bn95yfcabwvqkw6y59xz8g78d1ifdx3aq40vn") name src; withAutoReconf = true; };
-  emacs-26-2 = pkgs.callPackage ./emacs.nix { inherit (release "26.2" "1sxl0bqwl9b62nswxaiqh1xa61f3hng4fmyc69lmadx770mfb6ag") name src; withAutoReconf = true; };
-  emacs-26-3 = pkgs.callPackage ./emacs.nix { inherit (release "26.3" "14bm73758w6ydxlvckfy9nby015p20lh2yvl6pnrjz0k93h4giq9") name src; withAutoReconf = true; };
+  emacs-25-1 = pkgs.callPackage ./emacs.nix {
+    inherit (release "25.1" "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn") name src;
+    withAutoReconf = true;
+  };
 
-  emacs-snapshot = pkgs.callPackage ./emacs.nix { inherit (snapshot "52172d234015776bcc595c731477b98fa2949e50" "1xfidal23dxxplf0h2cpy816slqih1h096a9irfcjg4mrx02syrx") name src; srcRepo = true; withAutoReconf = true; };
+  emacs-25-2 = pkgs.callPackage ./emacs.nix {
+    inherit (release "25.2" "0b9dwx6nxzflaipkgml4snny2c3brgy0py6h05q995y1lrpbsnsh") name src;
+    withAutoReconf = true;
+  };
+
+  emacs-25-3 = pkgs.callPackage ./emacs.nix {
+    inherit (release "25.3" "1jc3g79nrcix0500kiw6hqpql82ajq0xivlip6iaryxn90dnlb7p") name src;
+    withAutoReconf = true;
+  };
+
+  emacs-26-1 = pkgs.callPackage ./emacs.nix {
+    inherit (release "26.1" "18vaqn7y7c39as4bn95yfcabwvqkw6y59xz8g78d1ifdx3aq40vn") name src;
+    withAutoReconf = true;
+  };
+
+  emacs-26-2 = pkgs.callPackage ./emacs.nix {
+    inherit (release "26.2" "1sxl0bqwl9b62nswxaiqh1xa61f3hng4fmyc69lmadx770mfb6ag") name src;
+    withAutoReconf = true;
+  };
+
+  emacs-26-3 = pkgs.callPackage ./emacs.nix {
+    inherit (release "26.3" "14bm73758w6ydxlvckfy9nby015p20lh2yvl6pnrjz0k93h4giq9") name src;
+    withAutoReconf = true;
+  };
+
+  emacs-snapshot = pkgs.callPackage ./emacs.nix {
+    inherit (snapshot "52172d234015776bcc595c731477b98fa2949e50" "1xfidal23dxxplf0h2cpy816slqih1h096a9irfcjg4mrx02syrx") name src;
+    srcRepo = true;
+    withAutoReconf = true; };
 }
