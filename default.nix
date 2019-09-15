@@ -66,16 +66,19 @@ in
   emacs-25-1 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.1" "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn") name src;
     withAutoReconf = true;
+    patches = [ ./gnutls-use-osx-cert-bundle.patch ];
   };
 
   emacs-25-2 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.2" "0b9dwx6nxzflaipkgml4snny2c3brgy0py6h05q995y1lrpbsnsh") name src;
     withAutoReconf = true;
+    patches = [ ./gnutls-use-osx-cert-bundle.patch ];
   };
 
   emacs-25-3 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.3" "1jc3g79nrcix0500kiw6hqpql82ajq0xivlip6iaryxn90dnlb7p") name src;
     withAutoReconf = true;
+    patches = [ ./gnutls-use-osx-cert-bundle.patch ];
   };
 
   emacs-26-1 = pkgs.callPackage ./emacs.nix {

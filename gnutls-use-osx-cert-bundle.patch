@@ -1,0 +1,10 @@
+--- emacs-25.1-orig/lisp/net/gnutls.el	2016-06-29 21:49:19.000000000 +1200
++++ emacs-25.1/lisp/net/gnutls.el	2019-09-15 16:12:34.000000000 +1200
+@@ -72,6 +72,7 @@
+     "/etc/ssl/ca-bundle.pem"                 ; Suse
+     "/usr/ssl/certs/ca-bundle.crt"           ; Cygwin
+     "/usr/local/share/certs/ca-root-nss.crt" ; FreeBSD
++    "/etc/ssl/cert.pem"                      ; Darwin
+     )
+   "List of CA bundle location filenames or a function returning said list.
+ The files may be in PEM or DER format, as per the GnuTLS documentation.
