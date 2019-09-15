@@ -20,32 +20,57 @@ Goals:
 
 ## Status
 
-- Official release versions from 24.3 onwards are supported
-- Binary caching via Cachix is enabled, and working for Linux (but not yet MacOS)
+- Official release versions from 24.2 onwards are supported
+- Binary caching via Cachix is enabled, and working
 - Early Travis integration is tested and [in use
   elsewhere](https://github.com/purcell/emacs.d) but see notes below.
 
+## Low-level Nix usage, e.g. for local testing
+
+First, ensure you have `cachix` enabled, to obtain cached binaries:
+
+```
+nix-env -iA cachix -f https://cachix.org/api/v1/install
+cachix use emacs-ci
+```
+
+Then, evaluate one of the `emacs-*` expressions in `default.nix`. You
+can do this without first downloading the contents of this repo,
+e.g. here's how you would add a specific version to your Nix profile:
+
+```
+nix-env -iA emacs-25-2 -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
+```
+
+For local testing, that mutates your user-level profile, so you
+probably don't want to do that.  There'll be a `nix-shell` equivalent
+of this, in order to run a command inside a transient environment
+containing a specific Emacs, but I haven't figured that out yet.
+
 ## Travis usage
 
-Here's some example usage: caution that this early method may change,
-and in particular I may provide a shell script that can be piped to
-bash, to provide some insurance against future setup changes.
+Here's some example usage: caution that this early method may change.
 
 ```yaml
 language: nix
 
+os:
+  - linux
+  - osx
+
+env:
+  - EMACS_VER=emacs-24-5
+  - EMACS_VER=emacs-25-3
+  - EMACS_VER=emacs-26-3
+
 install:
-  # Enable downloadable pre-built binaries stored on cachix
-  - nix-env -iA cachix -f https://cachix.org/api/v1/install
-  - cachix use emacs-ci
-  # Install a specific Emacs version in the nix environment
-  # The default "emacs" executable will then be Emacs 25.2
-  - nix-env -iA emacs-25-2 -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
+  - bash <(curl https://raw.githubusercontent.com/purcell/nix-emacs-ci/master/travis-install)
+  - nix-env -iA $EMACS_VER -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
+  # The default "emacs" executable will now be the named one
 
 script:
   - ... your commands go here ...
 ```
-
 
 <hr>
 
