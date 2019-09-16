@@ -25,6 +25,7 @@ and Damien Cassou's PPA are both unmaintained and have various issues.
 - Official release versions from 24.2 onwards are supported (MacOS:
   24.3 onwards, see [issue
   #4](https://github.com/purcell/nix-emacs-ci/issues/4))
+- An Emacs development snapshot build is also available
 - Binary caching via Cachix is enabled, and working
 - Early Travis integration is tested and [in use
   elsewhere](https://github.com/purcell/emacs.d) but see notes below.
