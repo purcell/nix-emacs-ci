@@ -30,29 +30,6 @@ and Damien Cassou's PPA are both unmaintained and have various issues.
 - Early Travis integration is tested and [in use
   elsewhere](https://github.com/purcell/emacs.d) but see notes below.
 
-## Low-level Nix usage, e.g. for local testing
-
-First, ensure you have `cachix` enabled, to obtain cached binaries:
-
-```
-nix-env -iA cachix -f https://cachix.org/api/v1/install
-cachix use emacs-ci
-```
-
-Then, evaluate one of the `emacs-*` expressions in `default.nix`. You
-can do this without first downloading the contents of this repo,
-e.g. here's how you would add a specific version to your Nix profile:
-
-```
-nix-env -iA emacs-25-2 -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
-```
-
-The above command mutates your user-level profile, so you probably
-don't want to do that when testing locally. There'll be a `nix-shell`
-equivalent of this, in order to run a command inside a transient
-environment containing a specific Emacs, but I haven't figured that
-out yet.
-
 ## Travis usage
 
 Here's some example usage: caution that this early method may
@@ -81,7 +58,31 @@ script:
   - ... your commands go here ...
 ```
 
-## Using new snapshot builds
+## Low-level Nix usage, e.g. for local testing
+
+First, ensure you have `cachix` enabled, to obtain cached binaries:
+
+```
+nix-env -iA cachix -f https://cachix.org/api/v1/install
+cachix use emacs-ci
+```
+
+Then, evaluate one of the `emacs-*` expressions in `default.nix`. You
+can do this without first downloading the contents of this repo,
+e.g. here's how you would add a specific version to your Nix profile:
+
+```
+nix-env -iA emacs-25-2 -f https://github.com/purcell/nix-emacs-ci/archive/master.tar.gz
+```
+
+The above command mutates your user-level profile, so you probably
+don't want to do that when testing locally. There'll be a `nix-shell`
+equivalent of this, in order to run a command inside a transient
+environment containing a specific Emacs, but I haven't figured that
+out yet.
+
+
+## Using newer snapshot builds
 
 `snapshot` builds aim to be a relatively recent commit on the Emacs
 master branch, and do not automatically give you the very latest Emacs
