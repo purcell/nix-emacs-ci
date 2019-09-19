@@ -3,8 +3,8 @@
 
 # Emacs installations for continuous integration
 
-This work-in-progress repo will provide a method for Emacs Lisp
-authors to easily test their code against a wide variety of Emacs
+This project aims to provide a method for Emacs Lisp authors
+to easily test their code against a wide variety of Emacs
 versions.
 
 The rationale for this is that [EVM](https://github.com/rejeep/evm)
