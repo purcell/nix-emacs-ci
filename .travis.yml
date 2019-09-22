@@ -32,4 +32,5 @@ install:
 
 script:
   - nix-build -A $ATTR | tee output
+  - EMACS=$PWD/result/bin/emacs tests/run
   - if [ -n "$CACHIX_SIGNING_KEY" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then cachix push emacs-ci < output; fi
