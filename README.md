@@ -27,8 +27,10 @@ and Damien Cassou's PPA are both unmaintained and have various issues.
   #4](https://github.com/purcell/nix-emacs-ci/issues/4))
 - An Emacs development snapshot build is also available
 - Binary caching via Cachix is enabled, and working
-- Early Travis integration is tested and [in use
-  elsewhere](https://github.com/purcell/emacs.d) but see notes below.
+- Early Travis integration is tested and in use
+  elsewhere (e.g. [my emacs config](https://github.com/purcell/emacs.d)
+  and [various other github projects](https://github.com/search?l=&q=nix-emacs-ci+++filename%3A.travis.yml&type=Code))
+  but see notes below.
 
 ## Travis usage
 
