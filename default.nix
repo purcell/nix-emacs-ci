@@ -55,30 +55,38 @@ in
     inherit (release "24.4" "1iicqcijr56r7vxxm3v3qhf69xpxlpq7afbjr6h6bpjsz8d4yg59") name src;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    patches = [ ./patches/gnutls-e_again.patch ];
   };
 
   emacs-24-5 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.5" "1dn3jx1dph5wr47v97g0fhka9gcpn8pnzys7khp9indj5xiacdr7") name src;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    patches = [ ./patches/gnutls-e_again.patch ];
   };
 
   emacs-25-1 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.1" "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn") name src;
     withAutoReconf = true;
-    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch ];
+    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch
+                ./patches/gnutls-e_again.patch
+              ];
   };
 
   emacs-25-2 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.2" "0b9dwx6nxzflaipkgml4snny2c3brgy0py6h05q995y1lrpbsnsh") name src;
     withAutoReconf = true;
-    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch ];
+    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch
+                ./patches/gnutls-e_again.patch
+              ];
   };
 
   emacs-25-3 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.3" "1jc3g79nrcix0500kiw6hqpql82ajq0xivlip6iaryxn90dnlb7p") name src;
     withAutoReconf = true;
-    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch ];
+    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch
+                ./patches/gnutls-e_again.patch
+              ];
   };
 
   emacs-26-1 = pkgs.callPackage ./emacs.nix {
