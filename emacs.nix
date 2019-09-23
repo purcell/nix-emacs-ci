@@ -8,6 +8,13 @@
 , srcRepo ? false
 }:
 
+let
+  latestPackageKeyring = fetchurl {
+    url = "https://github.com/emacs-mirror/emacs/raw/master/etc/package-keyring.gpg";
+    sha256 = "4a44d6c3a657405892dacf777f03b9267cc74cbc8edad65a88ae8c8929ab1a8d";
+  };
+in
+
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
   inherit name src;
@@ -47,6 +54,10 @@ stdenv.mkDerivation rec {
         substituteInPlace $makefile_in --replace /bin/pwd pwd
     done
     substituteInPlace src/Makefile.in --replace 'LC_ALL=C $(RUN_TEMACS)' 'env -i LC_ALL=C $(RUN_TEMACS)'
+    if [ -f etc/package-keyring.gpg ]; then
+      rm etc/package-keyring.gpg
+      ln -s ${latestPackageKeyring} etc/package-keyring.gpg
+    fi
   '';
 
   installTargets = "tags install";
