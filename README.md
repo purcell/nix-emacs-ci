@@ -106,6 +106,29 @@ manually. Send me a pull request to do this:
 - Once merged, we'll all be testing against a newer snapshot
   build.
 
+## What patches are applied to these binaries, and why?
+
+There's a tension between having a CI binary that is easily usable for
+the majority of testing purposes, and one that faithfully reproduces
+the known broken behaviour of that version in certain
+circumstances. Binaries for old Emacs versions "in the wild" will have
+been built with various old versions of GNUTLS and other libraries,
+and there is no single way to reproduce all their quirks.
+
+For these project, we are doing the least patching that will allow the
+older Emacsen to install packages from ELPA over HTTPS using a recent
+version of GNUTLS. (While older versions used the `http` ELPA URL
+anyway, `cask` uses `https` unconditionally.) This involves applying
+patches for the `E_AGAIN` issue that was fixed in 26.3, plus a patch
+to let Emacs find the system cert store on recent OSX versions.
+
+Additionally, the ELPA package signing key has changed and no longer
+matches the public key that was bundled with older Emacs releases
+(25.x), which meant that those releases could not now install ELPA
+packages with stock settings: `package-check-signatures` needed to be
+disabled, or the new public key imported into the user's keychain. To
+avoid this issue, we bundle the latest public keys into all builds.
+
 <hr>
 
 
