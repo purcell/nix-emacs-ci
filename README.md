@@ -8,7 +8,8 @@ to easily test their code against a wide variety of Emacs
 versions.
 
 The rationale for this is that [EVM](https://github.com/rejeep/evm)
-and Damien Cassou's PPA are both unmaintained and have various issues.
+and Damien Cassou's PPA have had various issues in my usage of them,
+and the latter is now unmaintained.
 
 ## Goals:
 
@@ -19,6 +20,7 @@ and Damien Cassou's PPA are both unmaintained and have various issues.
 - Both Linux *and* MacOS support
 - Minimal installations by default, for download speed: no images, no
   `window-system`
+- Allow easy local testing
 
 ## Status
 
