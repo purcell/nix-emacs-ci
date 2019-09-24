@@ -29,12 +29,14 @@ in
   # Fails on Linux due to insecure use of gets, see
   # https://travis-ci.com/purcell/nix-emacs-ci/jobs/235281220, would
   # need patching
-  # emacs-24-1 = with pkgs; callPackage ./emacs.nix {
-  #   inherit (release "24.1" "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0") name src;
-  #   withAutoReconf = false;
-  #   stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-  #   patches = [ ./patches/all-dso-handle.patch ];
-  # };
+  emacs-24-1 = with pkgs; callPackage ./emacs.nix {
+    inherit (release "24.1" "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0") name src;
+    withAutoReconf = false;
+    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    patches = [ ./patches/all-dso-handle.patch
+                ./patches/remove-old-gets-warning.patch
+              ];
+  };
 
   emacs-24-2 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.2" "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d") name src;

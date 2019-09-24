@@ -1,0 +1,12 @@
+diff -Naur emacs-24.1-orig/lib/stdio.in.h emacs-24.1/lib/stdio.in.h
+--- emacs-24.1-orig/lib/stdio.in.h	2012-04-08 15:03:02.000000000 +1200
++++ emacs-24.1/lib/stdio.in.h	2019-09-25 12:25:15.000000000 +1200
+@@ -712,10 +712,6 @@
+ #  undef gets
+ # endif
+ _GL_CXXALIASWARN (gets);
+-/* It is very rare that the developer ever has full control of stdin,
+-   so any use of gets warrants an unconditional warning.  Assume it is
+-   always declared, since it is required by C89.  */
+-_GL_WARN_ON_USE (gets, "gets is a security hole - use fgets instead");
+ #endif

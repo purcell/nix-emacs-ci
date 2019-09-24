@@ -10,6 +10,7 @@ os:
 # often.
 env:
   matrix:
+    - ATTR=emacs-24-1
     - ATTR=emacs-24-2
     - ATTR=emacs-24-3
     - ATTR=emacs-24-4
@@ -24,6 +25,8 @@ env:
 
 matrix:
   exclude:
+  - os: osx
+    env: ATTR=emacs-24-1
   - os: osx
     env: ATTR=emacs-24-2
 
