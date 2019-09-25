@@ -34,6 +34,10 @@ install:
   ./travis-install
 
 script:
-  - nix-build -A $ATTR | tee output
-  - EMACS=$PWD/result/bin/emacs tests/run
-  - if [ -n "$CACHIX_SIGNING_KEY" ] && [ "$TRAVIS_REPO_SLUG" = "purcell/nix-emacs-ci" ]; then cachix push emacs-ci < output; fi
+  - |
+    set -e
+    nix-build -A $ATTR | tee output
+    EMACS=$PWD/result/bin/emacs tests/run
+    if [ -n "$CACHIX_SIGNING_KEY" ] && [ "$TRAVIS_REPO_SLUG" = "purcell/nix-emacs-ci" ]; then
+      cachix push emacs-ci < output
+    fi
