@@ -29,11 +29,11 @@ and the latter is now unmaintained.
   #4](https://github.com/purcell/nix-emacs-ci/issues/4))
 - An Emacs development snapshot build is also available
 - Binary caching via Cachix is enabled, and working
-- Travis integration is tested and in use
+- A [Github Action](https://github.com/purcell/setup-emacs) is available for easy integration with your workflows
+- Early Travis integration is tested and in use
   elsewhere (e.g. [my emacs config](https://github.com/purcell/emacs.d)
   and [various other github projects](https://github.com/search?l=&q=nix-emacs-ci+++filename%3A.travis.yml&type=Code))
   but see notes below.
-- Early support for Github Actions is being tested on the [package-lint](https://github.com/purcell/package-lint/blob/master/.github/workflows/test.yml) repo
 
 ## Travis usage
 
@@ -72,10 +72,9 @@ script:
 
 ## Github Actions usage
 
-I'll probably write a custom action to make it easier, but I'm already testing these
-Emacs versions with Github Actions on the
-[package-lint](https://github.com/purcell/package-lint/blob/master/.github/workflows/test.yml)
-repo. I wouldn't yet advise that anyone copy that config.
+The [`purcell/setup-emacs` Github
+Action](https://github.com/purcell/setup-emacs) is available for easy
+integration with your Github workflows.
 
 ## Low-level Nix usage, e.g. for local testing
 
