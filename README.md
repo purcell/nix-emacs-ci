@@ -42,12 +42,6 @@ change. Early adopters should watch [issue
 #6](https://github.com/purcell/nix-emacs-ci/issues/6) to be kept up to
 date with changes to the recommended usage method.
 
-Note also that if you want to install packages in your CI build, the
-default settings of some Emacs versions require that the packages' GPG
-signatures can be verified, so you might also want to install `gpg`
-(e.g. via `nix-env -iA gpg -f '<nixpgs>'`) or set
-`package-check-signatures` to `nil`.
-
 ```yaml
 language: nix
 
