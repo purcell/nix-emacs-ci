@@ -26,9 +26,6 @@ in
 # expose them on that platform.
 (if pkgs.stdenv.isLinux then {
 
-  # Fails on Linux due to insecure use of gets, see
-  # https://travis-ci.com/purcell/nix-emacs-ci/jobs/235281220, would
-  # need patching
   emacs-24-1 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.1" "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0") name src;
     withAutoReconf = false;
