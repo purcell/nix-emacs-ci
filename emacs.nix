@@ -6,6 +6,7 @@
 , withAutoReconf ? false
 , patches ? []
 , srcRepo ? false
+, needCrtDir ? false
 }:
 
 let
@@ -45,7 +46,7 @@ stdenv.mkDerivation rec {
     "--with-png=no"
     "--with-gif=no"
     "--with-tiff=no"
-  ];
+  ] ++ lib.optionals needCrtDir ["--with-crt-dir=${stdenv.glibc}/lib"];
 
   preConfigure = ''
     substituteInPlace lisp/international/mule-cmds.el \

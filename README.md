@@ -24,7 +24,7 @@ and the latter is now unmaintained.
 
 ## Status
 
-- Official release versions from 24.1 onwards are supported (MacOS:
+- Official release versions from 23.4 onwards are supported (MacOS:
   24.3 onwards, see [issue
   #4](https://github.com/purcell/nix-emacs-ci/issues/4))
 - An Emacs development snapshot build is also available

@@ -26,6 +26,14 @@ in
 # expose them on that platform.
 (if pkgs.stdenv.isLinux then {
 
+  emacs-23-4 = with pkgs; callPackage ./emacs.nix {
+    inherit (release "23.4" "1fc8x5p38qihg7l6z2b1hjc534lnjb8gqpwgywlwg5s3csg6ymr6") name src;
+    withAutoReconf = false;
+    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    patches = [ ./patches/all-dso-handle.patch ];
+    needCrtDir = true;
+  };
+
   emacs-24-1 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.1" "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0") name src;
     withAutoReconf = false;
