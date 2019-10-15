@@ -1,10 +1,10 @@
 let
-  nixpkgs-1903 = import (builtins.fetchTarball {
-    url = https://github.com/NixOS/nixpkgs/archive/aa34ca05fe5b0bc2cc36d67aed023110da226164.tar.gz;
-    sha256 = "1lsywp26kq426bmywxq2d1n8s39p3cy4y93xplkgqbi5qj6xgl6z";
+  nixpkgs-1909 = import (builtins.fetchTarball{
+    url = "https://github.com/NixOS/nixpkgs/archive/release-19.09.tar.gz";
+    sha256 = "11wm7af6ab2979z8yrpcprb6d99kbrjq44a48ayi4a7c58a2xb6q";
   }) {};
 
-  pkgs = nixpkgs-1903;
+  pkgs = nixpkgs-1909;
 
   release = version: sha256: rec {
     name = "emacs-${version}";
@@ -114,7 +114,7 @@ in
   };
 
   emacs-snapshot = pkgs.callPackage ./emacs.nix {
-    inherit (snapshot "07367e5b95fe31f3d4e994b42b081075501b9b60" "05kijricv53pdsfsiksmix6zrfn8xab0ms8y2grqs2db2ihraaw0") name src;
+    inherit (snapshot "56a7c60872272eef2dbd4fd071d0af0441f374d8" "08qmhfrss8kldawfbbdyplv12f3s44ppym71bl1w5qpjsfqv8ndd") name src;
     srcRepo = true;
     withAutoReconf = true; };
 }
