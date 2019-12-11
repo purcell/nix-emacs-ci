@@ -1,10 +1,10 @@
 let
-  nixpkgs-1903 = import (builtins.fetchTarball {
-    url = https://github.com/NixOS/nixpkgs/archive/aa34ca05fe5b0bc2cc36d67aed023110da226164.tar.gz;
-    sha256 = "1lsywp26kq426bmywxq2d1n8s39p3cy4y93xplkgqbi5qj6xgl6z";
+  nixpkgs-1909 = import (builtins.fetchTarball{
+    url = "https://github.com/NixOS/nixpkgs/archive/e11288b9192edec8a3c37f3267961650813a6089.tar.gz";
+    sha256 = "16mwf57g8iyq442yx113d07d1arksg5pcdyy6lqq041njy0clnyq";
   }) {};
 
-  pkgs = nixpkgs-1903;
+  pkgs = nixpkgs-1909;
 
   release = version: sha256: rec {
     name = "emacs-${version}";
