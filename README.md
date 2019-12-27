@@ -119,12 +119,12 @@ circumstances. Binaries for old Emacs versions "in the wild" will have
 been built with various old versions of GNUTLS and other libraries,
 and there is no single way to reproduce all their quirks.
 
-For these project, we are doing the least patching that will allow the
+For this project, we are doing the least patching that will allow the
 older Emacsen to install packages from ELPA over HTTPS using a recent
 version of GNUTLS. (While older versions used the `http` ELPA URL
 anyway, `cask` uses `https` unconditionally.) This involves applying
 patches for the `E_AGAIN` issue that was fixed in 26.3, plus a patch
-to let Emacs find the system cert store on recent OSX versions.
+to let old Emacsen find the system cert store on recent OSX versions.
 
 Additionally, the ELPA package signing key has changed and no longer
 matches the public key that was bundled with older Emacs releases
