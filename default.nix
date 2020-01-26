@@ -114,7 +114,7 @@ in
   };
 
   emacs-snapshot = pkgs.callPackage ./emacs.nix {
-    inherit (snapshot "bad2532f664e11e5b32c1194f2274ba2d1f0116b" "17bn3389xs44gkc75h2r5q1cchl97qx5dc98qp86vfzp858r1zyl") name src;
+    inherit (snapshot "23ef804eb55ed7324509b81638c66532344fe523" "1206ip4v3yh5vp5w40qmd4i7cshfmhbkpw00xsaa2yz05fk0nw5s") name src;
     srcRepo = true;
     withAutoReconf = true; };
 }
