@@ -119,6 +119,15 @@ in
     withAutoReconf = true;
   };
 
+  emacs-27-pre = pkgs.callPackage ./emacs.nix {
+    name = "emacs-27-pre";
+    src = pkgs.fetchurl {
+      url = "https://alpha.gnu.org/gnu/emacs/pretest/emacs-27.0.90.tar.xz";
+      sha256 = "1x0z9hfq7n88amd32714g9182nfy5dmz9br0pjqajgq82vjn9qxk";
+    };
+    withAutoReconf = true;
+  };
+
   emacs-snapshot = pkgs.callPackage ./emacs.nix {
     inherit (snapshot "08408b13faa911b586ac0c181159ada452a942cc" "075lsdbilfyaqdgarav1cynsxxgr76ify9l97v3h4496sls00pxk") name src;
     srcRepo = true;
