@@ -1,8 +1,10 @@
 let
-  nixpkgs-20-03 = import (builtins.fetchTarball{
-    url = "https://github.com/NixOS/nixpkgs/archive/5272327b81ed355bbed5659b8d303cf2979b6953.tar.gz";
-    sha256 = "0182ys095dfx02vl2a20j1hz92dx3mfgz2a6fhn31bqlp1wa8hlq";
-  }) {};
+  nixpkgs-20-03 = import (
+    builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/5272327b81ed355bbed5659b8d303cf2979b6953.tar.gz";
+      sha256 = "0182ys095dfx02vl2a20j1hz92dx3mfgz2a6fhn31bqlp1wa8hlq";
+    }
+  ) {};
 
   pkgs = nixpkgs-20-03;
 
@@ -22,40 +24,46 @@ let
     };
   };
 in
-# Some versions do not currently build on MacOS, so we do not even
-# expose them on that platform.
-(if pkgs.stdenv.isLinux then {
+  # Some versions do not currently build on MacOS, so we do not even
+  # expose them on that platform.
+(
+  if pkgs.stdenv.isLinux then {
 
-  emacs-23-4 = with pkgs; callPackage ./emacs.nix {
-    inherit (release "23.4" "1fc8x5p38qihg7l6z2b1hjc534lnjb8gqpwgywlwg5s3csg6ymr6") name src;
-    withAutoReconf = false;
-    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-    patches = [ ./patches/all-dso-handle.patch ];
-    needCrtDir = true;
-  };
+    emacs-23-4 = with pkgs; callPackage ./emacs.nix {
+      inherit (release "23.4" "1fc8x5p38qihg7l6z2b1hjc534lnjb8gqpwgywlwg5s3csg6ymr6") name src;
+      withAutoReconf = false;
+      stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+      patches = [
+        ./patches/all-dso-handle.patch
+        ./patches/fpending-23.4.patch
+      ];
+      needCrtDir = true;
+    };
 
-  emacs-24-1 = with pkgs; callPackage ./emacs.nix {
-    inherit (release "24.1" "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0") name src;
-    withAutoReconf = false;
-    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-    patches = [ ./patches/all-dso-handle.patch
-                ./patches/remove-old-gets-warning.patch
-              ];
-  };
+    emacs-24-1 = with pkgs; callPackage ./emacs.nix {
+      inherit (release "24.1" "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0") name src;
+      withAutoReconf = false;
+      stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+      patches = [
+        ./patches/all-dso-handle.patch
+        ./patches/remove-old-gets-warning.patch
+        ./patches/fpending-24.1.patch
+      ];
+    };
 
-  emacs-24-2 = with pkgs; callPackage ./emacs.nix {
-    inherit (release "24.2" "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d") name src;
-    withAutoReconf = false;
-    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-    patches = [ ./patches/all-dso-handle.patch ];
-  };
-} else {}) //
-{
+    emacs-24-2 = with pkgs; callPackage ./emacs.nix {
+      inherit (release "24.2" "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d") name src;
+      withAutoReconf = false;
+      stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+      patches = [ ./patches/all-dso-handle.patch ./patches/fpending-24.1.patch ];
+    };
+  } else {}
+) // {
   emacs-24-3 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.3" "0hggksbn9h5gxmmzbgzlc8hgl0c77simn10jhk6njgc10hrcm600") name src;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
-    patches = [ ./patches/all-dso-handle.patch ];
+    patches = [ ./patches/all-dso-handle.patch ./patches/fpending-24.3.patch ];
   };
 
   emacs-24-4 = with pkgs; callPackage ./emacs.nix {
@@ -75,25 +83,28 @@ in
   emacs-25-1 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.1" "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn") name src;
     withAutoReconf = true;
-    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch
-                ./patches/gnutls-e_again.patch
-              ];
+    patches = [
+      ./patches/gnutls-use-osx-cert-bundle.patch
+      ./patches/gnutls-e_again.patch
+    ];
   };
 
   emacs-25-2 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.2" "0b9dwx6nxzflaipkgml4snny2c3brgy0py6h05q995y1lrpbsnsh") name src;
     withAutoReconf = true;
-    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch
-                ./patches/gnutls-e_again.patch
-              ];
+    patches = [
+      ./patches/gnutls-use-osx-cert-bundle.patch
+      ./patches/gnutls-e_again.patch
+    ];
   };
 
   emacs-25-3 = pkgs.callPackage ./emacs.nix {
     inherit (release "25.3" "1jc3g79nrcix0500kiw6hqpql82ajq0xivlip6iaryxn90dnlb7p") name src;
     withAutoReconf = true;
-    patches = [ ./patches/gnutls-use-osx-cert-bundle.patch
-                ./patches/gnutls-e_again.patch
-              ];
+    patches = [
+      ./patches/gnutls-use-osx-cert-bundle.patch
+      ./patches/gnutls-e_again.patch
+    ];
   };
 
   emacs-26-1 = pkgs.callPackage ./emacs.nix {
@@ -116,5 +127,6 @@ in
   emacs-snapshot = pkgs.callPackage ./emacs.nix {
     inherit (snapshot "23ef804eb55ed7324509b81638c66532344fe523" "1206ip4v3yh5vp5w40qmd4i7cshfmhbkpw00xsaa2yz05fk0nw5s") name src;
     srcRepo = true;
-    withAutoReconf = true; };
+    withAutoReconf = true;
+  };
 }

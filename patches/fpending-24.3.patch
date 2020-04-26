@@ -1,0 +1,12 @@
+--- a/configure	2020-04-27 13:04:44.000000000 +1200
++++ b/configure	2020-04-27 13:06:22.000000000 +1200
+@@ -15496,7 +15496,8 @@
+ 
+           ;;
+         old)
+-                    $as_echo "#define PENDING_OUTPUT_COUNT(FILE) ((FILE)->_pptr - (FILE)->_pbase)" >>confdefs.h
++            $as_echo "#define DISPNEW_NEEDS_STDIO_EXT 1" >>confdefs.h
++            $as_echo "#define PENDING_OUTPUT_COUNT(FILE) __fpending (FILE)" >>confdefs.h
+ 
+           ;;
+       esac

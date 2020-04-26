@@ -1,0 +1,13 @@
+--- a/src/s/gnu-linux.h	2012-05-15 00:00:02.000000000 +1200
++++ b/src/s/gnu-linux.h	2020-04-27 14:07:52.000000000 +1200
+@@ -113,8 +113,9 @@
+   ((FILE)->__bufpos - (FILE)->__bufstart)
+ #else /* !_IO_STDIO_H && ! __UCLIBC__ */
+ /* Old C++ iostream names.  */
++#include <stdio_ext.h>
+ #define GNU_LIBRARY_PENDING_OUTPUT_COUNT(FILE) \
+-  ((FILE)->_pptr - (FILE)->_pbase)
++  (__fpending(FILE))
+ #endif /* !_IO_STDIO_H && ! __UCLIBC__ */
+ 
+ #define INTERRUPT_INPUT

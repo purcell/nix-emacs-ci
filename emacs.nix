@@ -1,8 +1,17 @@
 { name
 , src
-, stdenv, lib, fetchurl, ncurses, autoreconfHook
-, pkgconfig, libxml2, gettext, gnutls
-, autoconf ? null, automake ? null, texinfo ? null
+, stdenv
+, lib
+, fetchurl
+, ncurses
+, autoreconfHook
+, pkgconfig
+, libxml2
+, gettext
+, gnutls
+, autoconf ? null
+, automake ? null
+, texinfo ? null
 , withAutoReconf ? false
 , patches ? []
 , srcRepo ? false
@@ -16,7 +25,7 @@ let
   };
 in
 
-# A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
+  # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
   inherit name src;
 
@@ -26,7 +35,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs =
     [ pkgconfig ]
-    ++ lib.optionals withAutoReconf [autoreconfHook]
+    ++ lib.optionals withAutoReconf [ autoreconfHook ]
     ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
   buildInputs =
@@ -46,7 +55,7 @@ stdenv.mkDerivation rec {
     "--with-png=no"
     "--with-gif=no"
     "--with-tiff=no"
-  ] ++ lib.optionals needCrtDir ["--with-crt-dir=${stdenv.glibc}/lib"];
+  ] ++ lib.optionals needCrtDir [ "--with-crt-dir=${stdenv.glibc}/lib" ];
 
   preConfigure = ''
     substituteInPlace lisp/international/mule-cmds.el \
@@ -65,9 +74,9 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     description = "The extensible, customizable GNU text editor";
-    homepage    = https://www.gnu.org/software/emacs/;
-    license     = licenses.gpl3Plus;
-    platforms   = platforms.all;
+    homepage = https://www.gnu.org/software/emacs/;
+    license = licenses.gpl3Plus;
+    platforms = platforms.all;
 
     longDescription = ''
       GNU Emacs is an extensible, customizable text editor—and more.  At its
