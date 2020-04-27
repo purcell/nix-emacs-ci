@@ -133,6 +133,9 @@ packages with stock settings: `package-check-signatures` needed to be
 disabled, or the new public key imported into the user's keychain. To
 avoid this issue, we bundle the latest public keys into all builds.
 
+Finally, minor patches are applied as necessary to allow very old
+Emacs versions to compile against newer `glibc` versions.
+
 <hr>
 
 
