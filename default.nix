@@ -27,7 +27,7 @@ in
     emacs-23-4 = with pkgs; callPackage ./emacs.nix {
       inherit (release "23.4" "1fc8x5p38qihg7l6z2b1hjc534lnjb8gqpwgywlwg5s3csg6ymr6") name src;
       withAutoReconf = false;
-      stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+      stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
       patches = [
         ./patches/all-dso-handle.patch
         ./patches/fpending-23.4.patch
@@ -38,7 +38,7 @@ in
     emacs-24-1 = with pkgs; callPackage ./emacs.nix {
       inherit (release "24.1" "1awbgkwinpqpzcn841kaw5cszdn8sx6jyfp879a5bff0v78nvlk0") name src;
       withAutoReconf = false;
-      stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+      stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
       patches = [
         ./patches/all-dso-handle.patch
         ./patches/remove-old-gets-warning.patch
@@ -49,7 +49,7 @@ in
     emacs-24-2 = with pkgs; callPackage ./emacs.nix {
       inherit (release "24.2" "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d") name src;
       withAutoReconf = false;
-      stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+      stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
       patches = [ ./patches/all-dso-handle.patch ./patches/fpending-24.1.patch ];
     };
   } else {}
@@ -57,21 +57,21 @@ in
   emacs-24-3 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.3" "0hggksbn9h5gxmmzbgzlc8hgl0c77simn10jhk6njgc10hrcm600") name src;
     withAutoReconf = false;
-    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
     patches = [ ./patches/all-dso-handle.patch ./patches/fpending-24.3.patch ];
   };
 
   emacs-24-4 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.4" "1iicqcijr56r7vxxm3v3qhf69xpxlpq7afbjr6h6bpjsz8d4yg59") name src;
     withAutoReconf = false;
-    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
     patches = [ ./patches/gnutls-e_again.patch ];
   };
 
   emacs-24-5 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.5" "1dn3jx1dph5wr47v97g0fhka9gcpn8pnzys7khp9indj5xiacdr7") name src;
     withAutoReconf = false;
-    stdenv = if stdenv.cc.isGNU then overrideCC stdenv gcc49 else stdenv;
+    stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
     patches = [ ./patches/gnutls-e_again.patch ];
   };
 
