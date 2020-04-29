@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    paths-ignore:
+    - '**.md'
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        attr: [23-4, 24-1, 24-2, 24-3, 24-4, 24-5, 25-1, 25-2, 25-3, 26-1, 26-2, 26-3, snapshot]
+        exclude:
+          - os: macos-latest
+            attr: 23-4
+          - os: macos-latest
+            attr: 24-1
+          - os: macos-latest
+            attr: 24-2
+    steps:
+
+    - uses: actions/checkout@v2
+    - uses: cachix/install-nix-action@v8
+    - uses: cachix/cachix-action@v6
+      with:
+        name: emacs-ci
+        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+    - run: nix-build -A emacs-${{ matrix.attr }}
