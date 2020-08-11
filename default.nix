@@ -18,6 +18,12 @@ let
       url = "https://github.com/emacs-mirror/emacs/archive/${commit}.tar.gz";
     };
   };
+
+  # Vital backport which prevents catastrophic failure during build
+  fixMacosUnexecPatches = pkgs.lib.optional pkgs.stdenv.isDarwin (pkgs.fetchpatch {
+    url = "https://github.com/emacs-mirror/emacs/commit/888ffd960c06d56a409a7ff15b1d930d25c56089.patch";
+    sha256 = "08q3ygdigqwky70r47rcgzlkc5jy82xiq8am5kwwy891wlpl7frw";
+  });
 in
   # Some versions do not currently build on MacOS, so we do not even
   # expose them on that platform.
@@ -58,21 +64,21 @@ in
     inherit (release "24.3" "0hggksbn9h5gxmmzbgzlc8hgl0c77simn10jhk6njgc10hrcm600") name src;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-    patches = [ ./patches/all-dso-handle.patch ./patches/fpending-24.3.patch ];
+    patches = [ ./patches/all-dso-handle.patch ./patches/fpending-24.3.patch ] ++ fixMacosUnexecPatches;
   };
 
   emacs-24-4 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.4" "1iicqcijr56r7vxxm3v3qhf69xpxlpq7afbjr6h6bpjsz8d4yg59") name src;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-    patches = [ ./patches/gnutls-e_again.patch ];
+    patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
   };
 
   emacs-24-5 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.5" "1dn3jx1dph5wr47v97g0fhka9gcpn8pnzys7khp9indj5xiacdr7") name src;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-    patches = [ ./patches/gnutls-e_again.patch ];
+    patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
   };
 
   emacs-25-1 = pkgs.callPackage ./emacs.nix {
@@ -81,7 +87,7 @@ in
     patches = [
       ./patches/gnutls-use-osx-cert-bundle.patch
       ./patches/gnutls-e_again.patch
-    ];
+    ] ++ fixMacosUnexecPatches;
   };
 
   emacs-25-2 = pkgs.callPackage ./emacs.nix {
@@ -90,7 +96,7 @@ in
     patches = [
       ./patches/gnutls-use-osx-cert-bundle.patch
       ./patches/gnutls-e_again.patch
-    ];
+    ] ++ fixMacosUnexecPatches;
   };
 
   emacs-25-3 = pkgs.callPackage ./emacs.nix {
@@ -99,24 +105,25 @@ in
     patches = [
       ./patches/gnutls-use-osx-cert-bundle.patch
       ./patches/gnutls-e_again.patch
-    ];
+    ] ++ fixMacosUnexecPatches;
   };
 
   emacs-26-1 = pkgs.callPackage ./emacs.nix {
     inherit (release "26.1" "18vaqn7y7c39as4bn95yfcabwvqkw6y59xz8g78d1ifdx3aq40vn") name src;
     withAutoReconf = true;
-    patches = [ ./patches/gnutls-e_again.patch ];
+    patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
   };
 
   emacs-26-2 = pkgs.callPackage ./emacs.nix {
     inherit (release "26.2" "1sxl0bqwl9b62nswxaiqh1xa61f3hng4fmyc69lmadx770mfb6ag") name src;
     withAutoReconf = true;
-    patches = [ ./patches/gnutls-e_again.patch ];
+    patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
   };
 
   emacs-26-3 = pkgs.callPackage ./emacs.nix {
     inherit (release "26.3" "14bm73758w6ydxlvckfy9nby015p20lh2yvl6pnrjz0k93h4giq9") name src;
     withAutoReconf = true;
+    patches = fixMacosUnexecPatches;
   };
 
   emacs-27-1 = pkgs.callPackage ./emacs.nix {
