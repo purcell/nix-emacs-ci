@@ -119,12 +119,8 @@ in
     withAutoReconf = true;
   };
 
-  emacs-27-pre = pkgs.callPackage ./emacs.nix {
-    name = "emacs-27-pre";
-    src = pkgs.fetchurl {
-      url = "https://alpha.gnu.org/gnu/emacs/pretest/emacs-27.0.90.tar.xz";
-      sha256 = "1x0z9hfq7n88amd32714g9182nfy5dmz9br0pjqajgq82vjn9qxk";
-    };
+  emacs-27-1 = pkgs.callPackage ./emacs.nix {
+    inherit (release "27.1" "1nw4lpid1kqncypa9f1228d43m59qn3gqgmy3vrjrfair4fsdgzz") name src;
     withAutoReconf = true;
   };
 
