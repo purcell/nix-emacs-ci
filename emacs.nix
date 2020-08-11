@@ -9,6 +9,8 @@
 , libxml2
 , gettext
 , gnutls
+, jansson
+, gmp
 , autoconf ? null
 , automake ? null
 , texinfo ? null
@@ -39,7 +41,7 @@ stdenv.mkDerivation rec {
     ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext ];
+    [ ncurses libxml2 gnutls gettext jansson gmp ];
 
   hardeningDisable = [ "format" ];
 
