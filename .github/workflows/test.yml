@@ -25,7 +25,7 @@ jobs:
     steps:
 
     - uses: actions/checkout@v2
-    - uses: cachix/install-nix-action@v8
+    - uses: cachix/install-nix-action@v10
     - uses: cachix/cachix-action@v6
       with:
         name: emacs-ci
