@@ -31,3 +31,4 @@ jobs:
         name: emacs-ci
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
     - run: nix-build -A emacs-${{ matrix.attr }}
+    - run: nix-build --argstr emacsAttr emacs-${{ matrix.attr }} tests
