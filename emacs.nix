@@ -1,5 +1,6 @@
 { name
 , src
+, version
 , stdenv
 , lib
 , fetchurl
@@ -29,7 +30,7 @@ in
 
   # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
-  inherit name src;
+  inherit name version src;
 
   enableParallelBuilding = true;
 
