@@ -1,7 +1,7 @@
 let
   sources = import ./nix/sources.nix;
 
-  pkgs = import sources.nixpkgs {};
+  pkgs = import sources.nixpkgs { };
 
   release = version: sha256: rec {
     inherit version;
@@ -26,7 +26,7 @@ let
     sha256 = "08q3ygdigqwky70r47rcgzlkc5jy82xiq8am5kwwy891wlpl7frw";
   });
 in
-  # Some versions do not currently build on MacOS, so we do not even
+# Some versions do not currently build on MacOS, so we do not even
   # expose them on that platform.
 (
   if pkgs.stdenv.isLinux then {
@@ -47,6 +47,7 @@ in
       withAutoReconf = false;
       stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
       patches = [
+        ./patches/gnutls-e_again-old-emacsen.patch
         ./patches/all-dso-handle.patch
         ./patches/remove-old-gets-warning.patch
         ./patches/fpending-24.1.patch
@@ -57,22 +58,32 @@ in
       inherit (release "24.2" "0mykbg5rzrm2h4805y4nl5vpvwx4xcmp285sbr51sxp1yvgr563d") name src version;
       withAutoReconf = false;
       stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-      patches = [ ./patches/all-dso-handle.patch ./patches/fpending-24.1.patch ];
+      patches = [
+        ./patches/gnutls-e_again-old-emacsen.patch
+        ./patches/all-dso-handle.patch
+        ./patches/fpending-24.1.patch
+      ];
     };
-  } else {}
+  } else { }
 ) // {
   emacs-24-3 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.3" "0hggksbn9h5gxmmzbgzlc8hgl0c77simn10jhk6njgc10hrcm600") name src version;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-    patches = [ ./patches/all-dso-handle.patch ./patches/fpending-24.3.patch ] ++ fixMacosUnexecPatches;
+    patches = [
+      ./patches/gnutls-e_again.patch
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-24.3.patch
+    ] ++ fixMacosUnexecPatches;
   };
 
   emacs-24-4 = with pkgs; callPackage ./emacs.nix {
     inherit (release "24.4" "1iicqcijr56r7vxxm3v3qhf69xpxlpq7afbjr6h6bpjsz8d4yg59") name src version;
     withAutoReconf = false;
     stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-    patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
+    patches = [
+      ./patches/gnutls-e_again.patch
+    ] ++ fixMacosUnexecPatches;
   };
 
   emacs-24-5 = with pkgs; callPackage ./emacs.nix {

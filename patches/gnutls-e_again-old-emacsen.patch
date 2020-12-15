@@ -1,0 +1,20 @@
+--- a/src/gnutls.c	2020-12-15 16:07:40.000000000 +1300
++++ b/src/gnutls.c	2020-12-15 16:11:23.000000000 +1300
+@@ -435,8 +435,15 @@
+     /* The peer closed the connection. */
+     return 0;
+   else if (emacs_gnutls_handle_error (state, rtnval) == 0)
+-    /* non-fatal error */
+-    return -1;
++    {
++      /* If we get GNUTLS_E_AGAIN, then set errno appropriately so that
++         wait_reading_process_output retries the correct way instead of
++         erroring out.  */
++      if (rtnval == GNUTLS_E_AGAIN)
++        errno = EAGAIN;
++      /* non-fatal error */
++      return -1;
++    }
+   else {
+     /* a fatal error occurred */
+     return 0;
