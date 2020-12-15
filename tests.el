@@ -1,0 +1,8 @@
+(require 'package)
+(unless (file-directory-p ".elpa")
+  (make-directory ".elpa"))
+(setq package-user-dir (expand-file-name emacs-version ".elpa"))
+(push '("melpa" . "https://melpa.org/packages/") package-archives)
+(package-initialize)
+(package-refresh-contents)
+(package-install 'package-lint)

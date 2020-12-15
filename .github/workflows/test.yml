@@ -33,4 +33,6 @@ jobs:
     - run: nix-build -A emacs-${{ matrix.attr }}
     - run: nix-build --argstr emacsAttr emacs-${{ matrix.attr }} tests
       if: ${{ ! contains( fromJson('[ "23-4", "24-1", "24-2", "24-3" ]'), matrix.attr ) }}
-    - run: cd tests && EMACS=../result/bin/emacs ./run
+    - run: |
+        nix-shell -p '(import ./default.nix).emacs-${{ matrix.attr }}' \
+        --run 'emacs --no-init-file --batch --load tests.el'
