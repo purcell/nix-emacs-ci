@@ -47,6 +47,7 @@ in
       withAutoReconf = false;
       stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
       patches = [
+        ./patches/gnutls-e_again-old-emacsen.patch
         ./patches/all-dso-handle.patch
         ./patches/remove-old-gets-warning.patch
         ./patches/fpending-24.1.patch
@@ -58,6 +59,7 @@ in
       withAutoReconf = false;
       stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
       patches = [
+        ./patches/gnutls-e_again-old-emacsen.patch
         ./patches/all-dso-handle.patch
         ./patches/fpending-24.1.patch
       ];
