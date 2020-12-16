@@ -3,19 +3,21 @@
 (setq is-emacs-24+ (version<= "24" emacs-version))
 
 ;; Check we can have GNUTLS support
-(when is-emacs-24+
-  (unless (gnutls-available-p)
-    (error "GnuTLS appears unavailable")))
-
-(message "Testing we can talk https to GNU")
-(with-temp-buffer
-  (url-insert-file-contents "https://elpa.gnu.org/"))
-
-(message "Testing we can talk https to MELPA")
-(with-temp-buffer
-  (url-insert-file-contents "https://melpa.org/"))
+(unless (and (fboundp 'gnutls-available-p)
+             (gnutls-available-p))
+  (if is-emacs-24+
+      (error "GnuTLS appears unavailable")
+    (message "GnuTLS appears unavailable")))
 
 (when is-emacs-24+
+  (message "Testing we can talk https to GNU")
+  (with-temp-buffer
+    (url-insert-file-contents "https://elpa.gnu.org/"))
+
+  (message "Testing we can talk https to MELPA")
+  (with-temp-buffer
+    (url-insert-file-contents "https://melpa.org/"))
+
   (require 'package)
   (push '("melpa" . "https://melpa.org/packages/") package-archives)
 
