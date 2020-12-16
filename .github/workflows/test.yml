@@ -31,5 +31,10 @@ jobs:
         name: emacs-ci
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
     - run: nix-build -A emacs-${{ matrix.attr }}
+    - run: |
+        cd tests && ../result/bin/emacs -Q --batch \
+        --eval "(setq debug-on-error t)" --load init.el
+      name: Test if package.el works inside Emacs
     - run: nix-build --argstr emacsAttr emacs-${{ matrix.attr }} tests
       if: ${{ ! contains( fromJson('[ "23-4", "24-1", "24-2", "24-3" ]'), matrix.attr ) }}
+      name: Test low-level Nix usage
