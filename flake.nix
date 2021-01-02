@@ -21,5 +21,8 @@
           packages = import ./packages.nix {
             inherit system pkgs;
           };
+
+          # Export emacsPackagesFor for tests/default.nix
+          lib.emacsPackagesFor = pkgs.emacsPackagesFor;
         })) // { inherit flake-compat; };
 }
