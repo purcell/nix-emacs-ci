@@ -1,5 +1,5 @@
 { system ? builtins.currentSystem,
-  pkgs ? import ./nix { inherit system; }
+  pkgs
 }:
 let
   release = version: sha256: rec {
