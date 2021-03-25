@@ -54,7 +54,7 @@ env:
   - EMACS_CI=emacs-24-5
   - EMACS_CI=emacs-25-3
   - EMACS_CI=emacs-26-3
-  - EMACS_CI=emacs-27-1
+  - EMACS_CI=emacs-27-2
   - EMACS_CI=emacs-snapshot
 
 install:
