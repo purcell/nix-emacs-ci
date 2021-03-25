@@ -143,6 +143,11 @@ in
     withAutoReconf = true;
   };
 
+  emacs-27-2 = pkgs.callPackage ./emacs.nix {
+    inherit (release "27.2" "0wyv7l3skbv8zvwyxnmid8b0l3kcba8xdk2df266s2kkzcc63zw0") name src version;
+    withAutoReconf = true;
+  };
+
   emacs-snapshot = pkgs.callPackage ./emacs.nix {
     inherit (snapshot "c63d2ef59c511c1c48c69a202907b7edfcbb19b3" "0yxaxrdc3x0kwllk018xh3ghfsxkh43rp4hyk8yg7kvlffr1lmhq") name src;
     version = "28.0.50";
