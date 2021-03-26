@@ -16,7 +16,7 @@
 , automake ? null
 , texinfo ? null
 , withAutoReconf ? false
-, patches ? []
+, patches ? [ ]
 , srcRepo ? false
 , needCrtDir ? false
 }:
@@ -28,7 +28,7 @@ let
   };
 in
 
-  # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
+# A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
   inherit name version src;
 
@@ -75,7 +75,7 @@ stdenv.mkDerivation rec {
 
   installTargets = "tags install";
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "The extensible, customizable GNU text editor";
     homepage = https://www.gnu.org/software/emacs/;
     license = licenses.gpl3Plus;
