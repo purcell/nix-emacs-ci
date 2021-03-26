@@ -149,7 +149,7 @@ in
   };
 
   emacs-snapshot = pkgs.callPackage ./emacs.nix {
-    inherit (snapshot "c63d2ef59c511c1c48c69a202907b7edfcbb19b3" "0yxaxrdc3x0kwllk018xh3ghfsxkh43rp4hyk8yg7kvlffr1lmhq") name src;
+    inherit (snapshot "c24766c4d59bc7d9f583f299b1558e2356fba933" "0i9cxhlaq429m0y6xvlnjamzp7narknmpxa3vi0bxjp8s95dgbpz") name src;
     version = "28.0.50";
     srcRepo = true;
     withAutoReconf = true;
