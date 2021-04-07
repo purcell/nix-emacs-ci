@@ -7,10 +7,6 @@ This project aims to provide a method for Emacs Lisp authors
 to easily test their code against a wide variety of Emacs
 versions.
 
-The rationale for this is that [EVM](https://github.com/rejeep/evm)
-and Damien Cassou's PPA have had various issues in my usage of them,
-and the latter is now unmaintained.
-
 ## Goals:
 
 - Usable without Nix knowledge
@@ -18,12 +14,13 @@ and the latter is now unmaintained.
 - Binary caching, ie. pre-built executables, via
   [Cachix](https://cachix.org/) (a wonderful service!)
 - Both Linux *and* MacOS support
-- Minimal installations by default, for download speed: no images, no
+- Minimal installations by default, for download speed: no image support, no
   `window-system`
 - Allow easy local testing
 
 ## Status
 
+- Works for Linux x86_64, Linux ARM64 and MacOS
 - Official release versions from 23.4 onwards are supported (MacOS:
   24.3 onwards, see [issue
   #4](https://github.com/purcell/nix-emacs-ci/issues/4))
@@ -31,8 +28,7 @@ and the latter is now unmaintained.
 - Binary caching via Cachix is enabled, and working
 - A [Github Action](https://github.com/purcell/setup-emacs) is available for easy integration with your workflows
 - Early Travis integration is tested and in use
-  elsewhere (e.g. [my emacs config](https://github.com/purcell/emacs.d)
-  and [various other github projects](https://github.com/search?l=&q=nix-emacs-ci+++filename%3A.travis.yml&type=Code))
+  in [various other github projects](https://github.com/search?l=&q=nix-emacs-ci+++filename%3A.travis.yml&type=Code))
   but see notes below.
 
 ## Travis usage
