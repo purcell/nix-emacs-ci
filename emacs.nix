@@ -60,18 +60,30 @@ stdenv.mkDerivation rec {
     "--with-tiff=no"
   ] ++ lib.optionals needCrtDir [ "--with-crt-dir=${stdenv.glibc}/lib" ];
 
-  preConfigure = ''
-    substituteInPlace lisp/international/mule-cmds.el \
-      --replace /usr/share/locale ${gettext}/share/locale
-    for makefile_in in $(find . -name Makefile.in -print); do
-        substituteInPlace $makefile_in --replace /bin/pwd pwd
-    done
-    substituteInPlace src/Makefile.in --replace 'LC_ALL=C $(RUN_TEMACS)' 'env -i LC_ALL=C $(RUN_TEMACS)'
-    if [ -f etc/package-keyring.gpg ]; then
-      rm etc/package-keyring.gpg
-      ln -s ${latestPackageKeyring} etc/package-keyring.gpg
-    fi
-  '';
+  postPatch = lib.concatStringsSep "\n" [
+    (lib.optionalString srcRepo ''
+      rm -fr .git
+    '')
+
+    # Reduce closure size by cleaning the environment of the emacs dumper
+    ''
+      substituteInPlace src/Makefile.in \
+        --replace 'RUN_TEMACS = ./temacs' 'RUN_TEMACS = env -i ./temacs'
+    ''
+
+    ''
+      substituteInPlace lisp/international/mule-cmds.el \
+        --replace /usr/share/locale ${gettext}/share/locale
+
+      for makefile_in in $(find . -name Makefile.in -print); do
+          substituteInPlace $makefile_in --replace /bin/pwd pwd
+      done
+      if [ -f etc/package-keyring.gpg ]; then
+        rm etc/package-keyring.gpg
+        ln -s ${latestPackageKeyring} etc/package-keyring.gpg
+      fi
+    ''
+  ];
 
   installTargets = "tags install";
 
