@@ -13,9 +13,11 @@ let
 
   snapshot = commit: sha256: rec {
     name = "emacs-snapshot-${super.lib.strings.substring 0 8 commit}";
-    src = super.fetchurl {
+    src = super.fetchFromGitHub {
+      owner = "emacs-mirror";
+      repo = "emacs";
+      rev = commit;
       inherit sha256;
-      url = "https://github.com/emacs-mirror/emacs/archive/${commit}.tar.gz";
     };
   };
 
@@ -147,7 +149,7 @@ let
     };
 
     emacs-snapshot = super.callPackage ./emacs.nix {
-      inherit (snapshot "c24766c4d59bc7d9f583f299b1558e2356fba933" "0i9cxhlaq429m0y6xvlnjamzp7narknmpxa3vi0bxjp8s95dgbpz") name src;
+      inherit (snapshot "25c775b4e964aaa2cbf17997c0479dfc2ecf33e2" "17sshgayl372kj6ln47s85mhlk9p295rf05v8dp4mvxzfpa8ws8m") name src;
       version = "28.0.50";
       srcRepo = true;
       withAutoReconf = true;
