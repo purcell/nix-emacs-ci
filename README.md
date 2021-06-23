@@ -20,7 +20,7 @@ versions.
 
 ## Status
 
-- Works for Linux x86_64, Linux ARM64 and MacOS
+- Works for Linux x86_64 and MacOS
 - Official release versions from 23.4 onwards are supported (MacOS:
   24.3 onwards, see [issue
   #4](https://github.com/purcell/nix-emacs-ci/issues/4))
