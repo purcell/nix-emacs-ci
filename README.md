@@ -31,6 +31,12 @@ versions.
   in [various other github projects](https://github.com/search?l=&q=nix-emacs-ci+++filename%3A.travis.yml&type=Code))
   but see notes below.
 
+## Github Actions usage
+
+The [`purcell/setup-emacs` Github
+Action](https://github.com/purcell/setup-emacs) is available for easy
+integration with your Github workflows.
+
 ## Travis usage
 
 Here's some example usage: caution that this early method may
@@ -60,12 +66,6 @@ install:
 script:
   - ... your commands go here ...
 ```
-
-## Github Actions usage
-
-The [`purcell/setup-emacs` Github
-Action](https://github.com/purcell/setup-emacs) is available for easy
-integration with your Github workflows.
 
 ## Low-level Nix usage, e.g. for local testing
 
