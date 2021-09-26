@@ -2,15 +2,6 @@ self: super:
 let
   sources = super.callPackage ./_sources/generated.nix { };
 
-  release = version: sha256: rec {
-    inherit version;
-    name = "emacs-${version}";
-    src = super.fetchurl {
-      inherit sha256;
-      url = "mirror://gnu/emacs/${name}.tar.gz";
-    };
-  };
-
   snapshot = commit: sha256: rec {
     name = "emacs-snapshot-${super.lib.strings.substring 0 8 commit}";
     src = super.fetchFromGitHub {
