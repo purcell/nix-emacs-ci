@@ -1,7 +1,7 @@
 { emacsAttr
 }:
 let
-  pkgs = import (import ../nix/sources.nix).nixpkgs {};
+  pkgs = import (import ../compat.nix).defaultNix.inputs.nixpkgs { };
   emacs = (import ../default.nix).${emacsAttr};
 in
 (pkgs.emacsPackagesFor emacs).emacsWithPackages (

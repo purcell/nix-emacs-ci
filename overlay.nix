@@ -1,7 +1,5 @@
 self: super:
 let
-  sources = import ./nix/sources.nix;
-
   release = version: sha256: rec {
     inherit version;
     name = "emacs-${version}";
