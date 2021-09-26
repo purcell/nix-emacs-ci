@@ -1,5 +1,4 @@
-{ name
-, src
+{ src
 , version
 , stdenv
 , lib
@@ -30,7 +29,8 @@ in
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
-  inherit name version src;
+  pname = "emacs";
+  inherit version src;
 
   enableParallelBuilding = true;
 

@@ -1,0 +1,55 @@
+[emacs-27-2]
+fetch.url = "mirror://gnu/emacs/emacs-27.2.tar.gz"
+src.manual = "27.2"
+
+[emacs-27-1]
+fetch.url = "mirror://gnu/emacs/emacs-27.1.tar.gz"
+src.manual = "27.1"
+
+[emacs-26-3]
+fetch.url = "mirror://gnu/emacs/emacs-26.3.tar.gz"
+src.manual = "26.3"
+
+[emacs-26-2]
+fetch.url = "mirror://gnu/emacs/emacs-26.2.tar.gz"
+src.manual = "26.2"
+
+[emacs-26-1]
+fetch.url = "mirror://gnu/emacs/emacs-26.1.tar.gz"
+src.manual = "26.1"
+
+[emacs-25-3]
+fetch.url = "mirror://gnu/emacs/emacs-25.3.tar.gz"
+src.manual = "25.3"
+
+[emacs-25-2]
+fetch.url = "mirror://gnu/emacs/emacs-25.2.tar.gz"
+src.manual = "25.2"
+
+[emacs-25-1]
+fetch.url = "mirror://gnu/emacs/emacs-25.1.tar.gz"
+src.manual = "25.1"
+
+[emacs-24-5]
+fetch.url = "mirror://gnu/emacs/emacs-24.5.tar.gz"
+src.manual = "24.5"
+
+[emacs-24-4]
+fetch.url = "mirror://gnu/emacs/emacs-24.4.tar.gz"
+src.manual = "24.4"
+
+[emacs-24-3]
+fetch.url = "mirror://gnu/emacs/emacs-24.3.tar.gz"
+src.manual = "24.3"
+
+[emacs-24-2]
+fetch.url = "mirror://gnu/emacs/emacs-24.2.tar.gz"
+src.manual = "24.2"
+
+[emacs-24-1]
+fetch.url = "mirror://gnu/emacs/emacs-24.1.tar.gz"
+src.manual = "24.1"
+
+[emacs-23-4]
+fetch.url = "mirror://gnu/emacs/emacs-23.4.tar.gz"
+src.manual = "23.4"
