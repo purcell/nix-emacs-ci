@@ -1,5 +1,6 @@
 { src
 , version
+, name ? "emacs-${version}"
 , stdenv
 , lib
 , fetchurl
@@ -29,8 +30,7 @@ in
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
-  pname = "emacs";
-  inherit version src;
+  inherit name version src;
 
   enableParallelBuilding = true;
 
