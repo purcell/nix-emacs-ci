@@ -26,7 +26,7 @@ jobs:
             attr: 23-4
     steps:
 
-    - uses: actions/checkout@v2.3.4
+    - uses: actions/checkout@v2.3.5
     - uses: cachix/install-nix-action@v14
     - uses: cachix/cachix-action@v10
       with:
