@@ -153,6 +153,7 @@ let
       version = "28.0.50";
       srcRepo = true;
       withAutoReconf = true;
+      inherit (self.darwin) sigtool;
     };
   };
 in
