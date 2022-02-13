@@ -12,6 +12,7 @@
 , gnutls
 , jansson
 , gmp
+, sigtool ? null
 , autoconf ? null
 , automake ? null
 , texinfo ? null
@@ -34,15 +35,13 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  CFLAGS = "-DMAC_OS_X_VERSION_MAX_ALLOWED=101200";
-
   nativeBuildInputs =
     [ pkgconfig ]
     ++ lib.optionals withAutoReconf [ autoreconfHook ]
     ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext jansson gmp ];
+    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optionals stdenv.isDarwin [ sigtool ];
 
   hardeningDisable = [ "format" ];
 

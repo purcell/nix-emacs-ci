@@ -38,5 +38,5 @@ jobs:
         --eval "(setq debug-on-error t)" --load init.el
       name: Test if package.el works inside Emacs
     - run: nix-build --argstr emacsAttr emacs-${{ matrix.attr }} tests
-      if: ${{ ! contains( fromJson('[ "23-4", "24-1", "24-2", "24-3" ]'), matrix.attr ) }}
+      if: ${{ ! contains( fromJson('[ "23-4", "24-1", "24-2", "24-3", "24-4", "24-5" ]'), matrix.attr ) }}
       name: Test low-level Nix usage

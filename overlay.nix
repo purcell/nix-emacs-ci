@@ -149,10 +149,11 @@ let
     };
 
     emacs-snapshot = super.callPackage ./emacs.nix {
-      inherit (snapshot "1283e1db9b7750a90472e7d557fdd75fcaff6446" "0m2kjw0h2r0law0l0zfsnh13z1xcwc44a02cphr8d0f0prmx2z9y") name src;
+      inherit (snapshot "68b32732140606a1eddce82f50733c549a40900a" "sha256-ycujDOUAZS5l4E8px+e0ZDprxLOJAj95xB6Jnp6082Q=") name src;
       version = "28.0.50";
       srcRepo = true;
       withAutoReconf = true;
+      inherit (self.darwin) sigtool;
     };
   };
 in
