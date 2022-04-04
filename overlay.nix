@@ -148,6 +148,11 @@ let
       withAutoReconf = true;
     };
 
+    emacs-28-1 = super.callPackage ./emacs.nix {
+      inherit (release "28.1" "0a0a6j98l637mw09a7kbv8s7dh6zfhp37gqxc0sryxp54izvyf8l") name src version;
+      withAutoReconf = true;
+    };
+
     emacs-snapshot = super.callPackage ./emacs.nix {
       inherit (snapshot "68b32732140606a1eddce82f50733c549a40900a" "sha256-ycujDOUAZS5l4E8px+e0ZDprxLOJAj95xB6Jnp6082Q=") name src;
       version = "29.0.50";
