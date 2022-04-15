@@ -21,6 +21,7 @@ let
     emacs-23-4 = with super; callPackage ./emacs.nix {
       inherit (source_for "23.4") name src version;
       withAutoReconf = false;
+      withX = false;
       stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
       patches = [
         ./patches/all-dso-handle.patch

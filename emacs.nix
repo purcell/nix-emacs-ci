@@ -21,6 +21,7 @@
 , automake ? null
 , texinfo ? null
 , withAutoReconf ? true
+, withX ? true
 , patches ? [ ]
 , srcRepo ? false
 , needCrtDir ? false
@@ -45,7 +46,8 @@ stdenv.mkDerivation rec {
     ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext jansson gmp xlibsWrapper libXaw Xaw3d libXpm libpng libjpeg libtiff libXft librsvg giflib imagemagick ]
+    [ ncurses libxml2 gnutls gettext jansson gmp ]
+    ++ lib.optionals withX [ xlibsWrapper libXaw Xaw3d libXpm libpng libjpeg libtiff libXft librsvg giflib imagemagick ]
     ++ lib.optionals stdenv.isDarwin [ sigtool ];
 
   hardeningDisable = [ "format" ];
