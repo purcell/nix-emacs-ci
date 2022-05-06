@@ -95,7 +95,6 @@ let
 
     emacs-25-1 = super.callPackage ./emacs.nix {
       inherit (release "25.1" "0rqw9ama0j5b6l4czqj4wlf21gcxi9s18p8cx6ghxm5l1nwl8cvn") name src version;
-      withAutoReconf = true;
       patches = [
         ./patches/gnutls-use-osx-cert-bundle.patch
         ./patches/gnutls-e_again.patch
@@ -104,7 +103,6 @@ let
 
     emacs-25-2 = super.callPackage ./emacs.nix {
       inherit (release "25.2" "0b9dwx6nxzflaipkgml4snny2c3brgy0py6h05q995y1lrpbsnsh") name src version;
-      withAutoReconf = true;
       patches = [
         ./patches/gnutls-use-osx-cert-bundle.patch
         ./patches/gnutls-e_again.patch
@@ -113,7 +111,6 @@ let
 
     emacs-25-3 = super.callPackage ./emacs.nix {
       inherit (release "25.3" "1jc3g79nrcix0500kiw6hqpql82ajq0xivlip6iaryxn90dnlb7p") name src version;
-      withAutoReconf = true;
       patches = [
         ./patches/gnutls-use-osx-cert-bundle.patch
         ./patches/gnutls-e_again.patch
@@ -122,42 +119,35 @@ let
 
     emacs-26-1 = super.callPackage ./emacs.nix {
       inherit (release "26.1" "18vaqn7y7c39as4bn95yfcabwvqkw6y59xz8g78d1ifdx3aq40vn") name src version;
-      withAutoReconf = true;
       patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
     };
 
     emacs-26-2 = super.callPackage ./emacs.nix {
       inherit (release "26.2" "1sxl0bqwl9b62nswxaiqh1xa61f3hng4fmyc69lmadx770mfb6ag") name src version;
-      withAutoReconf = true;
       patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
     };
 
     emacs-26-3 = super.callPackage ./emacs.nix {
       inherit (release "26.3" "14bm73758w6ydxlvckfy9nby015p20lh2yvl6pnrjz0k93h4giq9") name src version;
-      withAutoReconf = true;
       patches = fixMacosUnexecPatches;
     };
 
     emacs-27-1 = super.callPackage ./emacs.nix {
       inherit (release "27.1" "1nw4lpid1kqncypa9f1228d43m59qn3gqgmy3vrjrfair4fsdgzz") name src version;
-      withAutoReconf = true;
     };
 
     emacs-27-2 = super.callPackage ./emacs.nix {
       inherit (release "27.2" "0wyv7l3skbv8zvwyxnmid8b0l3kcba8xdk2df266s2kkzcc63zw0") name src version;
-      withAutoReconf = true;
     };
 
     emacs-28-1 = super.callPackage ./emacs.nix {
       inherit (release "28.1" "0a0a6j98l637mw09a7kbv8s7dh6zfhp37gqxc0sryxp54izvyf8l") name src version;
-      withAutoReconf = true;
     };
 
     emacs-snapshot = super.callPackage ./emacs.nix {
       inherit (snapshot "a1fa3d24d7f96542530f30c28daf9bf8aaaeae13" "sha256-4RMRQNg7FDQkddlBxKZH2Ah3GBVtCJOPqu+Q/UEmHKc=") name src;
       version = "29.0.50";
       srcRepo = true;
-      withAutoReconf = true;
       inherit (self.darwin) sigtool;
     };
   };
