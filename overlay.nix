@@ -154,7 +154,7 @@ let
     };
 
     emacs-snapshot = super.callPackage ./emacs.nix {
-      inherit (snapshot "a1fa3d24d7f96542530f30c28daf9bf8aaaeae13" "sha256-4RMRQNg7FDQkddlBxKZH2Ah3GBVtCJOPqu+Q/UEmHKc=") name src;
+      inherit (snapshot "6ccc4b6bc8a14daca6b3e3250574752c90c1eb9b" "sha256-szOofD4JNDlKOpR0dBLDM0P3wbrUpqC+yp+EFYbmyho=") name src;
       version = "29.0.50";
       srcRepo = true;
       withAutoReconf = true;
