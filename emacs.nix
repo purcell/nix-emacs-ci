@@ -16,7 +16,7 @@
 , autoconf ? null
 , automake ? null
 , texinfo ? null
-, withAutoReconf ? false
+, withAutoReconf ? true
 , patches ? [ ]
 , srcRepo ? false
 , needCrtDir ? false
