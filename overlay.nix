@@ -86,6 +86,7 @@ let
       patches = [
         ./patches/gnutls-use-osx-cert-bundle.patch
         ./patches/gnutls-e_again.patch
+        ./patches/sigsegv-stack.patch
       ] ++ fixMacosUnexecPatches;
     };
 
@@ -95,6 +96,7 @@ let
       patches = [
         ./patches/gnutls-use-osx-cert-bundle.patch
         ./patches/gnutls-e_again.patch
+        ./patches/sigsegv-stack.patch
       ] ++ fixMacosUnexecPatches;
     };
 
@@ -104,35 +106,50 @@ let
       patches = [
         ./patches/gnutls-use-osx-cert-bundle.patch
         ./patches/gnutls-e_again.patch
+        ./patches/sigsegv-stack.patch
       ] ++ fixMacosUnexecPatches;
     };
 
     emacs-26-1 = super.callPackage ./emacs.nix {
       inherit (source_for "26.1") name src version;
       withAutoReconf = true;
-      patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
+      patches = [
+        ./patches/gnutls-e_again.patch
+        ./patches/sigsegv-stack.patch
+      ] ++ fixMacosUnexecPatches;
     };
 
     emacs-26-2 = super.callPackage ./emacs.nix {
       inherit (source_for "26.2") name src version;
       withAutoReconf = true;
-      patches = [ ./patches/gnutls-e_again.patch ] ++ fixMacosUnexecPatches;
+      patches = [
+        ./patches/gnutls-e_again.patch
+        ./patches/sigsegv-stack.patch
+      ] ++ fixMacosUnexecPatches;
     };
 
     emacs-26-3 = super.callPackage ./emacs.nix {
       inherit (source_for "26.3") name src version;
       withAutoReconf = true;
-      patches = fixMacosUnexecPatches;
+      patches = [
+        ./patches/sigsegv-stack.patch
+      ] ++ fixMacosUnexecPatches;
     };
 
     emacs-27-1 = super.callPackage ./emacs.nix {
       inherit (source_for "27.1") name src version;
       withAutoReconf = true;
+      patches = [
+        ./patches/sigsegv-stack.patch
+      ];
     };
 
     emacs-27-2 = super.callPackage ./emacs.nix {
       inherit (source_for "27.2") name src version;
       withAutoReconf = true;
+      patches = [
+        ./patches/sigsegv-stack.patch
+      ];
     };
 
     emacs-28-1 = super.callPackage ./emacs.nix {
