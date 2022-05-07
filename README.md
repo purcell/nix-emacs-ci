@@ -94,12 +94,12 @@ out yet.
 ## Using newer snapshot builds
 
 `snapshot` builds aim to be a relatively recent commit on the Emacs
-master branch, and do not automatically give you the very latest Emacs
+master branch, and does not automatically give you the very latest Emacs
 revision available via Git. That would defeat binary caching, so the
 current plan is to periodically update the `-snapshot` builds
 manually. Send me a pull request to do this:
 
-- Update the commit named in `default.nix`
+- Update the commit pointed to by the snapshot target using `niv update emacs-snapshot`.
 - Try `nix-build -A emacs-snapshot`.
 - This will fail due to SHA256 checksum mismatch of the downloaded archive,
   so now update that too, and rebuild.
