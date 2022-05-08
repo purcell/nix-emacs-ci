@@ -3,6 +3,7 @@ name: Update snapshot
 on:
   schedule:
     - cron: "15 9 * * 1"
+  workflow_dispatch:
 
 jobs:
   build:
