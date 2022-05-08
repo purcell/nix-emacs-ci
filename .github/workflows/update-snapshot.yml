@@ -15,5 +15,6 @@ jobs:
       run: nix-shell -p niv niv update emacs-snapshot
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
-      title: 'Update snapshot'
-      add-paths: nix/sources.*
+      with:
+        title: 'Update snapshot'
+        add-paths: nix/sources.*
