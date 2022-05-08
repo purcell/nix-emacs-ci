@@ -1,0 +1,18 @@
+name: Update snapshot
+
+on:
+  schedule:
+    - cron: "* 9 0 * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v17
+    - name: Update snapshot commit
+      run: nix-shell -p niv niv update emacs-snapshot
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
+      title: 'Update snapshot'
+      add-paths: nix/sources.*
