@@ -19,4 +19,9 @@ jobs:
       uses: peter-evans/create-pull-request@v4
       with:
         title: 'Update snapshot'
+        body: ''
+        commit-message: 'Update snapshot'
+        branch: snapshot-update
+        branch-suffix: timestamp
+        delete-branch: true
         add-paths: nix/sources.*
