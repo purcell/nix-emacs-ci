@@ -2,7 +2,7 @@ name: Update snapshot
 
 on:
   schedule:
-    - cron: "* 9 0 * *"
+    - cron: "15 9 * * 1"
 
 jobs:
   build:
