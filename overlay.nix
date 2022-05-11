@@ -1,6 +1,6 @@
 self: super:
 let
-  sources = import ./nix/sources.nix;
+  sources = import ./nix/sources.nix { inherit (super) system; };
 
   source_for = version: rec {
     inherit version;
