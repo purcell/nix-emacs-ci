@@ -91,21 +91,15 @@ environment containing a specific Emacs, but I haven't figured that
 out yet.
 
 
-## Using newer snapshot builds
+## About `snapshot` builds
 
 `snapshot` builds aim to be a relatively recent commit on the Emacs
 master branch, and does not automatically give you the very latest Emacs
-revision available via Git. That would defeat binary caching, so the
-current plan is to periodically update the `-snapshot` builds
-manually. Send me a pull request to do this:
+revision available via Git. That would defeat binary caching.
 
-- Update the commit pointed to by the snapshot target using `niv update emacs-snapshot`.
-- Try `nix-build -A emacs-snapshot`.
-- This will fail due to SHA256 checksum mismatch of the downloaded archive,
-  so now update that too, and rebuild.
-- Now submit the change as a pull request.
-- Once merged, we'll all be testing against a newer snapshot
-  build.
+Instead, a scheduled Action runs every week to speculatively update
+the version: it requires me to click a couple of things, but most
+weeks this should happen.
 
 ## What patches are applied to these binaries, and why?
 
