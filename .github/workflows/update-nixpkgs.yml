@@ -1,4 +1,4 @@
-name: Update snapshot
+name: Update nixpkgs snapshot
 
 on:
   schedule:
