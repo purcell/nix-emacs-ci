@@ -110,10 +110,10 @@
         "homepage": "http://www.gnu.org/software/emacs/",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "c6ff592663e93c43ee36ba441ada5639305fee75",
-        "sha256": "071zi474j5g6s8kwisbmhl17cgxj26ibxrmipfv4k7hsm045yfa7",
+        "rev": "5b1bb1af030597aab7f7895b6e3da9b430f9438a",
+        "sha256": "1v6fqf85lsa3hz3cf4h7n2vpf0cypzqc8z90049ljjna0lvyd5b4",
         "type": "tarball",
-        "url": "https://github.com/emacs-mirror/emacs/archive/c6ff592663e93c43ee36ba441ada5639305fee75.tar.gz",
+        "url": "https://github.com/emacs-mirror/emacs/archive/5b1bb1af030597aab7f7895b6e3da9b430f9438a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
