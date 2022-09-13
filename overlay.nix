@@ -157,6 +157,11 @@ let
       withAutoReconf = true;
     };
 
+    emacs-28-2 = super.callPackage ./emacs.nix {
+      inherit (source_for "28.2") name src version;
+      withAutoReconf = true;
+    };
+
     emacs-snapshot = super.callPackage ./emacs.nix {
       inherit (source_for "snapshot") name src;
       version = "29.0.50";
