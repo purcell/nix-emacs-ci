@@ -104,6 +104,13 @@
         "url_template": "mirror://gnu/emacs/emacs-<version>.tar.gz",
         "version": "28.1"
     },
+    "emacs-28.2": {
+        "sha256": "sha256-+Tmn3gJ+7536KehS3QUGRWFc0ic7xZI/KDl63n/yEp4=",
+        "type": "tarball",
+        "url": "mirror://gnu/emacs/emacs-28.2.tar.gz",
+        "url_template": "mirror://gnu/emacs/emacs-<version>.tar.gz",
+        "version": "28.2"
+    },
     "emacs-snapshot": {
         "branch": "master",
         "description": "Mirror of GNU Emacs",
