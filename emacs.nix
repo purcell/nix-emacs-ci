@@ -62,6 +62,9 @@ stdenv.mkDerivation rec {
   postPatch = lib.concatStringsSep "\n" [
     (lib.optionalString srcRepo ''
       rm -fr .git
+      substituteInPlace lisp/loadup.el \
+        --replace '(emacs-repository-get-version)' '"${src.rev}"' \
+        --replace '(emacs-repository-get-branch)' '"master"'
     '')
 
     # Reduce closure size by cleaning the environment of the emacs dumper
