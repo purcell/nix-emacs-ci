@@ -6,7 +6,7 @@
 , fetchurl
 , ncurses
 , autoreconfHook
-, pkgconfig
+, pkg-config
 , libxml2
 , gettext
 , gnutls
@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   nativeBuildInputs =
-    [ pkgconfig ]
+    [ pkg-config ]
     ++ lib.optionals withAutoReconf [ autoreconfHook ]
     ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
