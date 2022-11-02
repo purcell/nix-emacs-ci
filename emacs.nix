@@ -4,6 +4,7 @@
 , stdenv
 , lib
 , fetchurl
+, glibc
 , ncurses
 , autoreconfHook
 , pkg-config
@@ -57,7 +58,7 @@ stdenv.mkDerivation rec {
     "--with-png=no"
     "--with-gif=no"
     "--with-tiff=no"
-  ] ++ lib.optionals needCrtDir [ "--with-crt-dir=${stdenv.glibc}/lib" ];
+  ] ++ lib.optionals needCrtDir [ "--with-crt-dir=${glibc}/lib" ];
 
   postPatch = lib.concatStringsSep "\n" [
     (lib.optionalString srcRepo ''
