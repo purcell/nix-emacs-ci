@@ -3,6 +3,7 @@ cd "$(dirname "$0")"
 echo "Attempting startup..."
 rm -rf elpa .gnupg
 HOME=$(pwd) ${EMACS:=emacs} -nw --batch \
+                -l url \
                 --eval '(let ((debug-on-error t)
                               (url-show-status nil)
                               (user-emacs-directory default-directory)
