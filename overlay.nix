@@ -164,7 +164,7 @@ let
 
     emacs-snapshot = super.callPackage ./emacs.nix {
       inherit (source_for "snapshot") name src;
-      version = "29.0.50";
+      version = "30.0.50";
       srcRepo = true;
       withAutoReconf = true;
       inherit (self.darwin) sigtool;
