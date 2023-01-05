@@ -26,7 +26,7 @@
 let
   latestPackageKeyring = fetchurl {
     url = "https://github.com/emacs-mirror/emacs/raw/master/etc/package-keyring.gpg";
-    sha256 = "4a44d6c3a657405892dacf777f03b9267cc74cbc8edad65a88ae8c8929ab1a8d";
+    sha256 = "69e4bfa98b9f750596584c602d3528113760dd1197c8e6188c07357bfee9762b";
   };
 in
 
