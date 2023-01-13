@@ -1,4 +1,4 @@
-name: Update snapshot
+name: Update snapshots
 
 on:
   schedule:
@@ -13,14 +13,16 @@ jobs:
     - uses: cachix/install-nix-action@v18
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - name: Update snapshot commit
+    - name: Update HEAD snapshot commit
       run: 'nix-shell -p niv --run "niv update emacs-snapshot"'
+    - name: Update release snapshot commit
+      run: 'nix-shell -p niv --run "niv update emacs-release-snapshot"'
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
       with:
-        title: 'Update snapshot'
+        title: 'Update snapshots'
         body: ''
-        commit-message: 'Update snapshot'
+        commit-message: 'Update snapshots'
         branch: snapshot-update
         branch-suffix: timestamp
         delete-branch: true
