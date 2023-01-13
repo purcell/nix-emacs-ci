@@ -162,6 +162,14 @@ let
       withAutoReconf = true;
     };
 
+    emacs-release-snapshot = super.callPackage ./emacs.nix {
+      inherit (source_for "release-snapshot") name src;
+      version = "29.0.60";
+      srcRepo = true;
+      withAutoReconf = true;
+      inherit (self.darwin) sigtool;
+    };
+
     emacs-snapshot = super.callPackage ./emacs.nix {
       inherit (source_for "snapshot") name src;
       version = "30.0.50";

@@ -111,6 +111,18 @@
         "url_template": "mirror://gnu/emacs/emacs-<version>.tar.gz",
         "version": "28.2"
     },
+    "emacs-release-snapshot": {
+        "branch": "emacs-29",
+        "description": "Mirror of GNU Emacs",
+        "homepage": "http://www.gnu.org/software/emacs/",
+        "owner": "emacs-mirror",
+        "repo": "emacs",
+        "rev": "f4f30ff4c44dcfdf780f1981aa541af713f2805f",
+        "sha256": "0r8y7gya3203910qrqdazlkykx0ca3lgybhsa53g35pi496cyd4r",
+        "type": "tarball",
+        "url": "https://github.com/emacs-mirror/emacs/archive/f4f30ff4c44dcfdf780f1981aa541af713f2805f.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "emacs-snapshot": {
         "branch": "master",
         "description": "Mirror of GNU Emacs",
