@@ -14,10 +14,14 @@
 , jansson
 , gmp
 , sigtool ? null
+, xlibsWrapper, libXaw, libXpm
+, Xaw3d, libXcursor, libXft, dbus, libpng, libjpeg, giflib
+, libtiff, librsvg, imagemagick, libselinux
 , autoconf ? null
 , automake ? null
 , texinfo ? null
 , withAutoReconf ? true
+, withX ? true
 , patches ? [ ]
 , srcRepo ? false
 , needCrtDir ? false
@@ -42,7 +46,9 @@ stdenv.mkDerivation rec {
     ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optionals stdenv.isDarwin [ sigtool ];
+    [ ncurses libxml2 gnutls gettext jansson gmp ]
+    ++ lib.optionals withX [ xlibsWrapper libXaw Xaw3d libXpm libpng libjpeg libtiff libXft librsvg giflib imagemagick ]
+    ++ lib.optionals stdenv.isDarwin [ sigtool ];
 
   hardeningDisable = [ "format" ];
 
@@ -51,13 +57,6 @@ stdenv.mkDerivation rec {
   configureFlags = [
     "--disable-build-details" # for a (more) reproducible build
     "--with-modules"
-    "--with-x=no"
-    "--with-ns=no"
-    "--with-xpm=no"
-    "--with-jpeg=no"
-    "--with-png=no"
-    "--with-gif=no"
-    "--with-tiff=no"
   ] ++ lib.optionals needCrtDir [ "--with-crt-dir=${glibc}/lib" ];
 
   postPatch = lib.concatStringsSep "\n" [
