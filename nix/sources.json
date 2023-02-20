@@ -117,10 +117,10 @@
         "homepage": "http://www.gnu.org/software/emacs/",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "cc30422825a5acf460d026bfe912b327b70dedcf",
-        "sha256": "1qsz72dg8i23qwda4ks96lvvc3mfi8ys96bps9nry3n3bszzm9ja",
+        "rev": "fc4bfa76db958f48daed7c5812921b1653c31175",
+        "sha256": "1w60dmdc8ag1dx78ymrfndyb30giz76i00wg6a6f3950jjnlkabb",
         "type": "tarball",
-        "url": "https://github.com/emacs-mirror/emacs/archive/cc30422825a5acf460d026bfe912b327b70dedcf.tar.gz",
+        "url": "https://github.com/emacs-mirror/emacs/archive/fc4bfa76db958f48daed7c5812921b1653c31175.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "emacs-snapshot": {
@@ -129,10 +129,10 @@
         "homepage": "http://www.gnu.org/software/emacs/",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "609319da870eac75cf4715de8abfaac9233d98f9",
-        "sha256": "0z0vfj69c3kj0wpw50zgsk2rr0ygyl9y2a10ygb40m69qlkqdyrd",
+        "rev": "cac13e360547f95ec64d34f38003dfc7ff1a97ee",
+        "sha256": "1dr3vp2n4kd153nhx1m0c6xpdnjycrzx7218yjjqwsddw5z0q3x6",
         "type": "tarball",
-        "url": "https://github.com/emacs-mirror/emacs/archive/609319da870eac75cf4715de8abfaac9233d98f9.tar.gz",
+        "url": "https://github.com/emacs-mirror/emacs/archive/cac13e360547f95ec64d34f38003dfc7ff1a97ee.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
