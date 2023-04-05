@@ -16,7 +16,7 @@ jobs:
     - name: Update snapshot commit
       run: 'nix-shell -p niv --run "niv update nixpkgs"'
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v5
       with:
         title: 'Update nixpkgs snapshot'
         body: ''
