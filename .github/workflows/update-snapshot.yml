@@ -1,4 +1,4 @@
-name: Update snapshots
+name: Update emacs snapshots
 
 on:
   schedule:
