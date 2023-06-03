@@ -91,6 +91,12 @@ stdenv.mkDerivation rec {
 
   installTargets = "tags install";
 
+  # Create site-start.el which is needed by the wrapper
+  postInstall = ''
+    mkdir -p $out/share/emacs/site-lisp
+    touch $out/share/emacs/site-lisp/site-start.el
+  '';
+
   meta = with lib; {
     description = "The extensible, customizable GNU text editor";
     homepage = https://www.gnu.org/software/emacs/;
