@@ -20,9 +20,9 @@ jobs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
-        title: 'Update snapshots'
+        title: 'Update emacs snapshots'
         body: ''
-        commit-message: 'Update snapshots'
+        commit-message: 'Update emacs snapshots'
         branch: snapshot-update
         branch-suffix: timestamp
         delete-branch: true
