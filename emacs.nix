@@ -13,7 +13,7 @@
 , gnutls
 , jansson
 , tree-sitter
-, treeSitter ? false
+, withTreeSitter ? false
 , gmp
 , sigtool ? null
 , autoconf ? null
@@ -44,14 +44,14 @@ stdenv.mkDerivation rec {
     ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optionals stdenv.isDarwin [ sigtool ] ++ lib.optional treeSitter tree-sitter;
+    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optionals stdenv.isDarwin [ sigtool ] ++ lib.optional withTreeSitter tree-sitter;
 
   hardeningDisable = [ "format" ];
 
   inherit patches;
 
   passthru = {
-    inherit treeSitter;
+    inherit withTreeSitter;
   };
 
   configureFlags = [

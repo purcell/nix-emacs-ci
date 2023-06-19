@@ -167,7 +167,7 @@ let
       version = "29.0.60";
       srcRepo = true;
       withAutoReconf = true;
-      treeSitter = true;
+      withTreeSitter = true;
       inherit (self.darwin) sigtool;
     };
 
@@ -176,7 +176,7 @@ let
       version = "30.0.50";
       srcRepo = true;
       withAutoReconf = true;
-      treeSitter = true;
+      withTreeSitter = true;
       inherit (self.darwin) sigtool;
     };
   };
