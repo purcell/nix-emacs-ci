@@ -23,14 +23,8 @@
 , patches ? [ ]
 , srcRepo ? false
 , needCrtDir ? false
+, latestPackageKeyring
 }:
-
-let
-  latestPackageKeyring = fetchurl {
-    url = "https://github.com/emacs-mirror/emacs/raw/master/etc/package-keyring.gpg";
-    sha256 = "69e4bfa98b9f750596584c602d3528113760dd1197c8e6188c07357bfee9762b";
-  };
-in
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {

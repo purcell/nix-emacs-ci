@@ -74,6 +74,21 @@ nix-env -iA cachix -f https://cachix.org/api/v1/install
 cachix use emacs-ci
 ```
 
+If you want to add the cache address and key to your `substituters`
+system-wide, use the details on [the cache
+page](https://app.cachix.org/cache/emacs-ci).
+
+### With Flakes
+
+There's a flake definition in this repo so (assuming you have flakes
+enabled in your nix installation) you can easily run any given Emacs, e.g. using:
+
+```bash
+nix run 'github:purcell/nix-emacs-ci#emacs-28-2' -- -Q
+```
+
+### Without Flakes
+
 Then, evaluate one of the `emacs-*` expressions in `default.nix`. You
 can do this without first downloading the contents of this repo,
 e.g. here's how you would add a specific version to your Nix profile:
