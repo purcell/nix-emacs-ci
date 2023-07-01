@@ -5,12 +5,13 @@
 
 This project aims to provide a method for Emacs Lisp authors
 to easily test their code against a wide variety of Emacs
-versions.
+versions. It is used most widely as the basis of the popular
+[setup-emacs GitHub Action](https://github.com/purcell/setup-emacs).
 
 ## Goals:
 
 - Usable without Nix knowledge
-- Clear, simple docs and setup, initially primarily for Travis and Github Actions
+- Clear, simple docs and setup, initially primarily for Travis and [Github Actions](https://github.com/purcell/setup-emacs)
 - Binary caching, ie. pre-built executables, via
   [Cachix](https://cachix.org/) (a wonderful service!)
 - Both Linux *and* MacOS support
@@ -39,10 +40,7 @@ integration with your Github workflows.
 
 ## Travis usage
 
-Here's some example usage: caution that this early method may
-change. Early adopters should watch [issue
-#6](https://github.com/purcell/nix-emacs-ci/issues/6) to be kept up to
-date with changes to the recommended usage method.
+While people were still using Travis for open source, integration worked like this:
 
 ```yaml
 language: nix
