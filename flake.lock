@@ -275,18 +275,6 @@
         "type": "github"
       }
     },
-    "macos-unexec-patches": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-QLNRDchKD1BCNdtFO0Unr46KEWOl5KZ7CbDhnAc7sFU=",
-        "type": "file",
-        "url": "https://github.com/emacs-mirror/emacs/commit/888ffd960c06d56a409a7ff15b1d930d25c56089.patch"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/emacs-mirror/emacs/commit/888ffd960c06d56a409a7ff15b1d930d25c56089.patch"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1688100262,
@@ -325,7 +313,6 @@
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "latest-package-keyring": "latest-package-keyring",
-        "macos-unexec-patches": "macos-unexec-patches",
         "nixpkgs": "nixpkgs"
       }
     },

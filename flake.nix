@@ -24,7 +24,6 @@
     "emacs-28.2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-28.2.tar.gz"; flake = false; };
     emacs-snapshot = { url = "github:emacs-mirror/emacs"; flake = false; };
     emacs-release-snapshot = { url = "github:emacs-mirror/emacs?ref=emacs-29"; flake = false; };
-    macos-unexec-patches = { url = "https://github.com/emacs-mirror/emacs/commit/888ffd960c06d56a409a7ff15b1d930d25c56089.patch"; flake = false; };
     latest-package-keyring = { url = "github:emacs-mirror/emacs?path=/etc/package-keyring.gpg"; flake = false; };
   };
 
@@ -92,7 +91,7 @@
                   ./patches/gnutls-e_again.patch
                   ./patches/all-dso-handle.patch
                   ./patches/fpending-24.3.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
@@ -104,7 +103,7 @@
                 stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
                 patches = [
                   ./patches/gnutls-e_again.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
@@ -116,7 +115,7 @@
                 stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
                 patches = [
                   ./patches/gnutls-e_again.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
@@ -128,7 +127,7 @@
                   ./patches/gnutls-use-osx-cert-bundle.patch
                   ./patches/gnutls-e_again.patch
                   ./patches/sigsegv-stack.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
@@ -140,7 +139,7 @@
                   ./patches/gnutls-use-osx-cert-bundle.patch
                   ./patches/gnutls-e_again.patch
                   ./patches/sigsegv-stack.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
@@ -152,7 +151,7 @@
                   ./patches/gnutls-use-osx-cert-bundle.patch
                   ./patches/gnutls-e_again.patch
                   ./patches/sigsegv-stack.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
@@ -163,7 +162,7 @@
                 patches = [
                   ./patches/gnutls-e_again.patch
                   ./patches/sigsegv-stack.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
@@ -174,7 +173,7 @@
                 patches = [
                   ./patches/gnutls-e_again.patch
                   ./patches/sigsegv-stack.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
@@ -184,7 +183,7 @@
                 inherit latestPackageKeyring;
                 patches = [
                   ./patches/sigsegv-stack.patch
-                  inputs.macos-unexec-patches
+                  ./patches/macos-unexec.patch
                 ];
                 inherit (self.darwin) sigtool;
               };
