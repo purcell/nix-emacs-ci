@@ -5,22 +5,22 @@
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
 
     flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
-    "emacs-23.4" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-23.4.tar.gz"; flake = false; };
-    "emacs-24.1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.1.tar.gz"; flake = false; };
-    "emacs-24.2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.2.tar.gz"; flake = false; };
-    "emacs-24.3" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.3.tar.gz"; flake = false; };
-    "emacs-24.4" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.4.tar.gz"; flake = false; };
-    "emacs-24.5" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.gz"; flake = false; };
-    "emacs-25.1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-25.1.tar.gz"; flake = false; };
-    "emacs-25.2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-25.2.tar.gz"; flake = false; };
-    "emacs-25.3" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-25.3.tar.gz"; flake = false; };
-    "emacs-26.1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-26.1.tar.gz"; flake = false; };
-    "emacs-26.2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-26.2.tar.gz"; flake = false; };
-    "emacs-26.3" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-26.3.tar.gz"; flake = false; };
-    "emacs-27.1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-27.1.tar.gz"; flake = false; };
-    "emacs-27.2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-27.2.tar.gz"; flake = false; };
-    "emacs-28.1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-28.1.tar.gz"; flake = false; };
-    "emacs-28.2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-28.2.tar.gz"; flake = false; };
+    "emacs-23-4" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-23.4.tar.gz"; flake = false; };
+    "emacs-24-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.1.tar.gz"; flake = false; };
+    "emacs-24-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.2.tar.gz"; flake = false; };
+    "emacs-24-3" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.3.tar.gz"; flake = false; };
+    "emacs-24-4" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.4.tar.gz"; flake = false; };
+    "emacs-24-5" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.gz"; flake = false; };
+    "emacs-25-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-25.1.tar.gz"; flake = false; };
+    "emacs-25-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-25.2.tar.gz"; flake = false; };
+    "emacs-25-3" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-25.3.tar.gz"; flake = false; };
+    "emacs-26-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-26.1.tar.gz"; flake = false; };
+    "emacs-26-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-26.2.tar.gz"; flake = false; };
+    "emacs-26-3" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-26.3.tar.gz"; flake = false; };
+    "emacs-27-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-27.1.tar.gz"; flake = false; };
+    "emacs-27-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-27.2.tar.gz"; flake = false; };
+    "emacs-28-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-28.1.tar.gz"; flake = false; };
+    "emacs-28-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-28.2.tar.gz"; flake = false; };
     emacs-snapshot = { url = "github:emacs-mirror/emacs"; flake = false; };
     emacs-release-snapshot = { url = "github:emacs-mirror/emacs?ref=emacs-29"; flake = false; };
   };
@@ -77,7 +77,7 @@
               pkgs.callPackage ./emacs.nix {
                 inherit name version;
                 inherit (pkgs.darwin) sigtool;
-                src = inputs."emacs-${version}";
+                src = inputs.${name};
                 latestPackageKeyring = inputs.emacs-snapshot + "/etc/package-keyring.gpg";
                 stdenv =
                   if lib.versionOlder version "25" && pkgs.stdenv.cc.isGNU
