@@ -76,6 +76,7 @@
             (name: version:
               pkgs.callPackage ./emacs.nix {
                 inherit name version;
+                inherit (pkgs.darwin) sigtool;
                 src = inputs."emacs-${version}";
                 latestPackageKeyring = inputs.emacs-snapshot + "/etc/package-keyring.gpg";
                 stdenv =
