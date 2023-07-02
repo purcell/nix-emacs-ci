@@ -32,8 +32,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs =
     [ pkg-config ]
     ++ lib.optionals stdenv.isDarwin [ sigtool ]
-    ++ lib.optionals (lib.versionAtLeast version "25.1") [ autoreconfHook ]
-    ++ lib.optionals srcRepo [ autoconf automake texinfo ];
+    ++ lib.optionals (lib.versionAtLeast version "25.1") [ autoreconfHook texinfo ];
 
   buildInputs =
     [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optional treeSitter tree-sitter;
