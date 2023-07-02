@@ -13,7 +13,7 @@
 , gnutls
 , jansson
 , tree-sitter
-, treeSitter ? false
+, withTreeSitter ? false
 , gmp
 , sigtool ? null
 , autoconf ? null
@@ -35,7 +35,7 @@ stdenv.mkDerivation rec {
     ++ lib.optionals (lib.versionAtLeast version "25.1") [ autoreconfHook texinfo ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optional treeSitter tree-sitter;
+    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optional withTreeSitter tree-sitter;
 
   hardeningDisable = [ "format" ];
 
@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
     ];
 
   passthru = {
-    inherit treeSitter;
+    inherit withTreeSitter;
   };
 
   configureFlags = [
