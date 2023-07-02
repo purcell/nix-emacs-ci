@@ -86,16 +86,5 @@
                 srcRepo = lib.strings.hasInfix "snapshot" version;
               })
             versions);
-
-    apps = nixpkgs.lib.genAttrs [
-      "aarch64-darwin"
-      "aarch64-linux"
-      "x86_64-darwin"
-      "x86_64-linux"
-    ]
-      (system:
-        builtins.mapAttrs
-          (name: pkg: { type = "app"; program = "${pkg}/bin/emacs"; })
-          self.packages.${system});
   };
 }

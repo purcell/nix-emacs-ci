@@ -129,6 +129,7 @@ stdenv.mkDerivation rec {
     homepage = https://www.gnu.org/software/emacs/;
     license = licenses.gpl3Plus;
     platforms = platforms.all;
+    mainProgram = "emacs";
 
     longDescription = ''
       GNU Emacs is an extensible, customizable text editor—and more.  At its
