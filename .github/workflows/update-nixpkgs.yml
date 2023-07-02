@@ -14,7 +14,7 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-unstable
     - name: Update snapshot commit
-      run: 'nix-shell -p niv --run "niv update nixpkgs"'
+      run: 'nix flake update nixpkgs'
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
@@ -24,4 +24,4 @@ jobs:
         branch: nixpkgs-snapshot-update
         branch-suffix: timestamp
         delete-branch: true
-        add-paths: nix/sources.*
+        add-paths: flake.lock
