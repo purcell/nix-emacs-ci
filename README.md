@@ -21,11 +21,9 @@ versions. It is used most widely as the basis of the popular
 
 ## Status
 
-- Works for Linux x86_64 and MacOS
-- Official release versions from 23.4 onwards are supported (MacOS:
-  24.3 onwards, see [issue
-  #4](https://github.com/purcell/nix-emacs-ci/issues/4))
-- An Emacs development snapshot build is also available
+- Works for Linux x86_64 and MacOS (no binary cache for ARM Macs yet, sorry)
+- Official release versions from 23.4 onwards are supported (though not necessarily on all platforms)
+- Emacs development and pre-release snapshot builds are also available
 - Binary caching via Cachix is enabled, and working
 - A [Github Action](https://github.com/purcell/setup-emacs) is available for easy integration with your workflows
 - Early Travis integration is tested and in use
