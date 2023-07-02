@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
 
     flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
     "emacs-23.4" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-23.4.tar.gz"; flake = false; };
@@ -24,230 +23,67 @@
     "emacs-28.2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-28.2.tar.gz"; flake = false; };
     emacs-snapshot = { url = "github:emacs-mirror/emacs"; flake = false; };
     emacs-release-snapshot = { url = "github:emacs-mirror/emacs?ref=emacs-29"; flake = false; };
-    latest-package-keyring = { url = "github:emacs-mirror/emacs?path=/etc/package-keyring.gpg"; flake = false; };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
-    flake-utils.lib.eachDefaultSystem (system:
-      rec {
-        overlays.default = self: super: (
+  nixConfig = {
+    extra-substituters = [ "https://emacs-ci.cachix.org" ];
+    extra-trusted-public-keys = [ "emacs-ci.cachix.org-1:B5FVOrxhXXrOL0S+tQ7USrhjMT5iOPH+QN9q0NItom4=" ];
+  };
+
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs: {
+    packages =
+      nixpkgs.lib.genAttrs [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ]
+        (system:
           let
-            source_for = version: rec {
-              inherit version;
-              name = "emacs-${version}";
-              src = inputs."emacs-${version}";
-            };
-
-            latestPackageKeyring = inputs.latest-package-keyring;
-
-            versions = (if super.stdenv.isLinux then {
+            inherit (nixpkgs) lib;
+            pkgs = nixpkgs.legacyPackages.${system};
+            versions =
               # Some versions do not currently build on MacOS, so we do not even
               # expose them on that platform.
-
-              emacs-23-4 = with super; callPackage ./emacs.nix {
-                inherit (source_for "23.4") name src version;
-                inherit latestPackageKeyring;
-                withAutoReconf = false;
-                stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-                patches = [
-                  ./patches/all-dso-handle.patch
-                  ./patches/fpending-23.4.patch
-                ];
-                needCrtDir = true;
+              (lib.optionalAttrs pkgs.stdenv.isLinux {
+                emacs-23-4 = "23.4";
+                emacs-24-1 = "24.1";
+                emacs-24-2 = "24.2";
+              })
+              //
+              (lib.optionalAttrs (system != "aarch64-darwin") {
+                emacs-24-3 = "24.3";
+                emacs-24-4 = "24.4";
+                emacs-24-5 = "24.5";
+                emacs-25-1 = "25.1";
+                emacs-25-2 = "25.2";
+                emacs-25-3 = "25.3";
+                emacs-26-1 = "26.1";
+                emacs-26-2 = "26.2";
+                emacs-26-3 = "26.3";
+                emacs-27-1 = "27.1";
+                emacs-27-2 = "27.2";
+              })
+              //
+              {
+                emacs-28-1 = "28.1";
+                emacs-28-2 = "28.2";
+                emacs-release-snapshot = "29.0.60";
+                emacs-snapshot = "30.0.50";
               };
-
-              emacs-24-1 = with super; callPackage ./emacs.nix {
-                inherit (source_for "24.1") name src version;
-                inherit latestPackageKeyring;
-                withAutoReconf = false;
-                stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-                patches = [
-                  ./patches/gnutls-e_again-old-emacsen.patch
-                  ./patches/all-dso-handle.patch
-                  ./patches/remove-old-gets-warning.patch
-                  ./patches/fpending-24.1.patch
-                ];
-              };
-
-              emacs-24-2 = with super; callPackage ./emacs.nix {
-                inherit (source_for "24.2") name src version;
-                inherit latestPackageKeyring;
-                withAutoReconf = false;
-                stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-                patches = [
-                  ./patches/gnutls-e_again-old-emacsen.patch
-                  ./patches/all-dso-handle.patch
-                  ./patches/fpending-24.1.patch
-                ];
-              };
-            } else { }
-            ) // {
-              emacs-24-3 = with super; callPackage ./emacs.nix {
-                inherit (source_for "24.3") name src version;
-                inherit latestPackageKeyring;
-                withAutoReconf = false;
-                stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-                patches = [
-                  ./patches/gnutls-e_again.patch
-                  ./patches/all-dso-handle.patch
-                  ./patches/fpending-24.3.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-24-4 = with super; callPackage ./emacs.nix {
-                inherit (source_for "24.4") name src version;
-                inherit latestPackageKeyring;
-                withAutoReconf = false;
-                stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-                patches = [
-                  ./patches/gnutls-e_again.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-24-5 = with super; callPackage ./emacs.nix {
-                inherit (source_for "24.5") name src version;
-                inherit latestPackageKeyring;
-                withAutoReconf = false;
-                stdenv = if stdenv.cc.isGNU then gcc49Stdenv else stdenv;
-                patches = [
-                  ./patches/gnutls-e_again.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-25-1 = super.callPackage ./emacs.nix {
-                inherit (source_for "25.1") name src version;
-                inherit latestPackageKeyring;
-                patches = [
-                  ./patches/gnutls-use-osx-cert-bundle.patch
-                  ./patches/gnutls-e_again.patch
-                  ./patches/sigsegv-stack.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-25-2 = super.callPackage ./emacs.nix {
-                inherit (source_for "25.2") name src version;
-                inherit latestPackageKeyring;
-                patches = [
-                  ./patches/gnutls-use-osx-cert-bundle.patch
-                  ./patches/gnutls-e_again.patch
-                  ./patches/sigsegv-stack.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-25-3 = super.callPackage ./emacs.nix {
-                inherit (source_for "25.3") name src version;
-                inherit latestPackageKeyring;
-                patches = [
-                  ./patches/gnutls-use-osx-cert-bundle.patch
-                  ./patches/gnutls-e_again.patch
-                  ./patches/sigsegv-stack.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-26-1 = super.callPackage ./emacs.nix {
-                inherit (source_for "26.1") name src version;
-                inherit latestPackageKeyring;
-                patches = [
-                  ./patches/gnutls-e_again.patch
-                  ./patches/sigsegv-stack.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-26-2 = super.callPackage ./emacs.nix {
-                inherit (source_for "26.2") name src version;
-                inherit latestPackageKeyring;
-                patches = [
-                  ./patches/gnutls-e_again.patch
-                  ./patches/sigsegv-stack.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-26-3 = super.callPackage ./emacs.nix {
-                inherit (source_for "26.3") name src version;
-                inherit latestPackageKeyring;
-                patches = [
-                  ./patches/sigsegv-stack.patch
-                  ./patches/macos-unexec.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-27-1 = super.callPackage ./emacs.nix {
-                inherit (source_for "27.1") name src version;
-                inherit latestPackageKeyring;
-                patches = [
-                  ./patches/sigsegv-stack.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-27-2 = super.callPackage ./emacs.nix {
-                inherit (source_for "27.2") name src version;
-                inherit latestPackageKeyring;
-                patches = [
-                  ./patches/sigsegv-stack.patch
-                ];
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-28-1 = super.callPackage ./emacs.nix {
-                inherit (source_for "28.1") name src version;
-                inherit latestPackageKeyring;
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-28-2 = super.callPackage ./emacs.nix {
-                inherit (source_for "28.2") name src version;
-                inherit latestPackageKeyring;
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-release-snapshot = super.callPackage ./emacs.nix {
-                inherit (source_for "release-snapshot") name src;
-                inherit latestPackageKeyring;
-                version = "29.0.60";
-                srcRepo = true;
-                treeSitter = true;
-                inherit (self.darwin) sigtool;
-              };
-
-              emacs-snapshot = super.callPackage ./emacs.nix {
-                inherit (source_for "snapshot") name src;
-                inherit latestPackageKeyring;
-                version = "30.0.50";
-                srcRepo = true;
-                treeSitter = true;
-                inherit (self.darwin) sigtool;
-              };
-            };
           in
-          versions // {
-            emacs-ci-versions = builtins.attrNames versions;
-          }
-        );
-
-        packages =
-          let pkgs = import nixpkgs { inherit system; overlays = [ overlays.default ]; };
-          in
-          builtins.listToAttrs
-            (builtins.map (a: { name = a; value = builtins.getAttr a pkgs; })
-              pkgs.emacs-ci-versions);
-      }
-    );
+          builtins.mapAttrs
+            (name: version:
+              pkgs.callPackage ./emacs.nix {
+                inherit name version;
+                src = inputs."emacs-${version}";
+                latestPackageKeyring = inputs.emacs-snapshot + "/etc/package-keyring.gpg";
+                stdenv =
+                  if lib.versionOlder version "25" && pkgs.stdenv.cc.isGNU
+                  then pkgs.gcc49Stdenv
+                  else pkgs.stdenv;
+                srcRepo = lib.strings.hasInfix "snapshot" version;
+              })
+            versions);
+  };
 }

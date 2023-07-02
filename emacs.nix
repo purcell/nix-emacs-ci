@@ -19,10 +19,7 @@
 , autoconf ? null
 , automake ? null
 , texinfo ? null
-, withAutoReconf ? true
-, patches ? [ ]
 , srcRepo ? false
-, needCrtDir ? false
 , latestPackageKeyring
 }:
 
@@ -34,7 +31,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs =
     [ pkg-config ]
-    ++ lib.optionals withAutoReconf [ autoreconfHook ]
+    ++ lib.optionals (lib.versionAtLeast version "25.1") [ autoreconfHook ]
     ++ lib.optionals srcRepo [ autoconf automake texinfo ];
 
   buildInputs =
@@ -42,7 +39,38 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "format" ];
 
-  inherit patches;
+  patches =
+    lib.optionals ("23.4" == version) [
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-23.4.patch
+    ] ++
+    lib.optionals ("24.1" == version) [
+      ./patches/gnutls-e_again-old-emacsen.patch
+      ./patches/all-dso-handle.patch
+      ./patches/remove-old-gets-warning.patch
+      ./patches/fpending-24.1.patch
+    ] ++
+    lib.optionals ("24.2" == version) [
+      ./patches/gnutls-e_again-old-emacsen.patch
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-24.1.patch
+    ] ++
+    lib.optionals ("24.3" == version) [
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-24.3.patch
+    ] ++
+    lib.optionals (lib.versionAtLeast version "24.3" && lib.versionOlder version "26.3") [
+      ./patches/gnutls-e_again.patch
+    ] ++
+    lib.optionals (lib.versionAtLeast version "25.1" && lib.versionOlder version "28.1") [
+      ./patches/sigsegv-stack.patch
+    ] ++
+    lib.optionals (stdenv.isDarwin && lib.versionAtLeast version "25.1" && lib.versionOlder version "26.1") [
+      ./patches/gnutls-use-osx-cert-bundle.patch
+    ] ++
+    lib.optionals (stdenv.isDarwin && lib.versionOlder version "27.1") [
+      ./patches/macos-unexec.patch
+    ];
 
   passthru = {
     inherit treeSitter;
@@ -58,7 +86,7 @@ stdenv.mkDerivation rec {
     "--with-png=no"
     "--with-gif=no"
     "--with-tiff=no"
-  ] ++ lib.optionals needCrtDir [ "--with-crt-dir=${glibc}/lib" ];
+  ] ++ lib.optionals ("23.4" == version) [ "--with-crt-dir=${glibc}/lib" ];
 
   postPatch = lib.concatStringsSep "\n" [
     (lib.optionalString srcRepo ''
@@ -83,7 +111,7 @@ stdenv.mkDerivation rec {
       done
       if [ -f etc/package-keyring.gpg ]; then
         rm etc/package-keyring.gpg
-        ln -s ${latestPackageKeyring} etc/package-keyring.gpg
+        cp ${latestPackageKeyring} etc/package-keyring.gpg
       fi
     ''
   ];

@@ -254,25 +254,8 @@
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "latest-package-keyring": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1688217933,
-        "narHash": "sha256-OAvK/dnCNVsk+PaTUlrzxYYWPV8rlDIY0GPEIDRUHsQ=",
-        "owner": "emacs-mirror",
-        "repo": "emacs",
-        "rev": "d42b45dcc7504deb9d1e7b730fed69e18f958533",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emacs-mirror",
-        "repo": "emacs",
-        "type": "github"
+        "id": "flake-utils",
+        "type": "indirect"
       }
     },
     "nixpkgs": {
@@ -312,7 +295,6 @@
         "emacs-snapshot": "emacs-snapshot",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
-        "latest-package-keyring": "latest-package-keyring",
         "nixpkgs": "nixpkgs"
       }
     },
