@@ -38,7 +38,8 @@ jobs:
         --eval "(setq debug-on-error t)" --load init.el
       name: Test if package.el works inside Emacs
     - run: |
-        nix-build --argstr emacsAttr emacs-${{ matrix.attr }} tests \
+        nix-build --experimental-features 'nix-command flakes' \
+                  --argstr emacsAttr emacs-${{ matrix.attr }} tests \
          && result/bin/test
       if: ${{ ! contains( fromJson('[ "23-4", "24-1", "24-2", "24-3", "24-4", "24-5" ]'), matrix.attr ) }}
       name: Test if the wrapper builds a configuration

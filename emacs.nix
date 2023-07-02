@@ -19,18 +19,9 @@
 , autoconf ? null
 , automake ? null
 , texinfo ? null
-, withAutoReconf ? true
-, patches ? [ ]
 , srcRepo ? false
-, needCrtDir ? false
+, latestPackageKeyring
 }:
-
-let
-  latestPackageKeyring = fetchurl {
-    url = "https://github.com/emacs-mirror/emacs/raw/master/etc/package-keyring.gpg";
-    sha256 = "69e4bfa98b9f750596584c602d3528113760dd1197c8e6188c07357bfee9762b";
-  };
-in
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
@@ -40,15 +31,46 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs =
     [ pkg-config ]
-    ++ lib.optionals withAutoReconf [ autoreconfHook ]
-    ++ lib.optionals srcRepo [ autoconf automake texinfo ];
+    ++ lib.optionals stdenv.isDarwin [ sigtool ]
+    ++ lib.optionals (lib.versionAtLeast version "25.1") [ autoreconfHook texinfo ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optionals stdenv.isDarwin [ sigtool ] ++ lib.optional treeSitter tree-sitter;
+    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optional treeSitter tree-sitter;
 
   hardeningDisable = [ "format" ];
 
-  inherit patches;
+  patches =
+    lib.optionals ("23.4" == version) [
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-23.4.patch
+    ] ++
+    lib.optionals ("24.1" == version) [
+      ./patches/gnutls-e_again-old-emacsen.patch
+      ./patches/all-dso-handle.patch
+      ./patches/remove-old-gets-warning.patch
+      ./patches/fpending-24.1.patch
+    ] ++
+    lib.optionals ("24.2" == version) [
+      ./patches/gnutls-e_again-old-emacsen.patch
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-24.1.patch
+    ] ++
+    lib.optionals ("24.3" == version) [
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-24.3.patch
+    ] ++
+    lib.optionals (lib.versionAtLeast version "24.3" && lib.versionOlder version "26.3") [
+      ./patches/gnutls-e_again.patch
+    ] ++
+    lib.optionals (lib.versionAtLeast version "25.1" && lib.versionOlder version "28.1") [
+      ./patches/sigsegv-stack.patch
+    ] ++
+    lib.optionals (stdenv.isDarwin && lib.versionAtLeast version "25.1" && lib.versionOlder version "26.1") [
+      ./patches/gnutls-use-osx-cert-bundle.patch
+    ] ++
+    lib.optionals (stdenv.isDarwin && lib.versionOlder version "27.1") [
+      ./patches/macos-unexec.patch
+    ];
 
   passthru = {
     inherit treeSitter;
@@ -64,7 +86,7 @@ stdenv.mkDerivation rec {
     "--with-png=no"
     "--with-gif=no"
     "--with-tiff=no"
-  ] ++ lib.optionals needCrtDir [ "--with-crt-dir=${glibc}/lib" ];
+  ] ++ lib.optionals ("23.4" == version) [ "--with-crt-dir=${glibc}/lib" ];
 
   postPatch = lib.concatStringsSep "\n" [
     (lib.optionalString srcRepo ''
@@ -89,7 +111,7 @@ stdenv.mkDerivation rec {
       done
       if [ -f etc/package-keyring.gpg ]; then
         rm etc/package-keyring.gpg
-        ln -s ${latestPackageKeyring} etc/package-keyring.gpg
+        cp ${latestPackageKeyring} etc/package-keyring.gpg
       fi
     ''
   ];
@@ -107,6 +129,7 @@ stdenv.mkDerivation rec {
     homepage = https://www.gnu.org/software/emacs/;
     license = licenses.gpl3Plus;
     platforms = platforms.all;
+    mainProgram = "emacs";
 
     longDescription = ''
       GNU Emacs is an extensible, customizable text editor—and more.  At its
