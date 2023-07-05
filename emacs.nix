@@ -13,7 +13,7 @@
 , gnutls
 , jansson
 , tree-sitter
-, withTreeSitter ? false
+, withTreeSitter ? lib.versionAtLeast version "29"
 , gmp
 , sigtool ? null
 , autoconf ? null
