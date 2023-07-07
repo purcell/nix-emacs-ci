@@ -23,5 +23,11 @@ pkgs.writeShellApplication {
     emacs --version
     emacs -batch -q -l seq -l dash
     echo "Successfully loaded."
+    emacs -batch -q --eval \
+      '(when (version< "29" emacs-version)
+         (if (treesit-available-p)
+            (message "treesit is available.")
+           (message "treesit is unavailable.")
+           (kill-emacs 1)))'
   '';
 }
