@@ -5,6 +5,12 @@
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
 
     flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
+
+    nix-github-actions = {
+      url = "github:nix-community/nix-github-actions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     "emacs-23-4" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-23.4.tar.bz2"; flake = false; };
     "emacs-24-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.1.tar.bz2"; flake = false; };
     "emacs-24-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.2.tar.xz"; flake = false; };
@@ -31,7 +37,7 @@
     extra-trusted-public-keys = [ "emacs-ci.cachix.org-1:B5FVOrxhXXrOL0S+tQ7USrhjMT5iOPH+QN9q0NItom4=" ];
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs: {
+  outputs = { self, nixpkgs, flake-utils, nix-github-actions, ... }@inputs: {
     packages =
       nixpkgs.lib.genAttrs [
         "aarch64-darwin"
@@ -88,5 +94,19 @@
                 srcRepo = lib.strings.hasInfix "snapshot" version;
               })
             versions);
+
+    checks = builtins.mapAttrs
+      (system:
+        builtins.mapAttrs (_name: ciEmacs:
+          nixpkgs.legacyPackages.${system}.callPackage ./tests {
+            inherit ciEmacs;
+          })
+      )
+      self.packages;
+
+    githubActions = nix-github-actions.lib.mkGithubMatrix {
+      checks = nixpkgs.lib.getAttrs [ "x86_64-linux" "x86_64-darwin" ] self.checks;
+      attrPrefix = "";
+    };
   };
 }

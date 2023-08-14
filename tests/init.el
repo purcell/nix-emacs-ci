@@ -9,6 +9,8 @@
       (error "GnuTLS appears unavailable")
     (message "GnuTLS appears unavailable")))
 
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 (when is-emacs-24+
   (message "Testing we can talk https to GNU")
   (with-temp-buffer

@@ -1,33 +1,30 @@
-{ emacsAttr ? null }:
+{ lib, emacs, ciEmacs, writeShellApplication }:
 let
-  flake = builtins.getFlake (toString ../.);
-  pkgs = import flake.inputs.nixpkgs { };
-  emacs =
-    if emacsAttr == null
-    then pkgs.emacs
-    else flake.packages.${builtins.currentSystem}.${emacsAttr};
+  canDoPackages = lib.versionAtLeast ciEmacs.version "25.1";
+  ciEmacsWithPackages = (emacs.pkgs.overrideScope' (_: _: {
+    emacs = ciEmacs;
+  })).withPackages (
+    epkgs: [
+      epkgs.seq
+      epkgs.dash
+    ]
+  );
 in
-pkgs.writeShellApplication {
+writeShellApplication {
   name = "test";
   runtimeInputs = [
-    ((pkgs.emacs.pkgs.overrideScope' (_: _: {
-      inherit emacs;
-    })).withPackages (
-      epkgs: [
-        epkgs.seq
-        epkgs.dash
-      ]
-    ))
+    (if canDoPackages then ciEmacsWithPackages else ciEmacs)
   ];
   text = ''
     emacs --version
+  '' + lib.optionalString canDoPackages ''
     emacs -batch -q -l seq -l dash
     echo "Successfully loaded."
+  '' + lib.optionalString (lib.versionAtLeast ciEmacs.version "29") ''
     emacs -batch -q --eval \
-      '(when (version< "29" emacs-version)
-         (if (treesit-available-p)
-            (message "treesit is available.")
-           (message "treesit is unavailable.")
-           (kill-emacs 1)))'
+      '(if (treesit-available-p)
+           (message "treesit is available.")
+         (message "treesit is unavailable.")
+         (kill-emacs 1))'
   '';
 }
