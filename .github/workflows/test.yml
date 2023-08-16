@@ -9,37 +9,32 @@ on:
       - master
 
 jobs:
-  build:
+  nix-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v22
+      - id: set-matrix
+        name: Generate Nix Matrix
+        run: |
+          set -Eeu
+          echo "matrix=$(nix eval --json '.#githubActions.matrix')" >> "$GITHUB_OUTPUT"
+
+  nix-build:
+    needs: nix-matrix
     runs-on: ${{ matrix.os }}
     strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-        attr: [23-4, 24-1, 24-2, 24-3, 24-4, 24-5, 25-1, 25-2, 25-3, 26-1, 26-2, 26-3, 27-1, 27-2, 28-1, 28-2, 29-1, release-snapshot, snapshot]
-        exclude:
-          - os: macos-latest
-            attr: 23-4
-          - os: macos-latest
-            attr: 24-1
-          - os: macos-latest
-            attr: 24-2
-          - os: ARM64
-            attr: 23-4
+      matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
     steps:
-
-    - uses: actions/checkout@v3
-    - uses: nixbuild/nix-quick-install-action@v25
-    - uses: cachix/cachix-action@v12
-      with:
-        name: emacs-ci
-        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-    - run: nix-build -A emacs-${{ matrix.attr }}
-    - run: |
-        cd tests && HOME=$(mktemp -d) ../result/bin/emacs -Q --batch \
-        --eval "(setq debug-on-error t)" --load init.el
-      name: Test if package.el works inside Emacs
-    - run: |
-        nix-build --experimental-features 'nix-command flakes' \
-                  --argstr emacsAttr emacs-${{ matrix.attr }} tests \
-         && result/bin/test
-      if: ${{ ! contains( fromJson('[ "23-4", "24-1", "24-2", "24-3", "24-4", "24-5" ]'), matrix.attr ) }}
-      name: Test if the wrapper builds a configuration
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v22
+      - uses: cachix/cachix-action@v12
+        with:
+          name: emacs-ci
+          signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+      - run: nix build -L ".#${{ matrix.attr }}"
+      - name: Test if package.el works inside Emacs
+        run: cd tests && HOME=$(pwd) nix run "..#${{ matrix.attr }}" -- -Q --batch \
+               --eval "(setq debug-on-error t)" --load init.el
