@@ -12,8 +12,10 @@
 , gettext
 , gnutls
 , jansson
+, sqlite
 , tree-sitter
 , withTreeSitter ? lib.versionAtLeast version "29"
+, withSQLite3 ? lib.versionAtLeast version "29"
 , gmp
 , sigtool ? null
 , autoconf ? null
@@ -35,7 +37,9 @@ stdenv.mkDerivation rec {
     ++ lib.optionals (lib.versionAtLeast version "25.1") [ autoreconfHook texinfo ];
 
   buildInputs =
-    [ ncurses libxml2 gnutls gettext jansson gmp ] ++ lib.optional withTreeSitter tree-sitter;
+    [ ncurses libxml2 gnutls gettext jansson gmp ]
+    ++ lib.optional withSQLite3 sqlite
+    ++ lib.optional withTreeSitter tree-sitter;
 
   hardeningDisable = [ "format" ];
 
