@@ -21,14 +21,12 @@ versions. It is used most widely as the basis of the popular
 
 ## Status
 
-- Works for Linux x86_64 and MacOS (no binary cache for ARM Macs yet, sorry)
+- Works for Linux and MacOS (but no binary cache for ARM on either yet, sorry)
 - Official release versions from 23.4 onwards are supported (though not necessarily on all platforms)
 - Emacs development and pre-release snapshot builds are also available
 - Binary caching via Cachix is enabled, and working
 - A [Github Action](https://github.com/purcell/setup-emacs) is available for easy integration with your workflows
-- Early Travis integration is tested and in use
-  in [various other github projects](https://github.com/search?l=&q=nix-emacs-ci+++filename%3A.travis.yml&type=Code))
-  but see notes below.
+- Travis integration is presumably still working but see notes below.
 
 ## Github Actions usage
 
@@ -63,6 +61,8 @@ script:
   - ... your commands go here ...
 ```
 
+This repo no longer actively aims to support Travis.
+
 ## Low-level Nix usage, e.g. for local testing
 
 ### With Flakes
@@ -76,6 +76,14 @@ nix run 'github:purcell/nix-emacs-ci#emacs-28-2' -- -Q
 
 The flake contains the necessary binary cache config, which you may be
 prompted to authorise.
+
+On MacOS with Apple Silicon and Rosetta installed, you can run the
+pre-built cached `x86_64` Emacsen like this:
+
+```bash
+nix run --system x86_64-darwin 'github:purcell/nix-emacs-ci#emacs-28-2' -- -Q
+```
+
 
 ### Without Flakes
 
