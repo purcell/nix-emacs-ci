@@ -34,7 +34,7 @@ jobs:
         with:
           name: emacs-ci
           signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-      - run: nix build -L ".#${{ matrix.attr }}"
+      - run: nix build -L ".#githubActions.checks.${{ matrix.attr }}"
       - name: Test if package.el works inside Emacs
-        run: cd tests && HOME=$(pwd) nix run "..#${{ matrix.attr }}" -- -Q --batch \
+        run: cd tests && HOME=$(pwd) nix run "..#githubActions.checks.${{ matrix.attr }}" -- -Q --batch \
                --eval "(setq debug-on-error t)" --load init.el
