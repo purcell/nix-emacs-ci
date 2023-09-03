@@ -6,11 +6,6 @@
 
     flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
 
-    nix-github-actions = {
-      url = "github:nix-community/nix-github-actions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     "emacs-23-4" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-23.4.tar.bz2"; flake = false; };
     "emacs-24-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.1.tar.bz2"; flake = false; };
     "emacs-24-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-24.2.tar.xz"; flake = false; };
@@ -37,7 +32,7 @@
     extra-trusted-public-keys = [ "emacs-ci.cachix.org-1:B5FVOrxhXXrOL0S+tQ7USrhjMT5iOPH+QN9q0NItom4=" ];
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-github-actions, ... }@inputs: {
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs: {
     packages =
       nixpkgs.lib.genAttrs [
         "aarch64-darwin"
@@ -104,9 +99,27 @@
       )
       self.packages;
 
-    githubActions = nix-github-actions.lib.mkGithubMatrix {
-      checks = nixpkgs.lib.getAttrs [ "x86_64-linux" "x86_64-darwin" ] self.checks;
-      attrPrefix = "";
-    };
+    githubActions =
+      let
+        inherit (builtins) attrValues mapAttrs attrNames map concatLists intersectAttrs;
+        platforms = {
+          "x86_64-linux" = "ubuntu-latest";
+          "x86_64-darwin" = "macos-latest";
+        };
+      in
+      rec {
+        checks = intersectAttrs platforms self.checks;
+        matrix.include =
+          concatLists (attrValues (mapAttrs
+            (system: pkgs:
+              map
+                (pkg: {
+                  inherit system;
+                  attr = pkg;
+                  os = platforms.${system};
+                })
+                (attrNames pkgs))
+            checks));
+      };
   };
 }
