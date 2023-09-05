@@ -75,7 +75,8 @@ nix run 'github:purcell/nix-emacs-ci#emacs-28-2' -- -Q
 ```
 
 The flake contains the necessary binary cache config, which you may be
-prompted to authorise.
+prompted to authorise, or you can just pass the
+`--accept-flake-config` argument to `nix run`.
 
 On MacOS with Apple Silicon and Rosetta installed, you can run the
 pre-built cached `x86_64` Emacsen like this:
