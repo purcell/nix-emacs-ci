@@ -43,6 +43,8 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "format" ];
 
+  dontStrip = stdenv.isDarwin && lib.versionOlder version "27.1";
+
   patches =
     lib.optionals ("23.4" == version) [
       ./patches/all-dso-handle.patch
