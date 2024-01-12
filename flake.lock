@@ -270,6 +270,18 @@
         "type": "indirect"
       }
     },
+    "melpa2nix-patch": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-19bZ5w/81o7gmeGj/ePw6BQiFQqT4JOVtmLpivgPbyc=",
+        "type": "file",
+        "url": "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/276943.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/276943.patch"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1704842529,
@@ -308,6 +320,7 @@
         "emacs-snapshot": "emacs-snapshot",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
+        "melpa2nix-patch": "melpa2nix-patch",
         "nixpkgs": "nixpkgs"
       }
     },

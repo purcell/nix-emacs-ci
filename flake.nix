@@ -25,6 +25,8 @@
     "emacs-29-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-29.1.tar.xz"; flake = false; };
     emacs-snapshot = { url = "github:emacs-mirror/emacs"; flake = false; };
     emacs-release-snapshot = { url = "github:emacs-mirror/emacs?ref=emacs-29"; flake = false; };
+
+    melpa2nix-patch = { url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/276943.patch"; flake = false; };
   };
 
   nixConfig = {
@@ -93,9 +95,16 @@
     checks = builtins.mapAttrs
       (system:
         builtins.mapAttrs (_name: ciEmacs:
-          nixpkgs.legacyPackages.${system}.callPackage ./tests {
-            inherit ciEmacs;
-          })
+              let
+                patchedNixpkgs = system: import (nixpkgs.legacyPackages.${system}.applyPatches {
+                  name = "nixpkgs-patched";
+                  src = nixpkgs;
+                  patches = inputs.melpa2nix-patch;
+                }) { inherit system; };
+                in
+                (patchedNixpkgs system).callPackage ./tests {
+                  inherit ciEmacs;
+                })
       )
       self.packages;
 
