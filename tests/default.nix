@@ -5,8 +5,7 @@ let
     emacs = ciEmacs;
   })).withPackages (
     epkgs: [
-      epkgs.seq
-      epkgs.dash
+      epkgs.compat
     ]
   );
 in
@@ -18,7 +17,7 @@ writeShellApplication {
   text = ''
     emacs --version
   '' + lib.optionalString canDoPackages ''
-    emacs -batch -q -l seq -l dash
+    emacs -batch -q -l compat
     echo "Successfully loaded."
   '' + lib.optionalString (lib.versionAtLeast ciEmacs.version "29") ''
     emacs -batch -q --eval \
