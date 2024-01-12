@@ -23,6 +23,7 @@
 , texinfo ? null
 , srcRepo ? false
 , latestPackageKeyring
+, darwin
 }:
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
@@ -43,7 +44,10 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "format" ];
 
-  dontStrip = stdenv.isDarwin && lib.versionOlder version "27.1";
+  # llvm-strip leaves executables that segfault immediately in some specific cases
+  preFixup = lib.optionalString (stdenv.hostPlatform.isDarwin && lib.versionOlder version "27.1") ''
+    export STRIP=${lib.getBin darwin.cctools-port}/bin/${stdenv.cc.targetPrefix}strip
+  '';
 
   patches =
     lib.optionals ("23.4" == version) [
