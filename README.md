@@ -74,6 +74,8 @@ enabled in your nix installation) you can easily run any given Emacs, e.g. using
 nix run 'github:purcell/nix-emacs-ci#emacs-28-2' -- -Q
 ```
 
+(`-Q` flag passed to emacs as an example.)
+
 The flake contains the necessary binary cache config, which you may be
 prompted to authorise, or you can just pass the
 `--accept-flake-config` argument to `nix run`.
