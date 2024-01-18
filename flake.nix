@@ -23,6 +23,7 @@
     "emacs-28-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-28.1.tar.xz"; flake = false; };
     "emacs-28-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-28.2.tar.xz"; flake = false; };
     "emacs-29-1" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-29.1.tar.xz"; flake = false; };
+    "emacs-29-2" = { url = "https://ftp.gnu.org/gnu/emacs/emacs-29.2.tar.xz"; flake = false; };
     emacs-snapshot = { url = "github:emacs-mirror/emacs"; flake = false; };
     emacs-release-snapshot = { url = "github:emacs-mirror/emacs?ref=emacs-29"; flake = false; };
   };
@@ -71,7 +72,8 @@
                 emacs-28-1 = "28.1";
                 emacs-28-2 = "28.2";
                 emacs-29-1 = "29.1";
-                emacs-release-snapshot = "29.1.90";
+                emacs-29-2 = "29.2";
+                emacs-release-snapshot = "29.2.90";
                 emacs-snapshot = "30.0.50";
               };
           in
