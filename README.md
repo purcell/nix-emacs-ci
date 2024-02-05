@@ -1,11 +1,11 @@
 [![Build Status](https://github.com/purcell/nix-emacs-ci/actions/workflows/test.yml/badge.svg)](https://github.com/purcell/nix-emacs-ci/actions/workflows/test.yml)
 <a href="https://www.patreon.com/sanityinc"><img alt="Support me" src="https://img.shields.io/badge/Support%20Me-%F0%9F%92%97-ff69b4.svg"></a>
 
-# Emacs installations for continuous integration
+# Emacs installations for continuous integration and testing
 
-This project aims to provide a method for Emacs Lisp authors
-to easily test their code against a wide variety of Emacs
-versions. It is used most widely as the basis of the popular
+This project uses Nix to provide a wide range of executables for current and past
+Emacs versions so Emacs Lisp authors to easily test their code.
+It is used most widely as the basis of the popular
 [setup-emacs GitHub Action](https://github.com/purcell/setup-emacs).
 
 ## Goals:
@@ -23,7 +23,7 @@ versions. It is used most widely as the basis of the popular
 
 - Works for Linux and MacOS (but no binary cache for ARM on either yet, sorry)
 - Official release versions from 23.4 onwards are supported (though not necessarily on all platforms)
-- Emacs development and pre-release snapshot builds are also available
+- Emacs development ("HEAD") and pre-release snapshot builds are also provided
 - Binary caching via Cachix is enabled, and working
 - A [Github Action](https://github.com/purcell/setup-emacs) is available for easy integration with your workflows
 - Travis integration is presumably still working but see notes below.
@@ -65,7 +65,9 @@ This repo no longer actively aims to support Travis.
 
 ## Low-level Nix usage, e.g. for local testing
 
-### With Flakes
+This section assumes you have installed the Nix package manager.
+
+### With Flakes (recommended)
 
 There's a flake definition in this repo so (assuming you have flakes
 enabled in your nix installation) you can easily run any given Emacs, e.g. using:
@@ -80,7 +82,8 @@ The flake contains the necessary binary cache config, which you may be
 prompted to authorise, or you can just pass the
 `--accept-flake-config` argument to `nix run`.
 
-On MacOS with Apple Silicon and Rosetta installed, you can run the
+On MacOS with Apple Silicon only comparatively recent
+Emacs versions are supported, but with Rosetta installed you can run the various
 pre-built cached `x86_64` Emacsen like this:
 
 ```bash
