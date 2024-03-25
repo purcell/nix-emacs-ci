@@ -217,6 +217,19 @@
         "url": "https://ftp.gnu.org/gnu/emacs/emacs-29.2.tar.xz"
       }
     },
+    "emacs-29-3": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711287509,
+        "narHash": "sha256-F/EO5gasb0bW0TIyudp1HAeZfwYjjE7a3ptK2oQbp7Q=",
+        "type": "tarball",
+        "url": "https://ftp.gnu.org/gnu/emacs/emacs-29.3.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://ftp.gnu.org/gnu/emacs/emacs-29.3.tar.xz"
+      }
+    },
     "emacs-release-snapshot": {
       "flake": false,
       "locked": {
@@ -318,6 +331,7 @@
         "emacs-28-2": "emacs-28-2",
         "emacs-29-1": "emacs-29-1",
         "emacs-29-2": "emacs-29-2",
+        "emacs-29-3": "emacs-29-3",
         "emacs-release-snapshot": "emacs-release-snapshot",
         "emacs-snapshot": "emacs-snapshot",
         "flake-compat": "flake-compat",
