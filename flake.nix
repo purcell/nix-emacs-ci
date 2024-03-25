@@ -75,7 +75,7 @@
                 emacs-29-1 = "29.1";
                 emacs-29-2 = "29.2";
                 emacs-29-3 = "29.3";
-                emacs-release-snapshot = "29.2.90";
+                emacs-release-snapshot = "29.3.50";
                 emacs-snapshot = "30.0.50";
               };
           in
