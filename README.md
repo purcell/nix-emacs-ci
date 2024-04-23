@@ -21,8 +21,8 @@ It is used most widely as the basis of the popular
 
 ## Status
 
-- Works for Linux and MacOS (but no binary cache for ARM on either yet, sorry)
-- Official release versions from 23.4 onwards are supported (though not necessarily on all platforms)
+- Works for Linux and MacOS (but no binary cache for ARM Linux, sorry)
+- Official release versions from 23.4 are supported on Linux; from 24.3 on Intel MacOS; and from 28.1 on ARM (Apple Silicon) MacOS
 - Emacs development ("HEAD") and pre-release snapshot builds are also provided
 - Binary caching via Cachix is enabled, and working
 - A [Github Action](https://github.com/purcell/setup-emacs) is available for easy integration with your workflows
