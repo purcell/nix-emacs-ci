@@ -2,4 +2,6 @@
 ;;; For more information see (info "(emacs) Directory Variables")
 
 ((nix-mode
-  (mode . nixpkgs-fmt-on-save)))
+  (mode . nixfmt-on-save))
+ (nix-ts-mode
+  (mode . nixfmt-on-save)))
