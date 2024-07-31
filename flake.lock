@@ -246,16 +246,16 @@
     "emacs-release-snapshot": {
       "flake": false,
       "locked": {
-        "lastModified": 1719168862,
-        "narHash": "sha256-v8rfz3k9OMyqoj7fLNLulYLOkg0fTKe3Pd0Wm8Ridfk=",
+        "lastModified": 1722312135,
+        "narHash": "sha256-LFU8VaBRjUc/HoB4OWbe34NhibrOcA8AtHWKeDT7ncg=",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "75ca15f2a3146b17fde5e2a50ad9102c6108ba7f",
+        "rev": "9f7c1ace9f86e4b657030a6e94c5d6aadc586878",
         "type": "github"
       },
       "original": {
         "owner": "emacs-mirror",
-        "ref": "emacs-29",
+        "ref": "emacs-30",
         "repo": "emacs",
         "type": "github"
       }
