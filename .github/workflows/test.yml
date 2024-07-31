@@ -9,7 +9,19 @@ on:
       - master
 
 jobs:
+  relock:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: cachix/install-nix-action@V27
+    - run: nix flake lock
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: Update flake.lock
+        file_pattern: flake.lock
+
   nix-matrix:
+    needs: relock
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
