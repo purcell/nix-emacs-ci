@@ -141,7 +141,7 @@
             emacs-29-2 = "29.2";
             emacs-29-3 = "29.3";
             emacs-29-4 = "29.4";
-            emacs-release-snapshot = "30.0.60";
+            emacs-release-snapshot = "30.0.90";
             emacs-snapshot = "31.0.50";
           };
       in builtins.mapAttrs (name: version:
