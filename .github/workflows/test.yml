@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: cachix/install-nix-action@V28
+    - uses: cachix/install-nix-action@v29
     - run: nix flake lock
     - uses: stefanzweifel/git-auto-commit-action@v5
       with:
@@ -27,7 +27,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@V28
+      - uses: cachix/install-nix-action@v29
       - id: set-matrix
         name: Generate Nix Matrix
         run: |
@@ -42,7 +42,7 @@ jobs:
     timeout-minutes: 30 # Safety net in case of hanging executable
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@V28
+      - uses: cachix/install-nix-action@v29
       - uses: cachix/cachix-action@v15
         with:
           name: emacs-ci
