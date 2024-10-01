@@ -118,14 +118,11 @@
         versions =
           # Some versions do not currently build on MacOS, so we do not even
           # expose them on that platform.
-          (lib.optionalAttrs pkgs.stdenv.isLinux {
-            emacs-23-4 = "23.4";
-            emacs-24-1 = "24.1";
-            emacs-24-2 = "24.2";
-          }) // (lib.optionalAttrs (system != "aarch64-darwin") {
+          (lib.optionalAttrs (system != "aarch64-darwin" && ! pkgs.stdenv.cc.isGNU) {
             emacs-24-3 = "24.3";
             emacs-24-4 = "24.4";
             emacs-24-5 = "24.5";
+          }) // (lib.optionalAttrs (system != "aarch64-darwin") {
             emacs-25-1 = "25.1";
             emacs-25-2 = "25.2";
             emacs-25-3 = "25.3";
@@ -151,10 +148,6 @@
           src = inputs.${name};
           latestPackageKeyring = inputs.emacs-snapshot
             + "/etc/package-keyring.gpg";
-          stdenv = if lib.versionOlder version "25" && pkgs.stdenv.cc.isGNU then
-            pkgs.gcc49Stdenv
-          else
-            pkgs.stdenv;
           srcRepo = lib.strings.hasInfix "snapshot" version;
         }) versions);
 
