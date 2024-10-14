@@ -151,10 +151,6 @@
           src = inputs.${name};
           latestPackageKeyring = inputs.emacs-snapshot
             + "/etc/package-keyring.gpg";
-          stdenv = if lib.versionOlder version "25" && pkgs.stdenv.cc.isGNU then
-            pkgs.gcc49Stdenv
-          else
-            pkgs.stdenv;
           srcRepo = lib.strings.hasInfix "snapshot" version;
         }) versions);
 
