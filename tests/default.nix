@@ -1,7 +1,7 @@
 { lib, emacs, ciEmacs, writeShellApplication }:
 let
   canDoPackages = lib.versionAtLeast ciEmacs.version "25.1";
-  ciEmacsWithPackages = (emacs.pkgs.overrideScope' (_: _: {
+  ciEmacsWithPackages = (emacs.pkgs.overrideScope (_: _: {
     emacs = ciEmacs;
   })).withPackages (
     epkgs: [
