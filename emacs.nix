@@ -101,6 +101,12 @@ stdenv.mkDerivation rec {
     ''
   ];
 
+  env = lib.optionalAttrs (stdenv.cc.isGNU && lib.versionOlder version "24.3") {
+    NIX_CFLAGS_COMPILE = toString [
+      "-Wno-error=implicit-function-declaration"
+    ];
+  };
+
   installTargets = "tags install";
 
   # Create site-start.el which is needed by the wrapper
