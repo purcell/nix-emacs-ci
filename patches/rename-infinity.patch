@@ -1,0 +1,161 @@
+diff --git a/src/dispextern.h b/src/dispextern.h
+index 9cc65f6a3d..579665c2ff 100644
+--- a/src/dispextern.h
++++ b/src/dispextern.h
+@@ -3569,6 +3569,10 @@ extern void create_tty_output (struct frame *);
+ extern struct terminal *init_tty (const char *, const char *, bool);
+ extern void tty_append_glyph (struct it *);
+ 
++/* All scrolling costs measured in characters.
++   So no cost can exceed the area of a frame, measured in characters.
++   Let's hope this is never more than 1000000 characters.  */
++enum { SCROLL_INFINITY = 1000000 };
+ 
+ /* Defined in scroll.c */
+ 
+diff --git a/src/dispnew.c b/src/dispnew.c
+index 61ca717079..bd246799b2 100644
+--- a/src/dispnew.c
++++ b/src/dispnew.c
+@@ -4677,8 +4677,7 @@ scrolling (struct frame *frame)
+ 	{
+ 	  /* This line cannot be redrawn, so don't let scrolling mess it.  */
+ 	  new_hash[i] = old_hash[i];
+-#define INFINITY 1000000	/* Taken from scroll.c */
+-	  draw_cost[i] = INFINITY;
++	  draw_cost[i] = SCROLL_INFINITY;
+ 	}
+       else
+ 	{
+diff --git a/src/process.c b/src/process.c
+index 29cedd7ad6..ff81485d26 100644
+--- a/src/process.c
++++ b/src/process.c
+@@ -5009,7 +5009,7 @@ wait_reading_process_output (intmax_t time_limit, int nsecs, int read_kbd,
+   Lisp_Object proc;
+   struct timespec timeout, end_time, timer_delay;
+   struct timespec got_output_end_time = invalid_timespec ();
+-  enum { MINIMUM = -1, TIMEOUT, INFINITY } wait;
++  enum { MINIMUM = -1, TIMEOUT, FOREVER } wait;
+   int got_some_output = -1;
+   uintmax_t prev_wait_proc_nbytes_read = wait_proc ? wait_proc->nbytes_read : 0;
+ #if defined HAVE_GETADDRINFO_A || defined HAVE_GNUTLS
+@@ -5048,7 +5048,7 @@ wait_reading_process_output (intmax_t time_limit, int nsecs, int read_kbd,
+       end_time = timespec_add (now, make_timespec (time_limit, nsecs));
+     }
+   else
+-    wait = INFINITY;
++    wait = FOREVER;
+ 
+   while (1)
+     {
+@@ -7515,7 +7515,7 @@ wait_reading_process_output (intmax_t time_limit, int nsecs, int read_kbd,
+ {
+   register int nfds;
+   struct timespec end_time, timeout;
+-  enum { MINIMUM = -1, TIMEOUT, INFINITY } wait;
++  enum { MINIMUM = -1, TIMEOUT, FOREVER } wait;
+ 
+   if (TYPE_MAXIMUM (time_t) < time_limit)
+     time_limit = TYPE_MAXIMUM (time_t);
+@@ -7529,7 +7529,7 @@ wait_reading_process_output (intmax_t time_limit, int nsecs, int read_kbd,
+                                make_timespec (time_limit, nsecs));
+     }
+   else
+-    wait = INFINITY;
++    wait = FOREVER;
+ 
+   /* Turn off periodic alarms (in case they are in use)
+      and then turn off any other atimers,
+@@ -7635,7 +7635,7 @@ wait_reading_process_output (intmax_t time_limit, int nsecs, int read_kbd,
+       /*  If we woke up due to SIGWINCH, actually change size now.  */
+       do_pending_window_change (0);
+ 
+-      if (wait < INFINITY && nfds == 0 && ! timeout_reduced_for_timers)
++      if (wait < FOREVER && nfds == 0 && ! timeout_reduced_for_timers)
+ 	/* We waited the full specified time, so return now.  */
+ 	break;
+ 
+diff --git a/src/scroll.c b/src/scroll.c
+index 8a53f9614f..a29f2d37f5 100644
+--- a/src/scroll.c
++++ b/src/scroll.c
+@@ -28,12 +28,6 @@ along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.  */
+ #include "frame.h"
+ #include "termhooks.h"
+ 
+-/* All costs measured in characters.
+-   So no cost can exceed the area of a frame, measured in characters.
+-   Let's hope this is never more than 1000000 characters.  */
+-
+-#define INFINITY 1000000
+-
+ struct matrix_elt
+   {
+     /* Cost of outputting through this line
+@@ -120,8 +114,8 @@ calculate_scrolling (struct frame *frame,
+ 
+   /* initialize the top left corner of the matrix */
+   matrix->writecost = 0;
+-  matrix->insertcost = INFINITY;
+-  matrix->deletecost = INFINITY;
++  matrix->insertcost = SCROLL_INFINITY;
++  matrix->deletecost = SCROLL_INFINITY;
+   matrix->insertcount = 0;
+   matrix->deletecount = 0;
+ 
+@@ -132,8 +126,8 @@ calculate_scrolling (struct frame *frame,
+       p = matrix + i * (window_size + 1);
+       cost += draw_cost[i] + next_insert_cost[i] + extra_cost;
+       p->insertcost = cost;
+-      p->writecost = INFINITY;
+-      p->deletecost = INFINITY;
++      p->writecost = SCROLL_INFINITY;
++      p->deletecost = SCROLL_INFINITY;
+       p->insertcount = i;
+       p->deletecount = 0;
+     }
+@@ -144,8 +138,8 @@ calculate_scrolling (struct frame *frame,
+     {
+       cost += next_delete_cost[j];
+       matrix[j].deletecost = cost;
+-      matrix[j].writecost = INFINITY;
+-      matrix[j].insertcost = INFINITY;
++      matrix[j].writecost = SCROLL_INFINITY;
++      matrix[j].insertcost = SCROLL_INFINITY;
+       matrix[j].deletecount = j;
+       matrix[j].insertcount = 0;
+     }
+@@ -465,8 +459,8 @@ calculate_direct_scrolling (struct frame *frame,
+ 
+   /* initialize the top left corner of the matrix */
+   matrix->writecost = 0;
+-  matrix->insertcost = INFINITY;
+-  matrix->deletecost = INFINITY;
++  matrix->insertcost = SCROLL_INFINITY;
++  matrix->deletecost = SCROLL_INFINITY;
+   matrix->writecount = 0;
+   matrix->insertcount = 0;
+   matrix->deletecount = 0;
+@@ -478,8 +472,8 @@ calculate_direct_scrolling (struct frame *frame,
+       p = matrix + i * (window_size + 1);
+       cost += draw_cost[i];
+       p->insertcost = cost;
+-      p->writecost = INFINITY;
+-      p->deletecost = INFINITY;
++      p->writecost = SCROLL_INFINITY;
++      p->deletecost = SCROLL_INFINITY;
+       p->insertcount = i;
+       p->writecount = 0;
+       p->deletecount = 0;
+@@ -489,8 +483,8 @@ calculate_direct_scrolling (struct frame *frame,
+   for (j = 1; j <= window_size; j++)
+     {
+       matrix[j].deletecost = 0;
+-      matrix[j].writecost = INFINITY;
+-      matrix[j].insertcost = INFINITY;
++      matrix[j].writecost = SCROLL_INFINITY;
++      matrix[j].insertcost = SCROLL_INFINITY;
+       matrix[j].deletecount = j;
+       matrix[j].writecount = 0;
+       matrix[j].insertcount = 0;

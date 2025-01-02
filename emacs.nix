@@ -51,6 +51,8 @@ stdenv.mkDerivation rec {
     (lib.versionAtLeast version "24.3" && lib.versionOlder version "26.3")
     [ ./patches/gnutls-e_again.patch ] ++ lib.optionals
     (lib.versionAtLeast version "25.1" && lib.versionOlder version "27.1")
+    [ ./patches/rename-infinity.patch ] ++ lib.optionals
+    (lib.versionAtLeast version "25.1" && lib.versionOlder version "27.1")
     [ ./patches/package-check-signature-all.patch ] ++ lib.optionals
     (lib.versionAtLeast version "25.1" && lib.versionOlder version "28.1")
     [ ./patches/sigsegv-stack.patch ] ++ lib.optionals (stdenv.isDarwin
