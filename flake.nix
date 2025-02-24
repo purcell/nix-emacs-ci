@@ -89,6 +89,10 @@
       url = "https://ftp.gnu.org/gnu/emacs/emacs-29.4.tar.xz";
       flake = false;
     };
+    "emacs-30-1" = {
+      url = "https://ftp.gnu.org/gnu/emacs/emacs-30.1.tar.xz";
+      flake = false;
+    };
     emacs-snapshot = {
       url = "github:emacs-mirror/emacs";
       flake = false;
@@ -141,7 +145,8 @@
             emacs-29-2 = "29.2";
             emacs-29-3 = "29.3";
             emacs-29-4 = "29.4";
-            emacs-release-snapshot = "30.0.90";
+            emacs-30-1 = "30.1";
+            emacs-release-snapshot = "30.1.50";
             emacs-snapshot = "31.0.50";
           };
       in builtins.mapAttrs (name: version:
