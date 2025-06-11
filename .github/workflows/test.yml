@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.head_ref }}
     - uses: cachix/install-nix-action@v31
     - run: nix flake lock
     - uses: stefanzweifel/git-auto-commit-action@v6
