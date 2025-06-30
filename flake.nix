@@ -170,7 +170,7 @@
         attrValues mapAttrs attrNames map concatLists intersectAttrs;
       platforms = {
         "x86_64-linux" = "ubuntu-latest";
-        "x86_64-darwin" = "macos-latest";
+        #"x86_64-darwin" = "macos-latest";
         "aarch64-darwin" = "macos-latest";
       };
     in rec {
