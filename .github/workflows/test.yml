@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
-    - uses: nixbuild/nix-quick-install-action@v31
+    - uses: nixbuild/nix-quick-install-action@v32
     - run: nix flake lock
     - uses: stefanzweifel/git-auto-commit-action@v6
       with:
@@ -29,7 +29,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-      - uses: nixbuild/nix-quick-install-action@v31
+      - uses: nixbuild/nix-quick-install-action@v32
       - id: set-matrix
         name: Generate Nix Matrix
         run: |
@@ -45,7 +45,7 @@ jobs:
     timeout-minutes: 30 # Safety net in case of hanging executable
     steps:
       - uses: actions/checkout@v4
-      - uses: nixbuild/nix-quick-install-action@v31
+      - uses: nixbuild/nix-quick-install-action@v32
       - uses: cachix/cachix-action@v16
         with:
           name: emacs-ci
