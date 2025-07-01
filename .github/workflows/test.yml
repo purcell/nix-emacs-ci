@@ -46,6 +46,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: nixbuild/nix-quick-install-action@v32
+        with:
+          nix_conf: connect-timeout = 30
       - uses: cachix/cachix-action@v16
         with:
           name: emacs-ci
