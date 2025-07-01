@@ -41,6 +41,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
+      fail-fast: false
     timeout-minutes: 30 # Safety net in case of hanging executable
     steps:
       - uses: actions/checkout@v4
