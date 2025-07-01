@@ -10,27 +10,27 @@
     };
 
     "emacs-23-4" = {
-      url = "github:emacs-mirror/emacs?ref=emacs-23.4";
+      url = "https://ftp.gnu.org/gnu/emacs/emacs-23.4.tar.bz2";
       flake = false;
     };
     "emacs-24-1" = {
-      url = "github:emacs-mirror/emacs?ref=emacs-24.1";
+      url = "https://ftp.gnu.org/gnu/emacs/emacs-24.1.tar.bz2";
       flake = false;
     };
     "emacs-24-2" = {
-      url = "github:emacs-mirror/emacs?ref=emacs-24.2";
+      url = "https://ftp.gnu.org/gnu/emacs/emacs-24.2.tar.xz";
       flake = false;
     };
     "emacs-24-3" = {
-      url = "github:emacs-mirror/emacs?ref=emacs-24.3";
+      url = "https://ftp.gnu.org/gnu/emacs/emacs-24.3.tar.xz";
       flake = false;
     };
     "emacs-24-4" = {
-      url = "github:emacs-mirror/emacs?ref=emacs-24.4";
+      url = "https://ftp.gnu.org/gnu/emacs/emacs-24.4.tar.xz";
       flake = false;
     };
     "emacs-24-5" = {
-      url = "github:emacs-mirror/emacs?ref=emacs-24.5";
+      url = "https://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.xz";
       flake = false;
     };
     "emacs-25-1" = {
