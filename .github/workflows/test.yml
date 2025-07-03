@@ -53,5 +53,7 @@ jobs:
           useDaemon: false
       - run: nix build --accept-flake-config --system ${{matrix.system}} -L ".#githubActions.checks.${{matrix.system}}.${{ matrix.attr }}"
       - name: Test if package.el works inside Emacs
-        run: cd tests && HOME=$(pwd) nix run --accept-flake-config --system ${{matrix.system}} "..#githubActions.checks.${{matrix.system}}.${{ matrix.attr }}" -- -Q --batch \
+        run: |
+          export NIX_USER_CONF_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/nix/nix.conf"
+          cd tests && HOME=$(pwd) nix run --accept-flake-config --system ${{matrix.system}} "..#githubActions.checks.${{matrix.system}}.${{ matrix.attr }}" -- -Q --batch \
                --eval "(setq debug-on-error t)" --load init.el
