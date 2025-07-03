@@ -46,6 +46,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: nixbuild/nix-quick-install-action@v32
+        with:
+          nix_conf: |
+            always-allow-substitutes = true
       - uses: cachix/cachix-action@v16
         with:
           name: emacs-ci
