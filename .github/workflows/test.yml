@@ -53,6 +53,7 @@ jobs:
         with:
           name: emacs-ci
           signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+          useDaemon: false
       - run: nix build --accept-flake-config --system ${{matrix.system}} -L ".#githubActions.checks.${{matrix.system}}.${{ matrix.attr }}"
       - name: Test if package.el works inside Emacs
         run: cd tests && HOME=$(pwd) nix run --accept-flake-config --system ${{matrix.system}} "..#githubActions.checks.${{matrix.system}}.${{ matrix.attr }}" -- -Q --batch \
