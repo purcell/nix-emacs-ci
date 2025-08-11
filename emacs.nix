@@ -20,7 +20,10 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ ncurses libxml2 gnutls gettext jansson gmp ]
     ++ lib.optional withSQLite3 sqlite
-    ++ lib.optional withTreeSitter tree-sitter;
+    ++ lib.optional withTreeSitter (tree-sitter.withPlugins (p:
+      lib.optionals (lib.versionAtLeast version "31") [
+        p.tree-sitter-jsdoc
+      ]));
 
   hardeningDisable = [ "format" ];
 
