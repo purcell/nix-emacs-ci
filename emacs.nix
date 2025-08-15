@@ -1,9 +1,31 @@
-{ name, src, version, stdenv, lib, fetchurl, glibc, ncurses, autoreconfHook
-, pkg-config, libxml2, gettext, gnutls, jansson, sqlite, tree-sitter
-, withTreeSitter ? lib.versionAtLeast version "29"
-, withSQLite3 ? lib.versionAtLeast version "29", gmp, sigtool ? null
-, autoconf ? null, automake ? null, texinfo ? null, srcRepo ? false
-, latestPackageKeyring, darwin }:
+{
+  name,
+  src,
+  version,
+  stdenv,
+  lib,
+  fetchurl,
+  glibc,
+  ncurses,
+  autoreconfHook,
+  pkg-config,
+  libxml2,
+  gettext,
+  gnutls,
+  jansson,
+  sqlite,
+  tree-sitter,
+  withTreeSitter ? lib.versionAtLeast version "29",
+  withSQLite3 ? lib.versionAtLeast version "29",
+  gmp,
+  sigtool ? null,
+  autoconf ? null,
+  automake ? null,
+  texinfo ? null,
+  srcRepo ? false,
+  latestPackageKeyring,
+  darwin,
+}:
 
 # A very minimal version of https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/emacs/default.nix
 stdenv.mkDerivation rec {
@@ -11,55 +33,71 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  nativeBuildInputs = [ pkg-config ]
-    ++ lib.optionals stdenv.isDarwin [ sigtool ]
-    ++ lib.optionals (lib.versionAtLeast version "25.1") [
-      autoreconfHook
-      texinfo
-    ];
+  nativeBuildInputs = [
+    pkg-config
+  ]
+  ++ lib.optionals stdenv.isDarwin [ sigtool ]
+  ++ lib.optionals (lib.versionAtLeast version "25.1") [
+    autoreconfHook
+    texinfo
+  ];
 
-  buildInputs = [ ncurses libxml2 gnutls gettext jansson gmp ]
-    ++ lib.optional withSQLite3 sqlite
-    ++ lib.optional withTreeSitter tree-sitter;
+  buildInputs = [
+    ncurses
+    libxml2
+    gnutls
+    gettext
+    jansson
+    gmp
+  ]
+  ++ lib.optional withSQLite3 sqlite
+  ++ lib.optional withTreeSitter tree-sitter;
 
   hardeningDisable = [ "format" ];
 
   # llvm-strip leaves executables that segfault immediately in some specific cases
-  preFixup = lib.optionalString
-    (stdenv.hostPlatform.isDarwin && lib.versionOlder version "27.1") ''
-      export STRIP=${
-        lib.getBin darwin.cctools-port
-      }/bin/${stdenv.cc.targetPrefix}strip
-    '';
+  preFixup = lib.optionalString (stdenv.hostPlatform.isDarwin && lib.versionOlder version "27.1") ''
+    export STRIP=${lib.getBin darwin.cctools-port}/bin/${stdenv.cc.targetPrefix}strip
+  '';
 
-  patches = lib.optionals ("23.4" == version) [
-    ./patches/all-dso-handle.patch
-    ./patches/fpending-23.4.patch
-  ] ++ lib.optionals ("24.1" == version) [
-    ./patches/gnutls-e_again-old-emacsen.patch
-    ./patches/all-dso-handle.patch
-    ./patches/remove-old-gets-warning.patch
-    ./patches/fpending-24.1.patch
-  ] ++ lib.optionals ("24.2" == version) [
-    ./patches/gnutls-e_again-old-emacsen.patch
-    ./patches/all-dso-handle.patch
-    ./patches/fpending-24.1.patch
-  ] ++ lib.optionals ("24.3" == version) [
-    ./patches/all-dso-handle.patch
-    ./patches/fpending-24.3.patch
-  ] ++ lib.optionals
-    (lib.versionAtLeast version "24.3" && lib.versionOlder version "26.3")
-    [ ./patches/gnutls-e_again.patch ] ++ lib.optionals
-    (lib.versionAtLeast version "25.1" && lib.versionOlder version "27.1")
-    [ ./patches/rename-infinity.patch ] ++ lib.optionals
-    (lib.versionAtLeast version "25.1" && lib.versionOlder version "27.1")
-    [ ./patches/package-check-signature-all.patch ] ++ lib.optionals
-    (lib.versionAtLeast version "25.1" && lib.versionOlder version "28.1")
-    [ ./patches/sigsegv-stack.patch ] ++ lib.optionals (stdenv.isDarwin
-      && lib.versionAtLeast version "25.1" && lib.versionOlder version "26.1")
-    [ ./patches/gnutls-use-osx-cert-bundle.patch ]
-    ++ lib.optionals (stdenv.isDarwin && lib.versionOlder version "27.1")
-    [ ./patches/macos-unexec.patch ];
+  patches =
+    lib.optionals ("23.4" == version) [
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-23.4.patch
+    ]
+    ++ lib.optionals ("24.1" == version) [
+      ./patches/gnutls-e_again-old-emacsen.patch
+      ./patches/all-dso-handle.patch
+      ./patches/remove-old-gets-warning.patch
+      ./patches/fpending-24.1.patch
+    ]
+    ++ lib.optionals ("24.2" == version) [
+      ./patches/gnutls-e_again-old-emacsen.patch
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-24.1.patch
+    ]
+    ++ lib.optionals ("24.3" == version) [
+      ./patches/all-dso-handle.patch
+      ./patches/fpending-24.3.patch
+    ]
+    ++ lib.optionals (lib.versionAtLeast version "24.3" && lib.versionOlder version "26.3") [
+      ./patches/gnutls-e_again.patch
+    ]
+    ++ lib.optionals (lib.versionAtLeast version "25.1" && lib.versionOlder version "27.1") [
+      ./patches/rename-infinity.patch
+    ]
+    ++ lib.optionals (lib.versionAtLeast version "25.1" && lib.versionOlder version "27.1") [
+      ./patches/package-check-signature-all.patch
+    ]
+    ++ lib.optionals (lib.versionAtLeast version "25.1" && lib.versionOlder version "28.1") [
+      ./patches/sigsegv-stack.patch
+    ]
+    ++ lib.optionals (
+      stdenv.isDarwin && lib.versionAtLeast version "25.1" && lib.versionOlder version "26.1"
+    ) [ ./patches/gnutls-use-osx-cert-bundle.patch ]
+    ++ lib.optionals (stdenv.isDarwin && lib.versionOlder version "27.1") [
+      ./patches/macos-unexec.patch
+    ];
 
   passthru = { inherit withTreeSitter; };
 
@@ -73,7 +111,8 @@ stdenv.mkDerivation rec {
     "--with-png=no"
     "--with-gif=no"
     "--with-tiff=no"
-  ] ++ lib.optionals ("23.4" == version) [ "--with-crt-dir=${glibc}/lib" ];
+  ]
+  ++ lib.optionals ("23.4" == version) [ "--with-crt-dir=${glibc}/lib" ];
 
   postPatch = lib.concatStringsSep "\n" [
     (lib.optionalString srcRepo ''
