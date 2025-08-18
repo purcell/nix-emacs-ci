@@ -272,11 +272,11 @@
     "emacs-release-snapshot": {
       "flake": false,
       "locked": {
-        "lastModified": 1754815531,
-        "narHash": "sha256-gO4fLazjQ4rpsBBUqg2AOTJSvVxT/WYMfH9ZZIBUWzE=",
+        "lastModified": 1755341946,
+        "narHash": "sha256-zC9Uf1X/bvl3rIDLKKdrzVCRCNUfiWDJiQBYFqwcArg=",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "4b90b6e7ce9be06087e727f7c6305a2a545660fc",
+        "rev": "964741d40e00334ec7b8dbe85c15c3f5af2296e7",
         "type": "github"
       },
       "original": {
@@ -289,11 +289,11 @@
     "emacs-snapshot": {
       "flake": false,
       "locked": {
-        "lastModified": 1754962497,
-        "narHash": "sha256-dii83/Lle9V/Ahdr4+++CKXIivMY4vigeFOQMn7dlRQ=",
+        "lastModified": 1755499776,
+        "narHash": "sha256-TET6MFBf25mlxn3RHecQ1cmuXj47yLa8MIan0jNh7H8=",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "498b2b6d2a3c860daaa0a5901a49442c0c6c501f",
+        "rev": "bf652e6844601bb42daaac2ed867e047f2eb615f",
         "type": "github"
       },
       "original": {
