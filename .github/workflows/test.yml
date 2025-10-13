@@ -17,7 +17,7 @@ jobs:
         ref: ${{ github.head_ref }}
     - uses: nixbuild/nix-quick-install-action@v34
     - run: nix flake lock
-    - uses: stefanzweifel/git-auto-commit-action@v6
+    - uses: stefanzweifel/git-auto-commit-action@v7
       with:
         commit_message: Update flake.lock
         file_pattern: flake.lock
