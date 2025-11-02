@@ -1,5 +1,5 @@
 diff --git a/src/search.c b/src/search.c
-index b9760a1fc0..0c24d71124 100644
+index b70f02097b..0793f9a8fb 100644
 --- a/src/search.c
 +++ b/src/search.c
 @@ -1,6 +1,6 @@
@@ -10,7 +10,7 @@ index b9760a1fc0..0c24d71124 100644
  Foundation, Inc.
  
  This file is part of GNU Emacs.
-@@ -308,12 +308,20 @@ Looking at others is wrong.  */)
+@@ -308,12 +308,20 @@ looking_at_1 (Lisp_Object string, bool posix)
  
    re_match_object = Qnil;
  
@@ -31,7 +31,7 @@ index b9760a1fc0..0c24d71124 100644
  
    if (i == -2)
      matcher_overflow ();
-@@ -561,8 +569,16 @@ A value of nil (or omitted third argment) means report and signal errors.  */)
+@@ -561,8 +569,16 @@ fast_looking_at (Lisp_Object regexp, ptrdiff_t pos, ptrdiff_t pos_byte,
  
    buf = compile_pattern (regexp, 0, Qnil, 0, multibyte);
    immediate_quit = 1;
@@ -48,7 +48,7 @@ index b9760a1fc0..0c24d71124 100644
    immediate_quit = 0;
  
    return len;
-@@ -1213,6 +1229,12 @@ A value of nil (or omitted third argment) means report and signal errors.  */)
+@@ -1213,6 +1229,12 @@ search_buffer (Lisp_Object string, ptrdiff_t pos, ptrdiff_t pos_byte,
  	}
        re_match_object = Qnil;
  
@@ -61,22 +61,22 @@ index b9760a1fc0..0c24d71124 100644
        while (n < 0)
  	{
  	  ptrdiff_t val;
-@@ -1254,6 +1276,9 @@ A value of nil (or omitted third argment) means report and signal errors.  */)
+@@ -1254,6 +1276,9 @@ search_buffer (Lisp_Object string, ptrdiff_t pos, ptrdiff_t pos_byte,
  	  else
  	    {
  	      immediate_quit = 0;
 +#ifdef REL_ALLOC
-+	      r_alloc_inhibit_buffer_relocation (0);
++              r_alloc_inhibit_buffer_relocation (0);
 +#endif
  	      return (n);
  	    }
  	  n++;
-@@ -1296,11 +1321,17 @@ A value of nil (or omitted third argment) means report and signal errors.  */)
+@@ -1296,11 +1321,17 @@ search_buffer (Lisp_Object string, ptrdiff_t pos, ptrdiff_t pos_byte,
  	  else
  	    {
  	      immediate_quit = 0;
 +#ifdef REL_ALLOC
-+	      r_alloc_inhibit_buffer_relocation (0);
++              r_alloc_inhibit_buffer_relocation (0);
 +#endif
  	      return (0 - n);
  	    }
@@ -89,7 +89,7 @@ index b9760a1fc0..0c24d71124 100644
        return (pos);
      }
    else				/* non-RE case */
-@@ -1999,12 +2030,26 @@ this.  */)
+@@ -1999,12 +2030,26 @@ boyer_moore (EMACS_INT n, unsigned char *base_pat,
  	      if (i + direction == 0)
  		{
  		  ptrdiff_t position, start, end;
@@ -116,7 +116,7 @@ index b9760a1fc0..0c24d71124 100644
  
  		  if (NILP (Vinhibit_changing_match_data))
  		    {
-@@ -2212,26 +2257,12 @@ this.  */)
+@@ -2212,26 +2257,12 @@ See also the functions `match-beginning', `match-end' and `replace-match'.  */)
  
  DEFUN ("re-search-backward", Fre_search_backward, Sre_search_backward, 1, 4,
         "sRE search backward: ",
@@ -137,19 +137,18 @@ index b9760a1fc0..0c24d71124 100644
 -
 -Search case-sensitivity is determined by the value of the variable
 -`case-fold-search', which see.
--
--See also the functions `match-beginning', `match-end', `match-string',
--and `replace-match'.  */)
 +       doc: /* Search backward from point for regular expression REGEXP.
 +This function is almost identical to `re-search-forward', except that
 +by default it searches backward instead of forward, and the sign of
 +COUNT also indicates exactly the opposite searching direction.
-+
+ 
+-See also the functions `match-beginning', `match-end', `match-string',
+-and `replace-match'.  */)
 +See `re-search-forward' for details.  */)
    (Lisp_Object regexp, Lisp_Object bound, Lisp_Object noerror, Lisp_Object count)
  {
    return search_command (regexp, bound, noerror, count, -1, 1, 0);
-@@ -2241,18 +2272,22 @@ this.  */)
+@@ -2241,18 +2272,22 @@ DEFUN ("re-search-forward", Fre_search_forward, Sre_search_forward, 1, 4,
         "sRE search: ",
         doc: /* Search forward from point for regular expression REGEXP.
  Set point to the end of the occurrence found, and return point.
@@ -184,7 +183,7 @@ index b9760a1fc0..0c24d71124 100644
  
  Search case-sensitivity is determined by the value of the variable
  `case-fold-search', which see.
-@@ -2624,6 +2659,7 @@ this argument unless you want to make the replacement text different from
+@@ -2624,6 +2659,7 @@ since only regular expressions have distinguished subexpressions.  */)
  	  const unsigned char *add_stuff = NULL;
  	  ptrdiff_t add_len = 0;
  	  ptrdiff_t idx = -1;
@@ -192,7 +191,7 @@ index b9760a1fc0..0c24d71124 100644
  
  	  if (str_multibyte)
  	    {
-@@ -2686,7 +2722,7 @@ this argument unless you want to make the replacement text different from
+@@ -2686,11 +2722,10 @@ since only regular expressions have distinguished subexpressions.  */)
  	     set up ADD_STUFF and ADD_LEN to point to it.  */
  	  if (idx >= 0)
  	    {
@@ -201,3 +200,27 @@ index b9760a1fc0..0c24d71124 100644
  	      add_len = CHAR_TO_BYTE (search_regs.end[idx]) - begbyte;
  	      if (search_regs.start[idx] < GPT && GPT < search_regs.end[idx])
  		move_gap_both (search_regs.start[idx], begbyte);
+-	      add_stuff = BYTE_POS_ADDR (begbyte);
+ 	    }
+ 
+ 	  /* Now the stuff we want to add to SUBSTED
+@@ -2703,6 +2738,11 @@ since only regular expressions have distinguished subexpressions.  */)
+ 		       add_len - (substed_alloc_size - substed_len),
+ 		       STRING_BYTES_BOUND, 1);
+ 
++	  /* We compute this after the call to xpalloc, because that
++	     could cause buffer text be relocated when ralloc.c is used.  */
++	  if (idx >= 0)
++	    add_stuff = BYTE_POS_ADDR (begbyte);
++
+ 	  /* Now add to the end of SUBSTED.  */
+ 	  if (add_stuff)
+ 	    {
+@@ -3396,6 +3436,7 @@ or other such regexp constructs are not replaced with this.
+ A value of nil (which is the normal value) means treat spaces literally.  */);
+   Vsearch_spaces_regexp = Qnil;
+ 
++  DEFSYM (Qinhibit_changing_match_data, "inhibit-changing-match-data");
+   DEFVAR_LISP ("inhibit-changing-match-data", Vinhibit_changing_match_data,
+       doc: /* Internal use only.
+ If non-nil, the primitive searching and matching functions
