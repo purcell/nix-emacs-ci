@@ -86,6 +86,9 @@ stdenv.mkDerivation rec {
     ++ lib.optionals (lib.versionAtLeast version "25.1" && lib.versionOlder version "27.1") [
       ./patches/rename-infinity.patch
     ]
+    ++ lib.optionals ("25.1" == version) [
+      ./patches/reloc-inhibit-search.patch
+    ]
     ++ lib.optionals (lib.versionAtLeast version "25.1" && lib.versionOlder version "27.1") [
       ./patches/package-check-signature-all.patch
     ]
