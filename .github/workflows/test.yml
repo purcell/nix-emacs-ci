@@ -12,7 +12,7 @@ jobs:
   relock:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         ref: ${{ github.head_ref }}
     - uses: nixbuild/nix-quick-install-action@v34
@@ -28,7 +28,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: nixbuild/nix-quick-install-action@v34
       - id: set-matrix
         name: Generate Nix Matrix
@@ -44,7 +44,7 @@ jobs:
       fail-fast: false
     timeout-minutes: 30 # Safety net in case of hanging executable
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: nixbuild/nix-quick-install-action@v34
       - uses: cachix/cachix-action@v16
         with:
