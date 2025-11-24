@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs-glibc-2-39.url = "nixpkgs/647e5c14cbd5067f44ac86b74f014962df460840";
 
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -169,13 +170,20 @@
             in
             builtins.mapAttrs (
               name: version:
-              pkgs.callPackage ./emacs.nix {
-                inherit name version;
-                inherit (pkgs.darwin) sigtool;
-                src = inputs.${name};
-                latestPackageKeyring = inputs.emacs-snapshot + "/etc/package-keyring.gpg";
-                srcRepo = lib.strings.hasInfix "snapshot" version;
-              }
+              (
+                if pkgs.stdenv.isLinux && lib.versionOlder version "25.2" then
+                  inputs.nixpkgs-glibc-2-39.legacyPackages.${system}
+                else
+                  pkgs
+              ).callPackage
+                ./emacs.nix
+                {
+                  inherit name version;
+                  inherit (pkgs.darwin) sigtool;
+                  src = inputs.${name};
+                  latestPackageKeyring = inputs.emacs-snapshot + "/etc/package-keyring.gpg";
+                  srcRepo = lib.strings.hasInfix "snapshot" version;
+                }
             ) versions
           );
 
