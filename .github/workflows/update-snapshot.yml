@@ -16,7 +16,7 @@ jobs:
     - name: Update HEAD snapshot commit
       run: 'nix flake update emacs-snapshot'
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
+      uses: peter-evans/create-pull-request@v8
       with:
         title: 'Update emacs snapshots'
         body: ''
