@@ -51,7 +51,7 @@ jobs:
         with:
           persist-credentials: false
       - uses: nixbuild/nix-quick-install-action@v34
-      - uses: cachix/cachix-action@v16
+      - uses: cachix/cachix-action@v17
         with:
           name: emacs-ci
           signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
