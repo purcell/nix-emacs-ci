@@ -289,11 +289,11 @@
     "emacs-snapshot": {
       "flake": false,
       "locked": {
-        "lastModified": 1774851480,
-        "narHash": "sha256-QUR+mQjt5GzjjuxGTKWsHnPt3Hxqr+wCkZyMqLM8oi8=",
+        "lastModified": 1775465855,
+        "narHash": "sha256-EkSwwSfxxIjZmV12PxDwA/i+10rQfdMGldnNsxaxov8=",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "9c75d761a570c0dff63886987448be507a658430",
+        "rev": "5003f5e6e48bc4a2050b74f85ed19b366237b427",
         "type": "github"
       },
       "original": {
