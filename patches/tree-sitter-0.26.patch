@@ -73,15 +73,6 @@ index bf982de580..69751b5ea1 100644
  /* Load the dynamic library of LANGUAGE_SYMBOL and return the pointer
     to the language definition.
  
-@@ -832,7 +864,7 @@ treesit_load_language (Lisp_Object language_symbol,
- 	build_string ("%s's ABI version is %d, but supported versions are %d-%d");
-       Lisp_Object formatted_msg =
- 	CALLN (Fformat_message, fmt, loaded_lib,
--	       make_fixnum (ts_language_version (lang)),
-+	       make_fixnum (treesit_language_abi_version (lang)),
- 	       make_fixnum (TREE_SITTER_MIN_COMPATIBLE_LANGUAGE_VERSION),
- 	       make_fixnum (TREE_SITTER_LANGUAGE_VERSION));
-       *signal_symbol = Qtreesit_load_language_error;
 @@ -914,7 +946,7 @@ Return nil if a grammar library for LANGUAGE is not available.  */)
        TSLanguage *ts_language = lang.lang;
        if (ts_language == NULL)
@@ -91,3 +82,16 @@ index bf982de580..69751b5ea1 100644
        return make_fixnum((ptrdiff_t) version);
      }
  }
+diff --git a/src/treesit.c b/src/treesit.c
+index bffd42da12..ad75ae0820 100644
+--- a/src/treesit.c
++++ b/src/treesit.c
+@@ -692,7 +692,7 @@ treesit_load_language (Lisp_Object language_symbol,
+     {
+       *signal_symbol = Qtreesit_load_language_error;
+       *signal_data = list2 (Qversion_mismatch,
+-			    make_fixnum (ts_language_version (lang)));
++			    make_fixnum (ts_language_abi_version (lang)));
+       return NULL;
+     }
+   return lang;
