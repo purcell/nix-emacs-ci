@@ -97,6 +97,9 @@ stdenv.mkDerivation rec {
     ) [ ./patches/gnutls-use-osx-cert-bundle.patch ]
     ++ lib.optionals (stdenv.isDarwin && lib.versionOlder version "27.1") [
       ./patches/macos-unexec.patch
+    ]
+    ++ lib.optionals (lib.versionAtLeast version "29.1" && lib.versionOlder version "31.0") [
+      ./patches/tree-sitter-0.26.patch
     ];
 
   passthru = { inherit withTreeSitter; };
