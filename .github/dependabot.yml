@@ -12,6 +12,9 @@ updates:
     default-days: 7
 - package-ecosystem: nix
   directory: "/"
+  allow:
+    - dependency-name: "emacs-snapshot"
+    - dependency-name: "emacs-release-snapshot"
   schedule:
     interval: weekly
   commit-message:
@@ -20,5 +23,4 @@ updates:
   groups:
     emacs-snapshots:
       patterns:
-        - "emacs-snapshot"
-        - "emacs-release-snapshot"
+        - "emacs-*"
