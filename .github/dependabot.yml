@@ -10,3 +10,15 @@ updates:
     include: "scope"
   cooldown:
     default-days: 7
+- package-ecosystem: nix
+  directory: "/"
+  schedule:
+    interval: weekly
+  commit-message:
+    prefix: "chore"
+    include: "scope"
+  groups:
+    emacs-snapshots:
+      patterns:
+        - "emacs-snapshot"
+        - "emacs-release-snapshot"
