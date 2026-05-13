@@ -63,12 +63,14 @@ jobs:
           cd tests && HOME=$(pwd) nix run --accept-flake-config --system ${{matrix.system}} "..#githubActions.checks.${{matrix.system}}.${{ matrix.attr }}" -- -Q --batch \
                --eval "(setq debug-on-error t)" --load init.el
       - name: Check the package version
+        env:
+          MATRIX_ATTR: ${{ matrix.attr }}
         run: |
-          nix_version=$(nix eval --raw ".#${{ matrix.attr }}.version")
-          real_version=$(nix run ".#${{ matrix.attr }}" -- --version \
+          nix_version=$(nix eval --raw ".#${MATRIX_ATTR}.version")
+          real_version=$(nix run ".#${MATRIX_ATTR}" -- --version \
             | grep -oE '[[:digit:]]+(:?\.[[:digit:]]+)+')
           if [[ "$nix_version" != "$real_version" ]]; then
-            echo "The package version for ${{ matrix.attr }} does not match."
+            echo "The package version for ${MATRIX_ATTR} does not match."
             echo "Update the version to ${real_version}"
             exit 1
           fi
