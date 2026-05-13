@@ -138,17 +138,17 @@
                 # Some versions do not currently build on MacOS, so we do not even
                 # expose them on that platform.
                 (lib.optionalAttrs pkgs.stdenv.isLinux {
-                  emacs-23-4 = "23.4";
-                  emacs-24-1 = "24.1";
-                  emacs-24-2 = "24.2";
+                  emacs-23-4 = "23.4.1";
+                  emacs-24-1 = "24.1.1";
+                  emacs-24-2 = "24.2.1";
                 })
                 // (lib.optionalAttrs (system != "aarch64-darwin") {
-                  emacs-24-3 = "24.3";
-                  emacs-24-4 = "24.4";
-                  emacs-24-5 = "24.5";
-                  emacs-25-1 = "25.1";
-                  emacs-25-2 = "25.2";
-                  emacs-25-3 = "25.3";
+                  emacs-24-3 = "24.3.1";
+                  emacs-24-4 = "24.4.1";
+                  emacs-24-5 = "24.5.1";
+                  emacs-25-1 = "25.1.1";
+                  emacs-25-2 = "25.2.1";
+                  emacs-25-3 = "25.3.1";
                   emacs-26-1 = "26.1";
                   emacs-26-2 = "26.2";
                   emacs-26-3 = "26.3";
