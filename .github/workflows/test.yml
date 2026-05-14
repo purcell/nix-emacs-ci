@@ -63,6 +63,7 @@ jobs:
           cd tests && HOME=$(pwd) nix run --accept-flake-config --system ${{matrix.system}} "..#githubActions.checks.${{matrix.system}}.${{ matrix.attr }}" -- -Q --batch \
                --eval "(setq debug-on-error t)" --load init.el
       - name: Check the package version
+        if: ${{ matrix.attr == 'emacs-snapshot' || matrix.attr == 'emacs-release-snapshot' }}
         env:
           MATRIX_ATTR: ${{ matrix.attr }}
         run: |
