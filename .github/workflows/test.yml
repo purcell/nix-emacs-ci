@@ -16,7 +16,7 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
         persist-credentials: false
-    - uses: nixbuild/nix-quick-install-action@v34
+    - uses: nixbuild/nix-quick-install-action@v35
     - run: nix flake lock
     - uses: stefanzweifel/git-auto-commit-action@v7
       with:
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v6.0.3
         with:
           persist-credentials: false
-      - uses: nixbuild/nix-quick-install-action@v34
+      - uses: nixbuild/nix-quick-install-action@v35
       - id: set-matrix
         name: Generate Nix Matrix
         run: |
@@ -50,7 +50,7 @@ jobs:
       - uses: actions/checkout@v6.0.3
         with:
           persist-credentials: false
-      - uses: nixbuild/nix-quick-install-action@v34
+      - uses: nixbuild/nix-quick-install-action@v35
       - uses: cachix/cachix-action@v17
         with:
           name: emacs-ci
