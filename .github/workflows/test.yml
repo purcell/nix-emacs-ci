@@ -18,7 +18,7 @@ jobs:
         persist-credentials: false
     - uses: nixbuild/nix-quick-install-action@v35
     - run: nix flake lock
-    - uses: stefanzweifel/git-auto-commit-action@v7
+    - uses: stefanzweifel/git-auto-commit-action@v7.1.0
       with:
         commit_message: Update flake.lock
         file_pattern: flake.lock
