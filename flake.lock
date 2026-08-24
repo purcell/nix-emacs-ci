@@ -269,14 +269,27 @@
         "url": "https://ftp.gnu.org/gnu/emacs/emacs-30.2.tar.xz"
       }
     },
+    "emacs-31-1": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787564845,
+        "narHash": "sha256-iyM1fsjykpb0GM/iD0pmoVrv0OeWbX3Fcj6nTbzPyGQ=",
+        "type": "tarball",
+        "url": "https://ftp.gnu.org/gnu/emacs/emacs-31.1.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://ftp.gnu.org/gnu/emacs/emacs-31.1.tar.xz"
+      }
+    },
     "emacs-release-snapshot": {
       "flake": false,
       "locked": {
-        "lastModified": 1787062416,
-        "narHash": "sha256-y6sGGzsviNLLlMURxW+k82T3S8BefM4hYiLf8Qdb2Jo=",
+        "lastModified": 1787586886,
+        "narHash": "sha256-b4skDEiSRg2qiyCjG47ztn2rU8GE59iOngcTAL+3NkY=",
         "owner": "emacs-mirror",
         "repo": "emacs",
-        "rev": "1988e330c1c5ad6f161e66c348cd8e65cd95e9cd",
+        "rev": "9c9a26e60babf0374a443f5988388699f053d08f",
         "type": "github"
       },
       "original": {
@@ -388,6 +401,7 @@
         "emacs-29-4": "emacs-29-4",
         "emacs-30-1": "emacs-30-1",
         "emacs-30-2": "emacs-30-2",
+        "emacs-31-1": "emacs-31-1",
         "emacs-release-snapshot": "emacs-release-snapshot",
         "emacs-snapshot": "emacs-snapshot",
         "flake-compat": "flake-compat",

@@ -98,6 +98,10 @@
       url = "https://ftp.gnu.org/gnu/emacs/emacs-30.2.tar.xz";
       flake = false;
     };
+    "emacs-31-1" = {
+      url = "https://ftp.gnu.org/gnu/emacs/emacs-31.1.tar.xz";
+      flake = false;
+    };
     emacs-snapshot = {
       url = "github:emacs-mirror/emacs";
       flake = false;
@@ -164,7 +168,8 @@
                   emacs-29-4 = "29.4";
                   emacs-30-1 = "30.1";
                   emacs-30-2 = "30.2";
-                  emacs-release-snapshot = "31.1";
+                  emacs-release-snapshot = "31.1.50";
+                  emacs-31-1 = "31.1";
                   emacs-snapshot = "32.0.50";
                 };
             in
