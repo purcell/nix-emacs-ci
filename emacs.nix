@@ -109,6 +109,9 @@ stdenv.mkDerivation rec {
     ]
     ++ lib.optionals (lib.versionAtLeast version "30.2" && lib.versionOlder version "31.0") [
       ./patches/tree-sitter-query-30.2.patch
+    ]
+    ++ lib.optionals (lib.versionAtLeast version "30.1" && lib.versionOlder version "31.1.50") [
+      ./patches/cve-2024-53920.patch
     ];
 
   passthru = { inherit withTreeSitter; };
