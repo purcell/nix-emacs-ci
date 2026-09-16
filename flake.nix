@@ -141,7 +141,7 @@
               versions =
                 # Some versions do not currently build on MacOS, so we do not even
                 # expose them on that platform.
-                (lib.optionalAttrs pkgs.stdenv.isLinux {
+                (lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
                   emacs-23-4 = "23.4";
                   emacs-24-1 = "24.1";
                   emacs-24-2 = "24.2";
@@ -176,7 +176,7 @@
             builtins.mapAttrs (
               name: version:
               (
-                if pkgs.stdenv.isLinux && lib.versionOlder version "25.2" then
+                if pkgs.stdenv.hostPlatform.isLinux && lib.versionOlder version "25.2" then
                   inputs.nixpkgs-glibc-2-39.legacyPackages.${system}
                 else
                   pkgs

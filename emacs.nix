@@ -36,7 +36,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     pkg-config
   ]
-  ++ lib.optionals stdenv.isDarwin [ sigtool ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [ sigtool ]
   ++ lib.optionals (lib.versionAtLeast version "25.1") [
     autoreconfHook
     texinfo
@@ -93,9 +93,9 @@ stdenv.mkDerivation rec {
       ./patches/sigsegv-stack.patch
     ]
     ++ lib.optionals (
-      stdenv.isDarwin && lib.versionAtLeast version "25.1" && lib.versionOlder version "26.1"
+      stdenv.hostPlatform.isDarwin && lib.versionAtLeast version "25.1" && lib.versionOlder version "26.1"
     ) [ ./patches/gnutls-use-osx-cert-bundle.patch ]
-    ++ lib.optionals (stdenv.isDarwin && lib.versionOlder version "27.1") [
+    ++ lib.optionals (stdenv.hostPlatform.isDarwin && lib.versionOlder version "27.1") [
       ./patches/macos-unexec.patch
     ]
     ++ lib.optionals (lib.versionAtLeast version "29.1" && lib.versionOlder version "31.0") [
