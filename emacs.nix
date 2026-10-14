@@ -112,6 +112,12 @@ stdenv.mkDerivation rec {
     ]
     ++ lib.optionals (lib.versionAtLeast version "30.1" && lib.versionOlder version "31.1.50") [
       ./patches/cve-2024-53920.patch
+    ]
+    ++ lib.optionals (lib.versionAtLeast version "30.1" && lib.versionOlder version "31") [
+      ./patches/cve-2026-108976.patch
+    ]
+    ++ lib.optionals (lib.versionAtLeast version "31" && lib.versionOlder version "31.1.50") [
+      ./patches/cve-2026-108976-31.patch
     ];
 
   passthru = { inherit withTreeSitter; };
