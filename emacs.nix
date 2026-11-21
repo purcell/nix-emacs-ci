@@ -118,6 +118,8 @@ stdenv.mkDerivation rec {
     ]
     ++ lib.optionals (lib.versionAtLeast version "31" && lib.versionOlder version "31.1.50") [
       ./patches/cve-2026-108976-31.patch
+      ./patches/bug-82213.patch
+      ./patches/bug-82213-regression.patch
     ];
 
   passthru = { inherit withTreeSitter; };

@@ -1,0 +1,80 @@
+From 5bf385dad6e5a2c2a9584252b99484cdbfeae66b Mon Sep 17 00:00:00 2001
+From: Stefan Monnier <monnier@iro.umontreal.ca>
+Date: Sun, 15 Nov 2026 18:15:49 -0500
+Subject: [PATCH] (set-auto-mode): Fix regression in commit 205ae0b0583d
+
+* lisp/files.el (set-auto-mode--from-matching-alist-entry): Handle nil
+modes in (REGEXP MODE NON-NIL) entries.
+
+* test/lisp/files-tests.el (files-tests--check-mode): Adjust to
+disappearance of 'set-auto-mode--find-matching-alist-entry'.
+Add entry for 'foo.el.orig' to test handling of nil MODEs.
+---
+ lisp/files.el            | 28 ++++++++++++++--------------
+ test/lisp/files-tests.el | 11 +++++++----
+ 2 files changed, 21 insertions(+), 18 deletions(-)
+
+diff --git a/lisp/files.el b/lisp/files.el
+index c2b6db8bf2fd..7cf424d971b3 100644
+--- a/lisp/files.el
++++ b/lisp/files.el
+@@ -3527,21 +3527,21 @@ If CASE-INSENSITIVE, the file system of file NAME is case-insensitive."
+                    ;; Fallback to case-insensitive match.
+                    (and auto-mode-case-fold
+                         (let ((case-fold-search t))
+-                          (assoc-default name alist 'string-match))))))
+-               ;; Extract MODE from (REGEXP MODE t) entries.
+-               (mode-t (when (and (not (functionp newmode))
+-                                  (consp newmode)
+-                                  (cadr newmode))
+-                         (setq name (substring name 0 (match-beginning 0)))
+-                         (car newmode)))
+-               (mode (or mode-t newmode)))
++                         (assoc-default name alist 'string-match)))))))
+           (when newmode
+-            (if (and dir-local
+-                     (not (set-auto-mode--dir-local-valid-p mode)))
+-                (message "Ignoring invalid mode `%S'" mode)
+-              (set-auto-mode-0 mode keep-mode-if-same)
+-              (setq was-set t))
+-            mode-t)))
++            (let* ((mode-t ;; Is it a (REGEXP MODE NON-NIL) entry?
++                    (and (not (functionp newmode))
++                         (consp newmode) (cadr newmode)))
++                   (mode (if (null mode-t) newmode
++                           (setq name (substring name 0 (match-beginning 0)))
++                           (car newmode))))
++              (when mode
++                (if (and dir-local
++                         (not (set-auto-mode--dir-local-valid-p mode)))
++                    (message "Ignoring invalid mode `%S'" mode)
++                  (set-auto-mode-0 mode keep-mode-if-same)
++                  (setq was-set t)))
++              mode-t))))
+     was-set))
+ 
+ (defun set-auto-mode--apply-alist (alist keep-mode-if-same dir-local)
+diff --git a/test/lisp/files-tests.el b/test/lisp/files-tests.el
+index d7ae7e3ea5fa..ba303c46b3a9 100644
+--- a/test/lisp/files-tests.el
++++ b/test/lisp/files-tests.el
+@@ -1780,12 +1780,15 @@ The door of all subtleties!
+ 
+ (defun files-tests--check-mode (filename)
+   "Return the major mode found in `auto-mode-alist' for FILENAME."
+-  (set-auto-mode--find-matching-alist-entry
+-   auto-mode-alist
+-   (concat "/home/jrhacker/" filename)
+-   nil))
++  (with-temp-buffer
++    (set-auto-mode--from-matching-alist-entry
++     auto-mode-alist
++     (concat "/home/jrhacker/" filename)
++     nil t nil)
++    major-mode))
+ 
+ (ert-deftest files-tests-auto-mode-alist ()
++  (should (eq (files-tests--check-mode "foo.el.orig") #'emacs-lisp-mode))
+   (should (eq (files-tests--check-mode ".gdbinit.in") #'gdb-script-mode))
+   (should (eq (files-tests--check-mode ".gdbinit") #'gdb-script-mode))
+   (should (eq (files-tests--check-mode "_gdbinit") #'gdb-script-mode)) ; for MS-DOS
